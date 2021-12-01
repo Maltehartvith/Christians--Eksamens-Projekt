@@ -1,7 +1,7 @@
 package system.Model;
 import java.util.ArrayList;
 
-public class Tour {
+public class Tour{
     private long tourID;
     private String name, description;
     private int maxMembers = 30, duration;
