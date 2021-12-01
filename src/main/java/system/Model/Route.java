@@ -1,6 +1,7 @@
 package system.Model;
-import java.util.ArrayList;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity @Table(name="routes")
 public class Route{
@@ -8,13 +9,13 @@ public class Route{
     @Column(name="routeID")
     private long routeID;
 
-
-    private Arraylist<Attraction> attractions = new ArrayList<>();
+    @ManyToMany
+    private ArrayList<Attraction> attractions = new ArrayList<>();
 
     public Route(){}
     public long getRouteID(){return routeID;}
     public void setRouteID(long tourID){this.routeID=routeID;}
-    public Arraylist<Attraction> getAttractions(){return attractions;}
-    public addAttraction(Attraction attraction){attractions.add(attraction);}
-    public removeAttraction(Attraction attraction){attractions.remove(attraction);}
+    public ArrayList<Attraction> getAttractions(){return attractions;}
+    public void addAttraction(Attraction attraction){attractions.add(attraction);}
+    public void removeAttraction(Attraction attraction){attractions.remove(attraction);}
 }

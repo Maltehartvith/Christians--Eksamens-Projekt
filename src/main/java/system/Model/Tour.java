@@ -20,8 +20,8 @@ public class Tour{
     @Column(name="duration")
     private int duration;
 
-
-    private Arraylist<Attraction> attractions = new ArrayList<>();
+    @ManyToMany
+    private ArrayList<Attraction> attractions = new ArrayList<>();
 
     public Tour(){}
     public long getTourID(){return tourID;}
@@ -34,7 +34,7 @@ public class Tour{
     public void setMaxMembers(int maxMembers){this.maxMembers=maxMembers;}
     public int getDuration(){return duration;}
     public void setDuration(int duration){this.duration=duration;}
-    public Arraylist<Attraction> getAttractions() {return attractions;}
-    public addAttraction(Attraction attraction){attractions.add(attraction);}
-    public removeAttraction(Attraction attraction){attractions.remove(attraction);}
+    public ArrayList<Attraction> getAttractions() {return attractions;}
+    public void addAttraction(Attraction attraction){attractions.add(attraction);}
+    public void removeAttraction(Attraction attraction){attractions.remove(attraction);}
 }

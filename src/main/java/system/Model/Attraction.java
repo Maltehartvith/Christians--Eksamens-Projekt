@@ -8,22 +8,22 @@ public class Attraction {
     private long attractionID;
 
     @Column(name="attractionID")
-    private String name
+    private String name;
 
     @Column(name="description")
-    private String description
+    private String description;
 
     @Column(name="interestPoints")
     private String interestPoints;
 
     @Column(name="latitude")
-    private double latitude
+    private double latitude;
 
     @Column(name="longtitude")
-    private double longtitude
+    private double longtitude;
 
     @Column(name="timeToBoat")
-    private double timeToBoat;
+    private int timeToBoat;
 
     public Attraction(){}
     public long getAttractionID(){return attractionID;}
