@@ -1,9 +1,29 @@
 package system.Model;
+import javax.persistence.*;
 
+@Entity @Table(name="attractions")
 public class Attraction {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="attractionID")
     private long attractionID;
-    private String name, description, interestPoints;
-    private double latitude, longtitude, timeToBoat;
+
+    @Column(name="attractionID")
+    private String name
+
+    @Column(name="description")
+    private String description
+
+    @Column(name="interestPoints")
+    private String interestPoints;
+
+    @Column(name="latitude")
+    private double latitude
+
+    @Column(name="longtitude")
+    private double longtitude
+
+    @Column(name="timeToBoat")
+    private double timeToBoat;
 
     public Attraction(){}
     public long getAttractionID(){return attractionID;}

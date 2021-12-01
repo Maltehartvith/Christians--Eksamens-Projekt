@@ -1,10 +1,26 @@
 package system.Model;
 import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity @Table(name="tours")
 public class Tour{
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="tourID")
     private long tourID;
-    private String name, description;
-    private int maxMembers = 30, duration;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="description")
+    private String description;
+
+    @Column(name="maxMembers")
+    private int maxMembers = 30;
+
+    @Column(name="duration")
+    private int duration;
+
+
     private Arraylist<Attraction> attractions = new ArrayList<>();
 
     public Tour(){}

@@ -1,8 +1,14 @@
 package system.Model;
 import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity @Table(name="routes")
 public class Route{
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="routeID")
     private long routeID;
+
+
     private Arraylist<Attraction> attractions = new ArrayList<>();
 
     public Route(){}
