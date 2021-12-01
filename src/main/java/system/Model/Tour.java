@@ -1,13 +1,16 @@
 package system.Model;
+
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
-@Entity @Table(name="tours")
+@Entity
+@Table(name="tours")
 public class Tour{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="tourID")
-    private long tourID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name="name")
     private String name;
@@ -21,14 +24,19 @@ public class Tour{
     @Column(name="duration")
     private int duration;
 
-    @ManyToMany
-    private ArrayList<Attraction> attractions = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name="tour_attractions",
+            joinColumns = @JoinColumn(name="tours_id"),
+            inverseJoinColumns = @JoinColumn(name="attractions_id")
+    )
+    private List<Attraction> tourAttraction = new ArrayList<>();
 
     public Tour(){}
 
-    public long getTourID(){return tourID;}
+    public long getId(){return id;}
 
-    public void setTourID(long tourID){this.tourID=tourID;}
+    public void setId(long tourID){this.id =tourID;}
 
     public String getName(){return name;}
 
@@ -46,10 +54,10 @@ public class Tour{
 
     public void setDuration(int duration){this.duration=duration;}
 
-    public ArrayList<Attraction> getAttractions() {return attractions;}
+    public List<Attraction> getAttractions() {return tourAttraction;}
 
-    public void addAttraction(Attraction attraction){attractions.add(attraction);}
+    public void addAttraction(Attraction attraction){tourAttraction.add(attraction);}
 
-    public void removeAttraction(Attraction attraction){attractions.remove(attraction);}
+    public void removeAttraction(Attraction attraction){tourAttraction.remove(attraction);}
 
 }

@@ -1,14 +1,18 @@
 package system.Model;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-@Entity @Table(name="attractions")
+@Entity
+@Table(name="attractions")
 public class Attraction extends Object {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="attractionID")
-    private long attractionID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name="attractionID")
+    @Column(name="name")
     private String name;
 
     @Column(name="description")
@@ -26,11 +30,17 @@ public class Attraction extends Object {
     @Column(name="timeToBoat")
     private int timeToBoat;
 
+    @ManyToMany(mappedBy = ("routeAttraction"), cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Route> routeArrayList = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "tourAttraction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Tour> tourArrayList = new ArrayList<>();
+
     public Attraction(){}
 
-    public long getAttractionID(){return attractionID;}
+    public long getAttractionID(){return id;}
 
-    public void setAttractionID(long attractionID){this.attractionID=attractionID;}
+    public void setAttractionID(long attractionID){this.id=attractionID;}
 
     public String getName(){return name;}
 

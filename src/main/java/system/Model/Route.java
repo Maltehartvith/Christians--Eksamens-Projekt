@@ -1,27 +1,35 @@
 package system.Model;
+
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
-@Entity @Table(name="routes")
+@Entity
+@Table(name="routes")
 public class Route{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="routeID")
-    private long routeID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToMany
-    private ArrayList<Attraction> attractions = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name="route_attractions",
+            joinColumns = @JoinColumn(name="routes_id"),
+            inverseJoinColumns = @JoinColumn(name="attractions_id")
+    )
+    private List<Attraction> routeAttraction = new ArrayList<>();
 
     public Route(){}
 
-    public long getRouteID(){return routeID;}
+    public long getId(){return id;}
 
-    public void setRouteID(long tourID){this.routeID=routeID;}
+    public void setId(long tourID){this.id = id;}
 
-    public ArrayList<Attraction> getAttractions(){return attractions;}
+    public List<Attraction> getAttractions(){return routeAttraction;}
 
-    public void addAttraction(Attraction attraction){attractions.add(attraction);}
+    public void addAttraction(Attraction attraction){routeAttraction.add(attraction);}
 
-    public void removeAttraction(Attraction attraction){attractions.remove(attraction);}
+    public void removeAttraction(Attraction attraction){routeAttraction.remove(attraction);}
 
 }
