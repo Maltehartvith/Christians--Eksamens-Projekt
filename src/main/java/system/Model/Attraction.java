@@ -30,40 +30,68 @@ public class Attraction extends Object {
     @Column(name="timeToBoat")
     private int timeToBoat;
 
-    @ManyToMany(mappedBy = ("routeAttraction"), cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = ("routeAttraction"))
     private List<Route> routeArrayList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "tourAttraction", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tourAttraction")
     private List<Tour> tourArrayList = new ArrayList<>();
 
     public Attraction(){}
 
-    public long getAttractionID(){return id;}
+    public long getAttractionID(){
+        return id;
+    }
 
-    public void setAttractionID(long attractionID){this.id=attractionID;}
+    public void setAttractionID(long attractionID){
+        this.id=attractionID;
+    }
 
-    public String getName(){return name;}
+    public String getName(){
+        return name;
+    }
 
-    public void setName(String name){this.name=name;}
+    public void setName(String name){
+        this.name=name;
+    }
 
-    public String getDescription(){return description;}
+    public String getDescription(){
+        return description;
+    }
 
-    public void setDescription(String description){this.description=description;}
+    public void setDescription(String description){
+        this.description=description;
+    }
 
-    public String getInterestPoints(){return interestPoints;}
+    public String getInterestPoints(){
+        return interestPoints;
+    }
 
-    public void setInterestPoints(String interestPoints){this.interestPoints=interestPoints;}
+    public void setInterestPoints(String interestPoints){
+        this.interestPoints=interestPoints;
+    }
 
-    public double getLatitude(){return latitude;}
+    public double getLatitude(){
+        return latitude;
+    }
 
-    public void setLatitude(double latitude){this.latitude=latitude;}
+    public void setLatitude(double latitude){
+        this.latitude=latitude;
+    }
 
-    public double getLongtitude(){return longtitude;}
+    public double getLongtitude(){
+        return longtitude;
+    }
 
-    public void setLongtitude(double longtitude){this.longtitude=longtitude;}
+    public void setLongtitude(double longtitude){
+        this.longtitude=longtitude;
+    }
 
-    public int getTimeToBoat(){return timeToBoat;}
+    public int getTimeToBoat(){
+        return timeToBoat;
+    }
 
-    public void setTimeToBoat(int timeToBoat){this.timeToBoat=timeToBoat;}
+    public void setTimeToBoat(int timeToBoat){
+        this.timeToBoat=timeToBoat;
+    }
 
 }

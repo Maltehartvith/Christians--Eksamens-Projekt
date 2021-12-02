@@ -24,7 +24,9 @@ public class Tour{
     @Column(name="duration")
     private int duration;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    /* cascade = CascadeType.ALL, fetch = FetchType.LAZY*/
+
+    @ManyToMany
     @JoinTable(
             name="tour_attractions",
             joinColumns = @JoinColumn(name="tours_id"),
@@ -34,30 +36,56 @@ public class Tour{
 
     public Tour(){}
 
-    public long getId(){return id;}
+    public long getId(){
+        return id;
+    }
 
-    public void setId(long tourID){this.id =tourID;}
+    public void setId(long tourID){
+        this.id =tourID;
+    }
 
-    public String getName(){return name;}
+    public String getName(){
+        return name;
+    }
 
-    public void setName(String name){this.name=name;}
+    public void setName(String name){
+        this.name=name;
+    }
 
-    public String getDescription(){return description;}
+    public String getDescription(){
+        return description;
+    }
 
-    public void setDescription(String description){this.description=description;}
+    public void setDescription(String description){
+        this.description=description;
+    }
 
-    public int getMaxMembers(){return maxMembers;}
+    public int getMaxMembers(){
+        return maxMembers;
+    }
 
-    public void setMaxMembers(int maxMembers){this.maxMembers=maxMembers;}
+    public void setMaxMembers(int maxMembers){
+        this.maxMembers=maxMembers;
+    }
 
-    public int getDuration(){return duration;}
+    public int getDuration(){
+        return duration;
+    }
 
-    public void setDuration(int duration){this.duration=duration;}
+    public void setDuration(int duration){
+        this.duration=duration;
+    }
 
-    public List<Attraction> getAttractions() {return tourAttraction;}
+    public List<Attraction> getAttractions() {
+        return tourAttraction;
+    }
 
-    public void addAttraction(Attraction attraction){tourAttraction.add(attraction);}
+    public void addAttraction(Attraction attraction){
+        tourAttraction.add(attraction);
+    }
 
-    public void removeAttraction(Attraction attraction){tourAttraction.remove(attraction);}
+    public void removeAttraction(Attraction attraction){
+        tourAttraction.remove(attraction);
+    }
 
 }

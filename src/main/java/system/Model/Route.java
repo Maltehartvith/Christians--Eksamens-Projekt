@@ -12,7 +12,7 @@ public class Route{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name="route_attractions",
             joinColumns = @JoinColumn(name="routes_id"),
@@ -22,14 +22,24 @@ public class Route{
 
     public Route(){}
 
-    public long getId(){return id;}
+    public long getId(){
+        return id;
+    }
 
-    public void setId(long tourID){this.id = id;}
+    public void setId(long tourID){
+        this.id = id;
+    }
 
-    public List<Attraction> getAttractions(){return routeAttraction;}
+    public List<Attraction> getAttractions(){
+        return routeAttraction;
+    }
 
-    public void addAttraction(Attraction attraction){routeAttraction.add(attraction);}
+    public void addAttraction(Attraction attraction){
+        routeAttraction.add(attraction);
+    }
 
-    public void removeAttraction(Attraction attraction){routeAttraction.remove(attraction);}
+    public void removeAttraction(Attraction attraction){
+        routeAttraction.remove(attraction);
+    }
 
 }
