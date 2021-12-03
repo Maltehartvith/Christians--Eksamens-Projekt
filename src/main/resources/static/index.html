@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="da">
+	<head>
+		<title>Map</title>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	   crossorigin=""/>
+	   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	   crossorigin=""></script>
+	   <style>#map { height: 600px; }</style>
+	</head>
+	<body>
+		<div id="map"></div>
+		<p id="data"/>
+		<script>
+			let startCoords = [55.3205449,15.1883541]
+			let map = L.map('index.html').setView(startCoords,16)
+			const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
+			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+			const tiles = L.tileLayer(tileUrl,{ attribution, minZoom: 16 })
+			tiles.addTo(index)
+			let marker = L.marker([55.3215079,15.1837528],{title:'Troldegrotten'}).on('click',onClick).addTo(index).bindPopup("<b>Troldegrotten</b>")
+			function onClick(e){
+				document.getElementById('data').innerHTML = "<b>Troldegrotten</b><br>Her bor der en trold!"
+			}
+		</script>
+	</body>
+</html>
