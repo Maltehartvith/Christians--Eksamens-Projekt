@@ -35,6 +35,16 @@ public class Attraction extends Object {
     @ManyToMany(mappedBy = "tourAttraction")
     private List<Tour> tourArrayList = new ArrayList<>();
 
+    public Attraction(Long id, String name, String description, String interestPoints, double latitude, double longtitude, int timeToBoat) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.interestPoints = interestPoints;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.timeToBoat = timeToBoat;
+    }
+
     public Attraction(){}
 
     public long getAttractionID(){
