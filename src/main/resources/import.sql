@@ -1,0 +1,3 @@
+create user projekt@localhost identified by '0';
+grant all on christiansoe.* to projekt@localhost;
+INSERT INTO attractions (description,interest_points,latitude,longtitude,name,time_to_boat) VAlUES ('frø','dyr',2.2,3.3,'frø',10),('Kald på øboerne for at få dem til at hejse og lægge den','bygning',5.2,5.3,'bro',3),('Her holder fangerne til','bygning',4.2,4.3,'Fængsel',4),('Kvinder vaskede tøj her','hemmeligt sted',2.7,3.7,'Vandhul',8),('Pas på med at fare vild i katakomberne','bygning',2.8,3.8,'Katakomber',6),('Der er god mad','bygning',2.1,3.1,'Restaurent Christian',5),('Ø chefen ','dyr',2.2,3.6,'Ø-Chef',5),('Myggens hule','dyr',2.5,3.5,'Myg',15),('Flot Struktur','bygning',2.4,3.4,'Nordre Kyst',5),('Sæler','dyr',2.3,3.2,'Vester Kyst',5);
