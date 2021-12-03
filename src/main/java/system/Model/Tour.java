@@ -36,6 +36,14 @@ public class Tour{
 
     public Tour(){}
 
+    public Tour(Long id, String name, String description, int maxMembers, int duration) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.maxMembers = maxMembers;
+        this.duration = duration;
+    }
+
     public long getId(){
         return id;
     }

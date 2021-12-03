@@ -3,4 +3,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import system.Model.Route;
 
-public interface RouteRepo extends JpaRepository<Route, Long> {}
+public interface RouteRepo extends JpaRepository<Route, Long> {
+
+}
