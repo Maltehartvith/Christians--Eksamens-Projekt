@@ -14,7 +14,7 @@ import system.Model.Tour;
 import system.Repository.AttractionRepo;
 
 @RestController
-@RequestMapping("attraction")
+@RequestMapping("api/attractions")
 public class AttractionController {
 
     @Autowired
@@ -40,12 +40,27 @@ public class AttractionController {
     @CrossOrigin(origins = "*", exposedHeaders = "Location")
     @PostMapping
     public ResponseEntity<Attraction> create(@RequestBody Attraction attraction) {
-        if(attraction.getAttractionID()!=0) {
+       /* if(attraction.getId()!=0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        }*/
+
         Attraction newAttraction = attractionRepo.save(attraction);
 
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/attractions/" + newAttraction.getAttractionID()).body(newAttraction);
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/attractions/" + newAttraction.getId()).body(newAttraction);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        Optional<Attraction> optionalAttraction = attractionRepo.findById(id);
+        if (optionalAttraction.isPresent()){
+            attractionRepo.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+
 
 }

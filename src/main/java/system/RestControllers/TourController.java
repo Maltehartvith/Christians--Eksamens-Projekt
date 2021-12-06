@@ -4,21 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import system.Model.Attraction;
 import system.Model.Tour;
+import system.Repository.AttractionRepo;
 import system.Repository.TourRepo;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("tours")
 @RestController
+@RequestMapping("api/tours")
 public class TourController {
 
     @Autowired
     TourRepo tourRepo;
 
-    @GetMapping("/read")
+    @Autowired
+    AttractionRepo attractionRepo;
+
+    @GetMapping
     public ResponseEntity<List<Tour>> findAll() {
         List<Tour> tours = new ArrayList<>();
         tourRepo.findAll().forEach(tours::add);
@@ -40,23 +45,23 @@ public class TourController {
     @CrossOrigin(origins = "*", exposedHeaders = "Location")
     @PostMapping
     public ResponseEntity<Tour> create(@RequestBody Tour tour) {
-        if(tour.getId()!=0) {
+        // Skal fjernes eller ændres - men virker for nu
+        /*if(tour.getId()== 0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        }*/
         Tour newTour = tourRepo.save(tour);
 
         return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tours/" + newTour.getId()).body(newTour);
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<Tour> editOne(@RequestBody Tour tour, @PathVariable("id") Long id) {
+    public ResponseEntity<Tour> edit(@RequestBody Tour tour, @PathVariable("id") Long id) {
         Tour t = tourRepo.findById(id).get();
         t.setId(tour.getId());
         t.setName(tour.getName());
         t.setDescription(tour.getDescription());
-        t.setMaxMembers(t.getMaxMembers());
-        t.setDuration(t.getDuration());
+        t.setMaxMembers(tour.getMaxMembers());
+        t.setDuration(tour.getDuration());
 
         Tour newTour = tourRepo.save(t);
         return ResponseEntity.status(HttpStatus.OK).body(newTour);

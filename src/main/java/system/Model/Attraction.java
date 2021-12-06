@@ -47,12 +47,12 @@ public class Attraction extends Object {
 
     public Attraction(){}
 
-    public long getAttractionID(){
+    public Long getId() {
         return id;
     }
 
-    public void setAttractionID(long attractionID){
-        this.id=attractionID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName(){

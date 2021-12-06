@@ -22,6 +22,10 @@ public class Route{
 
     public Route(){}
 
+    public Route(Long id) {
+        this.id = id;
+    }
+
     public long getId(){
         return id;
     }
