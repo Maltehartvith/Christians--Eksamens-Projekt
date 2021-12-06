@@ -1,6 +1,6 @@
 class Attraction {
     constructor() {
-        this.attractionID;
+        this.id;
         this.name;
         this.description;
         this.interestPoints;
