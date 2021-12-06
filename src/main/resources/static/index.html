@@ -14,6 +14,47 @@
 		<div id="map"></div>
 		<p id="data"/>
 		<script>
+			class Tour{
+				constructor() {
+					this.id;
+					this.name;
+					this.description;
+					this.maxMembers;
+					this.duration;
+					this.attractions = [];
+				}
+			}
+			class Attraction {
+				constructor() {
+					this.attractionID;
+					this.name;
+					this.description;
+					this.interestPoints;
+					this.latitude;
+					this.longtitude;
+					this.timeToBoat;
+				}
+			}
+
+			console.log("HEj igene")
+			const newTour = new Tour();
+			newTour.id = 2;
+			newTour.name = "Den aller bedste tur med Heidi Munck";
+			newTour.description = "Det er en meget meget meget lang tur";
+			newTour.duration = 500;
+			newTour.maxMembers = 30;
+
+			const att = new Attraction();
+			att.attractionID = 1;
+			att.name = "frø";
+			att.description = "Se de spændende frøer";
+			att.latitude = 2.3;
+			att.longtitude = 2.2;
+			att.interestPoints = "frø";
+			att.timeToBoat = 10;
+
+			newTour.attractions = [att]
+			testPUT();
 			let startCoords = [55.3205449,15.1883541]
 			let map = L.map('index.html').setView(startCoords,16)
 			const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
@@ -24,6 +65,28 @@
 			function onClick(e){
 				document.getElementById('data').innerHTML = "<b>Troldegrotten</b><br>Her bor der en trold!"
 			}
+
+			function testPUT() {
+
+
+				const options = {
+					method: "PUT",
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(newTour)
+				}
+				console.log(JSON.stringify(newTour))
+
+				fetch("tours",options)
+						.then(res=>res.json())
+
+
+
+			}
+
+
+
 		</script>
 	</body>
 </html>
