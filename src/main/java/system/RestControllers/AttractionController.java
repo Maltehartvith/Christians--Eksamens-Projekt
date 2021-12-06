@@ -40,12 +40,12 @@ public class AttractionController {
     @CrossOrigin(origins = "*", exposedHeaders = "Location")
     @PostMapping
     public ResponseEntity<Attraction> create(@RequestBody Attraction attraction) {
-        if(attraction.getAttractionID()!=0) {
+        if(attraction.getId()!=0) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         Attraction newAttraction = attractionRepo.save(attraction);
 
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/attractions/" + newAttraction.getAttractionID()).body(newAttraction);
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/attractions/" + newAttraction.getId()).body(newAttraction);
     }
 
 }
