@@ -8,64 +8,79 @@
 	    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 	    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 	    crossorigin=""></script>
-	    <style>
-		   #map { width: 600px; height: 600px; }
-		   td { vertical-align: top; }
-		   #menu {width: 300px;}
-	    </style>
+
+
+		<style>
+			#map { width: 600px; height: 600px; }
+			#data-cell { vertical-align: top; }
+			#menu {width: 600px; height: 600px; border: 1px solid black}
+			#tourDiv {width: 599px; height: 120px; border: 1px solid black}
+			#routeDiv {width: 599px; height: 120px; border: 1px solid black}
+			#attractionDiv {width: 599px; height: 120px; border: 1px solid black}
+			#ekstraDiv {width: 599px; height: 120px; border: 1px solid black}
+			.h1{text-align: center; font-family: "Comic Sans MS"}
+			.h2{font-family: "Comic Sans MS"; font-size: 25px}
+		</style>
 	</head>
-	<body>
-		<table>
-			<tr>
-				<td id="menu"><button id="routeButton" onclick="showRoute1()">Rute 1</button></td>
-				<td id="map-cell"><div id="map"></div></td>
-				<td id="data-cell"></td>
-			</tr>
-		</table>
+	<body class="container">
+
+	<br/>
+	<h1 class="h1"> Christians &#216 eksamensprojekt</h1>
+	<br/>
+
+	<table class="table">
+		<tr>
+			<td id="menu">
+				<h2 class="h1">Menu</h2>
+
+				<div id="tourDiv">
+					<h2 class="h2"> Tours</h2>
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Description</th>
+							<th>maxMembers</th>
+							<th>Duration</th>
+
+						</tr>
+						</thead>
+						<tbody id="tour-table-body"></tbody>
+
+					</table>
+
+				</div>
+				<br/>
+				<div id="routeDiv" >
+					<h2 class="h2"> Routes</h2>
+
+				</div>
+				<br/>
+				<div id="attractionDiv">
+					<h2 class="h2"> Attractions</h2>
+
+				</div>
+				<br/>
+				<div id="ekstraDiv">
+					<h2 class="h2"> Ekstra?</h2>
+
+				</div>
+
+			</td>
+
+
+			<td><div id="map"></div></td>
+			<td id="data-cell"></td>
+		</tr>
+	</table>
+
 
 
 		<script>
-			class Tour{
-				constructor() {
-					this.id;
-					this.name;
-					this.description;
-					this.maxMembers;
-					this.duration;
-					this.attractions = [];
-				}
-			}
-			class Attraction {
-				constructor() {
-					this.attractionID;
-					this.name;
-					this.description;
-					this.interestPoints;
-					this.latitude;
-					this.longtitude;
-					this.timeToBoat;
-				}
-			}
 
-			console.log("HEj igene")
-			const newTour = new Tour();
-			newTour.id = 2;
-			newTour.name = "Den aller bedste tur med Heidi Munck";
-			newTour.description = "Det er en meget meget meget lang tur";
-			newTour.duration = 500;
-			newTour.maxMembers = 30;
 
-			const att = new Attraction();
-			att.id = 1;
-			att.name = "frø";
-			att.description = "Se de spændende frøer";
-			att.latitude = 2.3;
-			att.longtitude = 2.2;
-			att.interestPoints = "frø";
-			att.timeToBoat = 10;
 
-			newTour.attractions = [att]
-			testPUT();
 
 
 			let startCoords = [55.3205449,15.1883541]
@@ -194,7 +209,7 @@
 				attractions.push({name:"Ringm&aelig;rkning af fugle",latitude:55.3208897,longtitude:15.1906824})
 
 				attractions.forEach(attraction=>{
-					document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
+					//document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
 					attractionToMarker(attraction)
 				})
 
@@ -268,24 +283,14 @@
 				markers.push(marker)
 			}
 
-			function testPUT() {
-				const options = {
-					method: "PUT",
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(newTour)
-				}
-				console.log(JSON.stringify(newTour))
 
-				fetch("api/tours",options)
-						.then(res=>res.json())
-			}
 
 			function displayAttractionData(attraction){
 				document.getElementById('data-cell').innerHTML=attractionToHTML(attraction)
 			}
 
 		</script>
+	<script src="Tour.js"></script>
+	<script src="TourOverride.js"></script>
 	</body>
 </html>
