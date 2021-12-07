@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
+
     <meta charset="UTF-8">
     <title>Test af tour</title>
+    <link rel="shortcut icon" href="#">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
 </head>
 <body class="container">
 <h1 style="text-align: center; font-size: 32px">Tours</h1>
-
-<button class="btn-success"><a style="color: black" href="tourTestAdd.html">Add</a></button>
-<button class="btn-danger"><a style="color: black" href="tourTestDelete.html">Delete</a></button>
 
 <table class="table">
     <thead>
@@ -23,10 +27,62 @@
 
     </tr>
     </thead>
-    <tbody id="tbody"></tbody>
+    <tbody id="tour-table-body"></tbody>
 
 </table>
+<button type="button" class="btn btn-primary" id="btn-add-tour">
+    Add new Tour
+</button>
+<div class="modal fade" id="tour-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Add tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tour ID: <span id="tour-id"></span></p>
+                <form>
+                    <div class="mb-3">
+                        <label for="input-name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="input-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-description" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="input-description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-maxMembers" class="form-label">Max Members</label>
+                        <input type="text" class="form-control" id="input-maxMembers">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-duration" class="form-label">Duration</label>
+                        <input type="text" class="form-control" id="input-duration">
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="select-attractions">Vælg attraktioner</label>
+                            <select multiple id="select-attractions">
+                            <div id="attractions-select">
+                            </div>
+                            </select>
+                            <input type="submit" >
+
+                    </div>
+
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button id="btn-save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END OF MODAL -->
 
 
 
@@ -61,29 +117,21 @@
 <script>
     sessionStorage.setItem("SERVER_URL","api/tours");
     const SERVER_URL = sessionStorage.getItem("SERVER_URL");
+    let attractionData = []
 
-    fetch(SERVER_URL)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            tour = data;
-            console.log(tour)
-            makeRows()
-        });
-
-    // Metode der laver rækkerne i tabellen.
     function makeRows() {
-        const rows = tour.map(t => `
+        const rows = localCache.getAll().map(u => `
          <tr>
-           <td>${t.id}</td>
-           <td>${t.name}</td>
-           <td>${t.description}</td>
-           <td>${t.maxMembers}</td>
-           <td>${t.duration}</td>
+           <td>${u.id}</td>
+           <td>${encode(u.name)}</td>
+           <td>${encode(u.description)}</td>
+           <td>${u.maxMembers}</td>
+           <td>${u.duration}</td>
+           <td><button data-id-delete=${u.id} class="btn-danger" style="color: black" href="#">Delete</td>
+            <td><button data-id-edit='${u.id}' class="btn-warning" style="color: black" href="#">Edit</button> </td>
          </tr>
         `)
-        document.getElementById("tbody").innerHTML = rows.join("")
+        document.getElementById("tour-table-body").innerHTML = rows.join("")
     }
 
 
@@ -92,14 +140,15 @@
             return response.json();
         })
         .then(function(data) {
-            attractions = data;
-            console.log(attractions)
+            let attraction = data;
+            attractionData = data
+            console.log(attraction)
             makeAttractionRows()
         });
 
     // Metode der laver rækkerne i tabellen.
     function makeAttractionRows() {
-        const rows = attractions.map(a => `
+        const rows = attractionData.map(a => `
          <tr>
            <td>${a.id}</td>
            <td>${a.name}</td>
@@ -113,5 +162,154 @@
         document.getElementById("tbody1").innerHTML = rows.join("")
     }
 
+    function localTourCache(){
+        let tourData = []
+        const addEdit = (tour,method) =>{
+            if(method==="POST"){
+                tourData.push(tour)
+            }
+            else if(method==="PUT") {
+                tourData = tourData.map(u => u.id == tour.id ? tour: u)
+            }
+        }
+
+        return {
+            getAll : () => tourData , //This is the same as above
+            addAll : (all) => tourData = all,
+            deleteOne: (id) => tourData = tourData.filter(u => u.id !== Number(id)),
+            findById : (id) => tourData.find(u => u.id == id),
+            addEdit :addEdit
+        }
+    }
+
+
+    function setUpHandlers() {
+        document.getElementById("tour-table-body").onclick = handleTableClick
+        document.getElementById("btn-save").onclick = saveTour
+        document.getElementById("btn-add-tour").onclick = makeNewTour
+    }
+
+    setUpHandlers()
+
+    function handleTableClick(evt) {
+        evt.preventDefault()
+        evt.stopPropagation()
+        const target = evt.target;
+        //data-id-delete
+        if (target.dataset.idDelete) {
+            const idToDelete = Number(target.dataset.idDelete)
+            const options = {
+                method: "DELETE",
+                headers: {'Accept': 'application/json'},
+
+            }
+
+            fetch(SERVER_URL+"/"+idToDelete,options)
+                .then(res=>{if(res.ok){
+                    localCache.deleteOne(idToDelete)
+                    console.log(idToDelete)
+                    makeRows()
+                }
+                })
+        }
+        //Observe change compared to video
+        if (target.dataset.idEdit) {
+            const idToEdit = Number(target.dataset.idEdit)
+            const tour = localCache.findById(idToEdit)
+            showModal(tour)
+        }
+
+    }
+
+    function makeNewTour() {
+        showModal({
+            id: null,
+            name: "",
+            description: "",
+            maxMembers: "",
+            duration: ""
+        })
+    }
+
+    function showModal(tour) {
+        const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
+        document.getElementById("modal-title").innerText = tour.id ? "Edit Tour" : "Add Tour"
+        document.getElementById("tour-id").innerText = tour.id
+        document.getElementById("input-name").value = tour.name
+        document.getElementById("input-description").value = tour.description
+        document.getElementById("input-maxMembers").value = tour.maxMembers
+        document.getElementById("input-duration").value = tour.duration
+        myModal.show()
+    }
+    function showEditModal(tour) {
+        const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
+        document.getElementById("modal-title").innerText = tour.id ? "Edit Tour" : "Add Tour"
+        document.getElementById("tour-id").innerText = tour.id
+        document.getElementById("input-name").value = tour.name
+        document.getElementById("input-description").value = tour.description
+        document.getElementById("input-maxMembers").value = tour.maxMembers
+        document.getElementById("input-duration").value = tour.duration
+        document.getElementById("multiple").value = tour.attractions
+
+        myModal.show()
+    }
+
+    function saveTour() {
+        const tour = {}
+        tour.id = Number(document.getElementById("tour-id").innerText)
+        tour.name = document.getElementById("input-name").value
+        tour.description = document.getElementById("input-description").value
+        tour.maxMembers = document.getElementById("input-maxMembers").value
+        tour.duration = document.getElementById("input-duration").value
+
+        const method = tour.id ? "PUT" : "POST"
+        const url = (method === "PUT") ? SERVER_URL+"/"+tour.id : SERVER_URL
+        const options = {
+            method: method,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tour)
+        }
+        fetch(url,options)
+            .then(res=>{
+                if(!res.ok){
+                    throw "Something went wrong"
+                }
+                return res.json()
+            })
+            .then(tour=>{
+                localCache.addEdit(tour,method)
+                makeRows()
+                window.location.replace("test.html")
+            })
+            .catch(e=>alert(e))
+    }
+
+
+    function fetchTour() {
+        fetch(SERVER_URL)
+            .then(res => res.json())
+            .then(data=> {
+                localCache.addAll(data)
+                makeRows()
+            })
+    }
+
+
+    const localCache = localTourCache();
+    fetchTour()
+
+
+    function encode(str) {
+        str = ""+str
+        str = str.replace(/&/g, "&amp;");
+        str = str.replace(/>/g, "&gt;");
+        str = str.replace(/</g, "&lt;");
+        str = str.replace(/"/g, "&quot;");
+        str = str.replace(/'/g, "&#039;");
+        return str;
+    }
 </script>
 </html>

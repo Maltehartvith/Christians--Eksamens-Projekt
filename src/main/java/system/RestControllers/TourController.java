@@ -55,15 +55,9 @@ public class TourController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tour> edit(@RequestBody Tour tour, @PathVariable("id") Long id) {
-        Tour t = tourRepo.findById(id).get();
-        t.setId(tour.getId());
-        t.setName(tour.getName());
-        t.setDescription(tour.getDescription());
-        t.setMaxMembers(tour.getMaxMembers());
-        t.setDuration(tour.getDuration());
+    public ResponseEntity<Tour> edit(@RequestBody Tour tour) {
 
-        Tour newTour = tourRepo.save(t);
+        Tour newTour = tourRepo.save(tour);
         return ResponseEntity.status(HttpStatus.OK).body(newTour);
     }
 
