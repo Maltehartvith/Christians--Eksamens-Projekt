@@ -8,21 +8,17 @@
 	    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 	    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 	    crossorigin=""></script>
-	    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.9.4/leaflet-geocoder-mapzen.js"></script>
-
 	    <style>
 		   #map { width: 600px; height: 600px; }
-		   #data-cell { vertical-align: top; }
-		   #menu {width: 400px;}
+		   td { vertical-align: top; }
+		   #menu {width: 300px;}
 	    </style>
 	</head>
 	<body>
 		<table>
 			<tr>
-				<td id="menu"></td>
-				<td><div id="map"></div></td>
+				<td id="menu"><button id="routeButton" onclick="showRoute1()">Rute 1</button></td>
+				<td id="map-cell"><div id="map"></div></td>
 				<td id="data-cell"></td>
 			</tr>
 		</table>
@@ -80,6 +76,34 @@
 			tiles.addTo(map)
 			let attractions=[]
 			let markers=[]
+
+			let route1_coords = [
+				[55.320783, 15.186147],
+				[55.320865, 15.186308],
+				[55.320914, 15.186443],
+				[55.320919, 15.187355],
+				[55.320851, 15.187840],
+				[55.321360, 15.189657],
+				[55.320560, 15.189646],
+				[55.320221, 15.189061],
+				[55.319913, 15.189120],
+				[55.319516, 15.188455],
+				[55.319243, 15.187435],
+				[55.319317, 15.186718],
+				[55.320229, 15.186411]
+			]
+
+			let route1=L.polyline(route1_coords, {color: 'red'})
+
+			function showRoute1(){
+				route1.addTo(map)
+				document.getElementById("routeButton").onclick=hideRoute1
+			}
+			function hideRoute1(){
+				route1.remove()
+				document.getElementById("routeButton").onclick=showRoute1
+			}
+
 			/*
 			fetch('api/attractions').then(response=>response.json()).then(data=>{
 				attractions=data
@@ -105,34 +129,34 @@
 				attractions.push({name:"Unavngivet",longtitude:15.1878440,latitude:55.3196098})
 				attractions.push({name:"Udsigt til den hvide dame",latitude:55.3194137,longtitude:15.1880874})
 				attractions.push({name:"Gryssehytten 98",latitude:55.3193422,longtitude:15.1878335})
-				attractions.push({name:"SkrÃ¦ld",latitude:55.3185370,longtitude:15.1875297})
+				attractions.push({name:"Skrald",latitude:55.3185370,longtitude:15.1875297})
 				attractions.push({name:"Arteje maler hus til kunst",latitude:55.3178818,longtitude:15.1887374})
 				attractions.push({name:"Kongensbakke",latitude:55.3179035,longtitude:15.1888505})
-				attractions.push({name:"Den bl&#229 hane hus",latitude:55.3184577,longtitude:15.1899624})
-				attractions.push({name:"Muren slutter og m&#229ske ogs&#229 turen",latitude:55.3182452,longtitude:15.1904174})
+				attractions.push({name:"Den bl&aring; hane hus",latitude:55.3184577,longtitude:15.1899624})
+				attractions.push({name:"Muren slutter og m&aring;ske ogs&aring; turen",latitude:55.3182452,longtitude:15.1904174})
 				attractions.push({name:"Verdensende",latitude:55.3194523,longtitude:15.1914865})
-				attractions.push({name:"Det Ã¸stligest punkt i DK",latitude:55.3194966,longtitude:15.1914682})
+				attractions.push({name:"Det &Oslash;stligest punkt i DK",latitude:55.3194966,longtitude:15.1914682})
 				attractions.push({name:"Sommerhytte uden vand og toilet",latitude:55.3202036,longtitude:15.1918046})
 				attractions.push({name:"Bumbemargasin",latitude:55.3202688,longtitude:15.1917908})
 				attractions.push({name:"Kanon",latitude:55.3206473,longtitude:15.1918498})
 				attractions.push({name:"Kenals vig her regned man ikke med angreb",latitude:55.3207767,longtitude:15.1909375})
-				attractions.push({name:"Sankt hans b&#229l",latitude:55.3206729,longtitude:15.1905938})
-				attractions.push({name:"Kunst maller har st&#229et her",latitude:55.3207202,longtitude:15.1896441})
+				attractions.push({name:"Sankt hans b&aring;l",latitude:55.3206729,longtitude:15.1905938})
+				attractions.push({name:"Kunst maler har st&aring;et her",latitude:55.3207202,longtitude:15.1896441})
 				attractions.push({name:"Sti til sanghans vandkilde",latitude:55.3210878,longtitude:15.1896714})
 				attractions.push({name:"Rugmarken",latitude:55.3223851,longtitude:15.1893255})
 				attractions.push({name:"Skole",latitude:55.3218778,longtitude:15.1895314})
 				attractions.push({name:"Telt hytte mm",latitude:55.3218028,longtitude:15.1899838})
-				attractions.push({name:"Ã†bler plantage",latitude:55.3212630,longtitude:15.1891052})
+				attractions.push({name:"&AElig;bler plantage",latitude:55.3212630,longtitude:15.1891052})
 				attractions.push({name:"Haver",latitude:55.3211813,longtitude:15.1889087})
-				attractions.push({name:"Teltplands til 16 med kÃ¸leskab",latitude:55.3212452,longtitude:15.1893447})
+				attractions.push({name:"Teltplands til 16 med k&oslash;leskab",latitude:55.3212452,longtitude:15.1893447})
 				attractions.push({name:"Krudthus ligger lavt",latitude:55.3209563,longtitude:15.1881492})
 				attractions.push({name:"Ruin",latitude:55.3209214,longtitude:15.1880076})
-				attractions.push({name:"Latterfrøer",latitude:55.3204756,longtitude:15.1876427})
+				attractions.push({name:"Latterfr&oslash;er",latitude:55.3204756,longtitude:15.1876427})
 				attractions.push({name:"Rute start forslag",latitude:55.3204536,longtitude:15.1876307})
 				attractions.push({name:"Bryggeriet det gamle",latitude:55.3202843,longtitude:15.1868364})
 				attractions.push({name:"Trappe",latitude:55.3195776,longtitude:15.1849335})
-				attractions.push({name:"Fængsel",latitude:55.3199894,longtitude:15.1845679})
-				attractions.push({name:"SkrÃ¦ld",latitude:55.3203696,longtitude:15.1854099})
+				attractions.push({name:"F&aelig;ngsel",latitude:55.3199894,longtitude:15.1845679})
+				attractions.push({name:"Skrald",latitude:55.3203696,longtitude:15.1854099})
 				attractions.push({name:"Bro",latitude:55.3204508,longtitude:15.1856262})
 				attractions.push({name:"Bro",latitude:55.3204404,longtitude:15.1862263})
 				attractions.push({name:"Gril",latitude:55.3203118,longtitude:15.1863215})
@@ -140,34 +164,34 @@
 				attractions.push({name:"Havnekontor",latitude:55.3203060,longtitude:15.1863116})
 				attractions.push({name:"Trappe",latitude:55.3202163,longtitude:15.1864310})
 				attractions.push({name:"Trappe",latitude:55.3204373,longtitude:15.1872110})
-				attractions.push({name:"FyrtÃ¥rn",latitude:55.3204645,longtitude:15.1872536})
-				attractions.push({name:"Ã˜je",latitude:55.3191383,longtitude:15.1888445})
+				attractions.push({name:"Fyrt&aring;rn",latitude:55.3204645,longtitude:15.1872536})
+				attractions.push({name:"&#216;je",latitude:55.3191383,longtitude:15.1888445})
 				attractions.push({name:"Beliggenhed 98",latitude:55.3191105,longtitude:15.1889450})
 				attractions.push({name:"Have",latitude:55.3192603,longtitude:15.1886435})
 				attractions.push({name:"Dam",latitude:55.3193819,longtitude:15.1886910})
 				attractions.push({name:"Trappe",latitude:55.3195648,longtitude:15.1895525})
 				attractions.push({name:"Duft",latitude:55.3195729,longtitude:15.1895470})
-				attractions.push({name:"Frø",latitude:55.3196030,longtitude:15.1895981})
+				attractions.push({name:"Fr&oslash;",latitude:55.3196030,longtitude:15.1895981})
 				attractions.push({name:"Trappe",latitude:55.3196148,longtitude:15.1896232})
-				attractions.push({name:"Båd",latitude:55.3195396,longtitude:15.1896946})
-				attractions.push({name:"Pas på",latitude:55.3194724,longtitude:15.1896920})
+				attractions.push({name:"B&aring;d",latitude:55.3195396,longtitude:15.1896946})
+				attractions.push({name:"Pas p&aring;",latitude:55.3194724,longtitude:15.1896920})
 				attractions.push({name:"Laxegade",latitude:55.3197598,longtitude:15.1895953})
 				attractions.push({name:"Dam",latitude:55.3201665,longtitude:15.1891147})
 				attractions.push({name:"Dam",latitude:55.3202814,longtitude:15.1891831})
 				attractions.push({name:"Stop ring",latitude:55.3203819,longtitude:15.1890576})
 				attractions.push({name:"Skraldespand",latitude:55.3205232,longtitude:15.1896118})
-				attractions.push({name:"Microbryggeriet ChrÃ¸Ã¸l",latitude:55.3203608,longtitude:15.1898805})
-				attractions.push({name:"Åbning",latitude:55.3196529,longtitude:15.1912014})
-				attractions.push({name:"Frø er set",latitude:55.3193691,longtitude:15.1913540})
+				attractions.push({name:"Microbryggeriet Chr&oslash;&oslash;l",latitude:55.3203608,longtitude:15.1898805})
+				attractions.push({name:"&Aring;bning",latitude:55.3196529,longtitude:15.1912014})
+				attractions.push({name:"Fr&oslash; er set",latitude:55.3193691,longtitude:15.1913540})
 				attractions.push({name:"Havudsigt",latitude:55.3195210,longtitude:15.1915006})
 				attractions.push({name:"Havudsigt",latitude:55.3197136,longtitude:15.1918784})
 				attractions.push({name:"Havudsigt",latitude:55.3200820,longtitude:15.1919872})
 				attractions.push({name:"Hus",latitude:55.3202320,longtitude:15.1917813})
 				attractions.push({name:"Mur",latitude:55.3203778,longtitude:15.1919598})
-				attractions.push({name:"Pas på",latitude:55.3207338,longtitude:15.1918503})
-				attractions.push({name:"Bænk",latitude:55.3207256,longtitude:15.1909859})
+				attractions.push({name:"Pas p&aring;",latitude:55.3207338,longtitude:15.1918503})
+				attractions.push({name:"B&aelig;nk",latitude:55.3207256,longtitude:15.1909859})
 				attractions.push({name:"Trappe",latitude:55.3207584,longtitude:15.1908466})
-				attractions.push({name:"Ringmærkning af fugle",latitude:55.3208897,longtitude:15.1906824})
+				attractions.push({name:"Ringm&aelig;rkning af fugle",latitude:55.3208897,longtitude:15.1906824})
 
 				attractions.forEach(attraction=>{
 					document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
@@ -188,21 +212,43 @@
 					lines.addTo(map)
 				document.getElementById('data-cell').innerHTML+="<br>"+lines
 				*/
+
+				let key="pk.eyJ1IjoidGhvcmZhIiwiYSI6ImNrd3Z3cWYyMjA3eGUycXM4ZTd1cnhreGEifQ.gvO7Znj1QoovnHj3_KiYSQ"
+				/*
 				let router=L.Routing.control({
+					router: L.Routing.mapbox(key, {profile: "mapbox/walking", polylinePrecision: 6}),
 					waypoints: [
 						L.latLng(55.3193823,15.1916354),
 						L.latLng(55.3222804,15.188732)
-					],
-					router: L.Routing.osrmv1({
-						service: 'match',
-						profile: 'foot'
-					})
+					]
 				})
 				router.addTo(map)
-				console.log(router)
+				*/
+
+				/*
+				const directions = new MapboxDirections({
+					accessToken: key,
+					unit: 'metric',
+					profile: 'mapbox/walking',
+					alternatives: false,
+					geometries: 'geojson',
+					controls: { instructions: false },
+					flyTo: false
+				})
+				console.log(directions)
+
+
+				 */
+				//map.addControl(directions, 'top-right')
+
+
+
 			}
 
 			function attractionToHTML(attraction){
+				let interestPoints=attraction.interestPoints==undefined?"?":attraction.interestPoints
+				let timeToBoat=attraction.timeToBoat==undefined?"?":attraction.timeToBoat
+				let description=attraction.description==undefined?"?":attraction.description
 				return `<p><b>${attraction.name}</b>
 						(${attraction.interestPoints})
 						(${attraction.timeToBoat} min. til b&#229;den)
