@@ -63,7 +63,9 @@ function localAttractionCache(){
 
     function setUpHandlersAttraction() {
         document.getElementById("attraction-table-body").onclick = handleTableClickAttraction
+        if(document.getElementById("btn-save-attraction") !==null)
         document.getElementById("btn-save-attraction").onclick = saveAttraction
+        if(document.getElementById("btn-add-attraction") !== null)
         document.getElementById("btn-add-attraction").onclick = makeNewAttraction
     }
 
