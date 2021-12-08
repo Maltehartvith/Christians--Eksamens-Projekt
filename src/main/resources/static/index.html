@@ -26,7 +26,7 @@
 			}
 			class Attraction {
 				constructor() {
-					this.attractionID;
+					this.id;
 					this.name;
 					this.description;
 					this.interestPoints;
@@ -53,8 +53,9 @@
 			att.interestPoints = "frø";
 			att.timeToBoat = 10;
 
-			newTour.attractions = [att]
+			newTour.attractions.push(att);
 			testPUT();
+
 			let startCoords = [55.3205449,15.1883541]
 			let map = L.map('index.html').setView(startCoords,16)
 			const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
@@ -78,7 +79,7 @@
 				}
 				console.log(JSON.stringify(newTour))
 
-				fetch("tours",options)
+				fetch("api/tours",options)
 						.then(res=>res.json())
 
 
