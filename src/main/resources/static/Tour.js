@@ -19,7 +19,7 @@
 
 sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
 const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
-
+//
 
 function makeTourRows() {
     const rows = localTCache.getAll().map(u => `
