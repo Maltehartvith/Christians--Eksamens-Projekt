@@ -136,6 +136,11 @@ function saveTour() {
     tour.description = document.getElementById("input-description-t").value
     tour.maxMembers = document.getElementById("input-maxMembers-t").value
     tour.duration = document.getElementById("input-duration-t").value
+    tour.attractions = []
+    console.log(document.getElementById("input-attraction-t").value)
+    tour.attractions.push(localACache.findById(document.getElementById("input-attraction-t").value))
+    console.log(tour)
+    /* Lav et Array og tilføj de rigtige Attractions HER*/
 
     const method = tour.id ? "PUT" : "POST"
     const url = (method === "PUT") ? SERVER_URL_TOURS+"/"+tour.id : SERVER_URL_TOURS
