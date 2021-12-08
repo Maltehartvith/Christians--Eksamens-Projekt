@@ -17,7 +17,7 @@
 			#tourDiv {width: 599px; height: 350px; border: 1px solid black; overflow:scroll}
 			#routeDiv {width: 599px; height: 120px; border: 1px solid black}
 			#attractionDiv {width: 599px; height: 350px; border: 1px solid black; overflow: scroll}
-			#ekstraDiv {width: 599px; height: 120px; border: 1px solid black}
+			#boatDiv {width: 599px; height: 120px; border: 1px solid black}
 			.h1{text-align: center; font-family: "Comic Sans MS"}
 			.h2{font-family: "Comic Sans MS"; font-size: 25px}
 		</style>
@@ -55,8 +55,8 @@
 				<br/>
 				<div id="routeDiv" >
 					<h2 class="h2"> Routes</h2>
-					<button id="routeButton" onclick="showRoute1()">Se rute 1</button>
-
+					<button id="routeButton" onclick="showRoute1()" class="btn btn-primary">Se rute 1</button>
+					<button id="routeEdit" onclick="enableRouteEdit()" class="btn btn-primary">Ny Rute</button>
 				</div>
 				<br/>
 				<div id="attractionDiv">
@@ -80,8 +80,9 @@
 
 				</div>
 				<br/>
-				<div id="ekstraDiv">
-					<h2 class="h2"> Ekstra?</h2>
+				<div id="boatDiv">
+					<h2 class="h2"> Tid til båden kommer</h2>
+					<button>  </button>
 
 				</div>
 
@@ -386,7 +387,27 @@
 				document.getElementById("attractionTable").innerHTML=""
 				document.getElementById("attractionSwitch").onclick=showAttractions
 			}
-
+			let customRoute=L.polyline([], {color: 'red'})
+			function enableRouteEdit(){
+				customRoute=L.polyline([], {color: 'red'})
+				customRoute.addTo(map)
+				map.on("click",(e)=>{
+					console.log(e)
+					let coords=map.mouseEventToLatLng(e.originalEvent)
+					console.log(coords.lat+","+coords.lng)
+					customRoute.addLatLng([coords.lat,coords.lng])
+				})
+				let button=document.getElementById("routeEdit")
+				button.onclick=disableRouteEdit
+				button.innerText="disableRouteEdit"
+			}
+			function disableRouteEdit(){
+				document.getElementById("map").onclick=()=>{}
+				map.removeLayer(customRoute)
+				let button=document.getElementById("routeEdit")
+				button.onclick=enableRouteEdit
+				button.innerText="enableRouteEdit"
+			}
 		</script>
 	</body>
 </html>

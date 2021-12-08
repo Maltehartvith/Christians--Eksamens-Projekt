@@ -21,6 +21,7 @@ sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
 const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
 
 
+
 function makeTourRows() {
     const rows = localTCache.getAll().map(u => `
          <tr>
@@ -106,7 +107,8 @@ function makeNewTour() {
         name: "",
         description: "",
         maxMembers: "",
-        duration: ""
+        duration: "",
+        attraction: []
     })
 }
 
@@ -118,6 +120,8 @@ function showTourModal(tour) {
     document.getElementById("input-description-t").value = tour.description
     document.getElementById("input-maxMembers-t").value = tour.maxMembers
     document.getElementById("input-duration-t").value = tour.duration
+    document.getElementById("input-attraction-t").value = tour.attraction
+    //makeSelectRows()
     myModal.show()
 }
 function showEditModal(tour) {
