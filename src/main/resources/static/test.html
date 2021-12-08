@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
+
     <meta charset="UTF-8">
     <title>Test af tour</title>
+    <link rel="shortcut icon" href="#">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+
 </head>
 <body class="container">
 <h1 style="text-align: center; font-size: 32px">Tours</h1>
-
-<button class="btn-success"><a style="color: black" href="tourTestAdd.html">Add</a></button>
-<button class="btn-danger"><a style="color: black" href="tourTestDelete.html">Delete</a></button>
 
 <table class="table">
     <thead>
@@ -18,15 +24,54 @@
         <th>Id</th>
         <th>Name</th>
         <th>Description</th>
-        <th>mxaMembers</th>
+        <th>maxMembers</th>
         <th>Duration</th>
 
     </tr>
     </thead>
-    <tbody id="tbody"></tbody>
+    <tbody id="tour-table-body"></tbody>
 
 </table>
-
+<button type="button" class="btn btn-primary" id="btn-add-tour">
+    Add new Tour
+</button>
+<div class="modal fade" id="tour-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title-tour" id="modal-title-tour">Add tour</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tour ID: <span id="tour-id-t"></span></p>
+                <form>
+                    <div class="mb-3">
+                        <label for="input-name-t" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="input-name-t">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-description-t" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="input-description-t">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-maxMembers-t" class="form-label">Max Members</label>
+                        <input type="text" class="form-control" id="input-maxMembers-t">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-duration-t" class="form-label">Duration</label>
+                        <input type="text" class="form-control" id="input-duration-t">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button id="btn-save-tour" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END OF MODAL -->
 
 
 
@@ -47,71 +92,62 @@
 
     </tr>
     </thead>
-    <tbody id="tbody1"></tbody>
+    <tbody id="attraction-table-body"></tbody>
 
+    <!--END OF MODAL -->
     </br>
 
-    <button class="btn-success"><a style="color: black" href="attractionTestAdd.html">Add attraction</a></button>
-    <button class="btn-danger"><a style="color: black" href="attractionTestDelete.html">Delete attraction</a></button>
-
 </table>
-
+<button type="button" class="btn btn-primary" id="btn-add-attraction">
+    Add new Attraction
+</button>
+<div class="modal fade" id="attraction-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title-attraction" id="modal-title-attraction">Add Attraction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Attraction ID: <span id="attraction-id-a"></span></p>
+                <form>
+                    <div class="mb-3">
+                        <label for="input-name-a" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="input-name-a">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-description-a" class="form-label">Description</label>
+                        <input type="text" class="form-control" id="input-description-a">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-interestPoints-a" class="form-label">Interest points</label>
+                        <input type="text" class="form-control" id="input-interestPoints-a">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-latitude-a" class="form-label">latitude</label>
+                        <input type="number" step=".0001" class="form-control" id="input-latitude-a">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-longtitude-a" class="form-label">Longitude</label>
+                        <input type="number" step=".0001" class="form-control" id="input-longtitude-a">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-timeToBoat-a" class="form-label">Time to boat</label>
+                        <input type="number" class="form-control" id="input-timeToBoat-a">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button id="btn-save-attraction" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
-<script>
-    sessionStorage.setItem("SERVER_URL","api/tours");
-    const SERVER_URL = sessionStorage.getItem("SERVER_URL");
+<script src="Tour.js"></script>
+<script src="Attraction.js"></script>
 
-    fetch(SERVER_URL)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            tour = data;
-            console.log(tour)
-            makeRows()
-        });
-
-    // Metode der laver rækkerne i tabellen.
-    function makeRows() {
-        const rows = tour.map(t => `
-         <tr>
-           <td>${t.id}</td>
-           <td>${t.name}</td>
-           <td>${t.description}</td>
-           <td>${t.maxMembers}</td>
-           <td>${t.duration}</td>
-         </tr>
-        `)
-        document.getElementById("tbody").innerHTML = rows.join("")
-    }
-
-
-    fetch("api/attractions")
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            attractions = data;
-            console.log(attractions)
-            makeAttractionRows()
-        });
-
-    // Metode der laver rækkerne i tabellen.
-    function makeAttractionRows() {
-        const rows = attractions.map(a => `
-         <tr>
-           <td>${a.id}</td>
-           <td>${a.name}</td>
-           <td>${a.description}</td>
-           <td>${a.interestPoints}</td>
-           <td>${a.latitude}</td>
-           <td>${a.longtitude}</td>
-           <td>${a.timeToBoat}</td>
-         </tr>
-        `)
-        document.getElementById("tbody1").innerHTML = rows.join("")
-    }
-
-</script>
 </html>

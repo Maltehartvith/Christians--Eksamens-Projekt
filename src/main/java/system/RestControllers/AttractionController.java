@@ -48,7 +48,12 @@ public class AttractionController {
 
         return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/attractions/" + newAttraction.getId()).body(newAttraction);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Attraction> edit(@RequestBody Attraction attraction) {
 
+        Attraction newAttraction = attractionRepo.save(attraction);
+        return ResponseEntity.status(HttpStatus.OK).body(newAttraction);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         Optional<Attraction> optionalAttraction = attractionRepo.findById(id);
