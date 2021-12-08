@@ -7,14 +7,6 @@
         this.duration;
         this.attractions = [];
     }
-    constructor(id, name, description, maxMembers, duration) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.maxMembers = maxMembers;
-        this.duration = duration;
-        this.attractions = [];
-    }
 }*/
 
 sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
@@ -121,7 +113,7 @@ function showTourModal(tour) {
     document.getElementById("input-maxMembers-t").value = tour.maxMembers
     document.getElementById("input-duration-t").value = tour.duration
     document.getElementById("input-attraction-t").value = tour.attraction
-    //makeSelectRows()
+    makeSelectRows()
     myModal.show()
 }
 function showEditModal(tour) {
