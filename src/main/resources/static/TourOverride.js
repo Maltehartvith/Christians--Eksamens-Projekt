@@ -11,11 +11,9 @@ function makeTourRows(){
         `)
     document.getElementById("tour-table-body").innerHTML = rows.join("")
 }
-function setUpHandlersTour() {
-    document.getElementById("tour-table-body").onclick = handleTableClickTour
+/*function setUpHandlersTour() {
+    //document.getElementById("tour-table-body").onclick = handleTableClickTour
     //document.getElementById("btn-save-tour").onclick = saveTour
     //document.getElementById("btn-add-tour").onclick = makeNewTour
 }
-setUpHandlersTour()
-
-//
+setUpHandlersTour()*/

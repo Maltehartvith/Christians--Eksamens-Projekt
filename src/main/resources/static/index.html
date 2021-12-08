@@ -14,9 +14,9 @@
 			#map { width: 600px; height: 600px; }
 			#data-cell { vertical-align: top; }
 			#menu {width: 600px; height: 600px; border: 1px solid black}
-			#tourDiv {width: 599px; height: 120px; border: 1px solid black}
+			#tourDiv {width: 599px; height: 350px; border: 1px solid black; overflow:scroll}
 			#routeDiv {width: 599px; height: 120px; border: 1px solid black}
-			#attractionDiv {width: 599px; height: 120px; border: 1px solid black}
+			#attractionDiv {width: 599px; height: 350px; border: 1px solid black; overflow: scroll}
 			#ekstraDiv {width: 599px; height: 120px; border: 1px solid black}
 			.h1{text-align: center; font-family: "Comic Sans MS"}
 			.h2{font-family: "Comic Sans MS"; font-size: 25px}
@@ -35,7 +35,8 @@
 
 				<div id="tourDiv">
 					<h2 class="h2"> Tours</h2>
-					<table class="table">
+					<button id="toursSwitch" class="btn btn-primary" onclick="hideTours()">Tours on/off</button>
+					<table id="tourTable" class="table">
 						<thead>
 						<tr>
 							<th>Id</th>
@@ -60,6 +61,22 @@
 				<br/>
 				<div id="attractionDiv">
 					<h2 class="h2"> Attractions</h2>
+					<button id="attractionSwitch" class="btn btn-primary" onclick="hideAttractions()">Attractions on/off</button>
+					<table id="attractionTable" class="table">
+						<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Interestpoints</th>
+							<th>Latitude</th>
+							<th>Longtitude</th>
+							<th>TimeToboat</th>
+
+						</tr>
+						</thead>
+						<tbody id="attraction-table-body"></tbody>
+					</table>
 
 				</div>
 				<br/>
@@ -314,14 +331,70 @@
 
 				fetch("api/tours",options)
 						.then(res=>res.json())
-			}
+			}*/
 
 			function displayAttractionData(attraction){
 				document.getElementById('data-cell').innerHTML=attractionToHTML(attraction)
-			}*/
+			}
+
+			function showTours() {
+				let tourTable = document.getElementById("tourTable")
+				document.getElementById("tourDiv").style.height='350px'
+				tourTable.innerHTML=`<thead>
+					<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Description</th>
+<th>maxMembers</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody id="tour-table-body"></tbody>`
+				makeTourRows()
+				document.getElementById("toursSwitch").onclick=hideTours
+			}
+			function hideTours(){
+				document.getElementById("tourDiv").style.height="120px"
+				document.getElementById("tourTable").innerHTML=""
+				document.getElementById("toursSwitch").onclick=showTours
+			}
+
+			function showAttractions() {
+				let attractionTable = document.getElementById("attractionTable")
+				document.getElementById("attractionDiv").style.height='350px'
+
+				attractionTable.innerHTML=`\t<thead>
+<tr>
+<th>Id</th>
+<th>Name</th>
+<th>Description</th>
+<th>Interestpoints</th>
+<th>Latitude</th>
+<th>Longtitude</th>
+<th>TimeToboat</th>
+
+</tr>
+</thead>
+<tbody id="attraction-table-body"></tbody>`
+
+				makeAttractionRows()
+				document.getElementById("attractionSwitch").onclick=hideAttractions
+			}
+
+			function hideAttractions() {
+				document.getElementById("attractionDiv").style.height="120px"
+				document.getElementById("attractionTable").innerHTML=""
+				document.getElementById("attractionSwitch").onclick=showAttractions
+			}
 
 		</script>
 	</body>
 </html>
 
 <script src="Tour.js"></script>
+<script src="TourOverride.js"></script>
+
+
+<script src="Attraction.js"></script>
+<script src="AttractionOverride.js"></script>
+
