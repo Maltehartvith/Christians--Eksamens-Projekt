@@ -54,7 +54,7 @@ public class TourController {
         return ResponseEntity.status(HttpStatus.CREATED).header("Location", "/tours/" + newTour.getId()).body(newTour);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping()
     public ResponseEntity<Tour> edit(@RequestBody Tour tour) {
 
         Tour newTour = tourRepo.save(tour);
