@@ -1,4 +1,5 @@
 
+
 function makeTourRows(){
     const rows = localTCache.getAll().map(u => `
          <tr>
@@ -13,9 +14,5 @@ function makeTourRows(){
 }
 function setUpHandlersTour() {
     document.getElementById("tour-table-body").onclick = handleTableClickTour
-    //document.getElementById("btn-save-tour").onclick = saveTour
-    //document.getElementById("btn-add-tour").onclick = makeNewTour
 }
 setUpHandlersTour()
-
-//
