@@ -19,7 +19,7 @@
 
 sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
 const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
-
+//
 
 function makeTourRows() {
     const rows = localTCache.getAll().map(u => `
@@ -59,8 +59,11 @@ function localTourCache(){
 
 function setUpHandlersTour() {
     document.getElementById("tour-table-body").onclick = handleTableClickTour
+    if(document.querySelector("btn-save-tour") !== null){
     document.getElementById("btn-save-tour").onclick = saveTour
+    } if(document.querySelector("btn-add-tour")!==null){
     document.getElementById("btn-add-tour").onclick = makeNewTour
+    }
 }
 
 setUpHandlersTour()
