@@ -7,18 +7,11 @@
         this.duration;
         this.attractions = [];
     }
-    constructor(id, name, description, maxMembers, duration) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.maxMembers = maxMembers;
-        this.duration = duration;
-        this.attractions = [];
-    }
 }*/
 
 sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
 const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
+
 
 
 function makeTourRows() {
@@ -106,7 +99,8 @@ function makeNewTour() {
         name: "",
         description: "",
         maxMembers: "",
-        duration: ""
+        duration: "",
+        attraction: []
     })
 }
 
@@ -118,6 +112,8 @@ function showTourModal(tour) {
     document.getElementById("input-description-t").value = tour.description
     document.getElementById("input-maxMembers-t").value = tour.maxMembers
     document.getElementById("input-duration-t").value = tour.duration
+    document.getElementById("input-attraction-t").value = tour.attraction
+    makeSelectRows()
     myModal.show()
 }
 function showEditModal(tour) {
@@ -140,6 +136,11 @@ function saveTour() {
     tour.description = document.getElementById("input-description-t").value
     tour.maxMembers = document.getElementById("input-maxMembers-t").value
     tour.duration = document.getElementById("input-duration-t").value
+    tour.attractions = []
+    console.log(document.getElementById("input-attraction-t").value)
+    tour.attractions.push(localACache.findById(document.getElementById("input-attraction-t").value))
+    console.log(tour)
+    /* Lav et Array og tilføj de rigtige Attractions HER*/
 
     const method = tour.id ? "PUT" : "POST"
     const url = (method === "PUT") ? SERVER_URL_TOURS+"/"+tour.id : SERVER_URL_TOURS

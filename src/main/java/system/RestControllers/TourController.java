@@ -56,7 +56,6 @@ public class TourController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Tour> edit(@RequestBody Tour tour) {
-
         Tour newTour = tourRepo.save(tour);
         return ResponseEntity.status(HttpStatus.OK).body(newTour);
     }

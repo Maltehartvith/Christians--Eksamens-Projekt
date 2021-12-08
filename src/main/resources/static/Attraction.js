@@ -13,6 +13,14 @@ class Attraction {
 sessionStorage.setItem("SERVER_URL_ATTRACTION","api/attractions");
 const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
 
+function makeSelectRows(){
+    const rows = localACache.getAll().map(a => `
+        <option id="attraction-${a.id}" value="${a.id}">${a.id} : ${a.name}</option>
+    `)
+
+    document.getElementById("input-attraction-t").innerHTML = rows.join("")
+
+}
 // Metode der laver rækkerne i tabellen.
 function makeAttractionRows() {
     const rows = localACache.getAll().map(a => `

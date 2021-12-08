@@ -43,7 +43,13 @@ public class DatabaseSetup implements CommandLineRunner {
         attractionRepo.save(new Attraction(9L, "Restaurent Christian", "Der er god mad","mad", 2.1, 3.1, 5));
         attractionRepo.save(new Attraction(10L, "Katakomber", "Pas på med at fare vild i katakomberne", "bygning", 2.8, 3.8, 6));
 
-
+        Tour t = new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200);
+        t.addAttraction(new Attraction(1L, "frø",  "Se de spændende frøer", "frø", 2.3, 2.2, 10));
+        t.addAttraction(new Attraction(2L, "Plante",  "Se de spændende planter", "Planter", 2.7, 2.6, 15));
+        t.addAttraction(new Attraction(3L, "Plante",  "Se de spændende planter", "Planter", 2.4, 2.6, 12));
+        tourRepo.save(t);
+        //tourRepo.save(new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200));
+        tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));
 
     }
 }
