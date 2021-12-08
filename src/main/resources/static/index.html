@@ -18,8 +18,8 @@
 			#routeDiv {width: 599px; height: 120px; border: 1px solid black}
 			#attractionDiv {width: 599px; height: 350px; border: 1px solid black; overflow: scroll}
 			#boatDiv {width: 599px; height: 120px; border: 1px solid black}
-			.h1{text-align: center; font-family: "Comic Sans MS"}
-			.h2{font-family: "Comic Sans MS"; font-size: 25px}
+			.h1{text-align: center}
+			.h2{font-size: 25px}
 		</style>
 	</head>
 	<body class="container">
@@ -82,8 +82,11 @@
 				<br/>
 				<div id="boatDiv">
 					<h2 class="h2"> Tid til båden kommer</h2>
-					<button>  </button>
-
+					<label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
+					<input id="boatTimeInput" type="time">
+					<button onclick="calculateTime()">Godkend</button>
+					<br/>
+					<h2>Tid til afgang: <label id="countDown"></label></h2>
 				</div>
 
 			</td>
@@ -407,6 +410,38 @@
 				let button=document.getElementById("routeEdit")
 				button.onclick=enableRouteEdit
 				button.innerText="enableRouteEdit"
+			}
+			let departure
+			function calculateTime(){
+				clearInterval()
+				let inputTime=document.getElementById("boatTimeInput").value
+				let arival=parseTime(inputTime)
+				departure=new Date(new Date(arival).setHours(new Date(arival).getHours()+3))
+				setInterval(()=>{
+					let timeLeft = departure - new Date()
+					let hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2,"0")
+					let minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2,"0")
+					let seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2,"0")
+
+					// Result is output to the specific element
+					document.getElementById("countDown").innerHTML = `${hours}:${minutes}:${seconds}`
+
+					// Display the message when countdown is over
+					if (timeLeft <= 0) {
+						clearInterval()
+						document.getElementById("countDown").innerHTML ="B&Aring;DEN ER ANKOMMET!!"
+					}
+				},1000)
+			}
+			function parseTime( t ) {
+				let d = new Date();
+				let time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+				d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+				d.setMinutes( parseInt( time[2]) || 0 );
+				return d;
+			}
+			function updateCountdown(){
+
 			}
 		</script>
 	</body>
