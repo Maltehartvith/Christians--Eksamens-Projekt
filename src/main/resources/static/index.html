@@ -10,23 +10,20 @@
 	    crossorigin=""></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 			  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-		<style>
-			#map { width: 600px; height: 600px; }
-			#data-cell { vertical-align: top; }
-			#menu {width: 600px; height: 600px; border: 1px solid black}
-			#tourDiv {width: 599px; height: 350px; border: 1px solid black; overflow:scroll}
-			#routeDiv {width: 599px; height: 120px; border: 1px solid black}
-			#attractionDiv {width: 599px; height: 350px; border: 1px solid black; overflow: scroll}
-			#boatDiv {width: 599px; height: 120px; border: 1px solid black}
-			.h1{text-align: center}
-			.h2{font-size: 25px}
-		</style>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body class="container">
 
 	<br/>
 	<h1 class="h1"> Christians &#216 eksamensprojekt</h1>
 	<br/>
+
+	<ul>
+		<li><a class="active" href="index.html" accesskey="k">Kort / index</a> </li>
+		<li><a href="test.html" accesskey="a">Admin</a></li>
+		<li><a href="aboutUs.html" accesskey="o">Om os</a> </li>
+	</ul>
+
 
 	<table class="table">
 		<tr>
@@ -81,7 +78,7 @@
 				</div>
 				<br/>
 				<div id="boatDiv">
-					<h2 class="h2"> Tid til båden kommer</h2>
+					<h2 class="h2"> Tid til b&aring;den kommer</h2>
 					<label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
 					<input id="boatTimeInput" type="time">
 					<button onclick="calculateTime()">Godkend</button>
@@ -178,6 +175,7 @@
 			initializeAttractions()
 
 			function initializeAttractions(){
+				// KLARET
 				attractions.push({name:"Det st&aring;r t&aring;rn",longtitude:15.1867559,latitude:55.3207358})
 				attractions.push({name:"Hvid dame",longtitude:15.1878977,latitude:55.3196099})
 				attractions.push({name:"Hvid dame",longtitude:15.1878071,latitude:55.3195853})
@@ -225,6 +223,10 @@
 				attractions.push({name:"Have",latitude:55.3192603,longtitude:15.1886435})
 				attractions.push({name:"Dam",latitude:55.3193819,longtitude:15.1886910})
 				attractions.push({name:"Trappe",latitude:55.3195648,longtitude:15.1895525})
+
+
+				// MANGLER
+
 				attractions.push({name:"Duft",latitude:55.3195729,longtitude:15.1895470})
 				attractions.push({name:"Fr&oslash;",latitude:55.3196030,longtitude:15.1895981})
 				attractions.push({name:"Trappe",latitude:55.3196148,longtitude:15.1896232})
