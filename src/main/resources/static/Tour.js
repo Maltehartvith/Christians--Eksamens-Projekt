@@ -112,22 +112,18 @@ function showTourModal(tour) {
     document.getElementById("input-description-t").value = tour.description
     document.getElementById("input-maxMembers-t").value = tour.maxMembers
     document.getElementById("input-duration-t").value = tour.duration
-    document.getElementById("input-attraction-t").value = tour.attraction
     makeSelectRows()
+    if(document.getElementById("modal-title-tour").innerText === "Edit Tour") {
+        makeRowsSetSelected(tour)
+    }
     myModal.show()
 }
-function showEditModal(tour) {
-    const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
-    document.getElementById("modal-title-tour").innerText = tour.id ? "Edit Tour" : "Add Tour"
-    document.getElementById("tour-id").innerText = tour.id
-    document.getElementById("input-name-t").value = tour.name
-    document.getElementById("input-description-t").value = tour.description
-    document.getElementById("input-maxMembers-t").value = tour.maxMembers
-    document.getElementById("input-duration-t").value = tour.duration
-    document.getElementById("multiple-t").value = tour.attractions
-
-    myModal.show()
-}
+    function makeRowsSetSelected(tour){
+         for (let i = 0, iLen= tour.attractions.length; i < iLen; i++){
+             let aID = tour.attractions[i].id
+             document.getElementById("attraction-"+aID).selected = true
+         }
+    }
 
 function saveTour() {
     const tour = {}

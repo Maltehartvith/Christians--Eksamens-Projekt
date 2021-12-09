@@ -84,9 +84,7 @@ public class DatabaseSetup implements CommandLineRunner {
 
 
         Tour t = new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200);
-        t.addAttraction(new Attraction(1L, "frø",  "Se de spændende frøer", "frø", 55.3207358, 15.1867559, 10));
-        t.addAttraction(new Attraction(2L, "Plante",  "Se de spændende planter", "Planter", 2.7, 2.6, 15));
-        t.addAttraction(new Attraction(3L, "Plante",  "Se de spændende planter", "Planter", 2.4, 2.6, 12));
+        t.addAttraction(new Attraction(2L, "Den hvide dame",  "Her er spørgelset den hvide dame blevet set ", "Spøgelser", 55.3196099 ,  15.1878977, 2));
         tourRepo.save(t);
         //tourRepo.save(new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200));
         tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));

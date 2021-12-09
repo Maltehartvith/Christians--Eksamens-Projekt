@@ -13,16 +13,15 @@ class Attraction {
 sessionStorage.setItem("SERVER_URL_ATTRACTION","api/attractions");
 const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
 
-function makeSelectRows(){
+    function makeSelectRows(){
     const rows = localACache.getAll().map(a => `
         <option id="attraction-${a.id}" value="${a.id}">${a.id} : ${a.name}</option>
     `)
-
     document.getElementById("input-attraction-t").innerHTML = rows.join("")
 
 }
-// Metode der laver rækkerne i tabellen.
-function makeAttractionRows() {
+    // Metode der laver rækkerne i tabellen.
+    function makeAttractionRows() {
     const rows = localACache.getAll().map(a => `
          <tr>
            <td>${a.id}</td>
@@ -38,8 +37,7 @@ function makeAttractionRows() {
         `)
     document.getElementById("attraction-table-body").innerHTML = rows.join("")
 }
-
-function localAttractionCache(){
+    function localAttractionCache(){
     let attractionData = []
     const addEdit = (attraction,method) =>{
         if(method==="POST"){
@@ -58,8 +56,6 @@ function localAttractionCache(){
         addEdit :addEdit
     }
 }
-
-
     function setUpHandlersAttraction() {
         document.getElementById("attraction-table-body").onclick = handleTableClickAttraction
         if(document.getElementById("btn-save-attraction") !==null)
@@ -102,7 +98,7 @@ function localAttractionCache(){
     }
 
 
-function makeNewAttraction() {
+    function makeNewAttraction() {
     showAttractionModal({
         id: null,
         name: "",
@@ -115,7 +111,7 @@ function makeNewAttraction() {
     })
 }
 
-function showAttractionModal(attraction) {
+    function showAttractionModal(attraction) {
     const myModal = new bootstrap.Modal(document.getElementById('attraction-modal'))
     document.getElementById("modal-title-attraction").innerText = attraction.id ? "Edit Attraction" : "Add Attraction"
     document.getElementById("attraction-id-a").innerText = attraction.id
@@ -128,7 +124,7 @@ function showAttractionModal(attraction) {
     myModal.show()
 }
 
-function saveAttraction() {
+    function saveAttraction() {
     const attraction = {}
     attraction.id = Number(document.getElementById("attraction-id-a").innerText)
     attraction.name = document.getElementById("input-name-a").value
@@ -163,7 +159,7 @@ function saveAttraction() {
         .catch(e=>alert(e))
 }
 
-function fetchAttraction() {
+    function fetchAttraction() {
     fetch(SERVER_URL_ATTRACTIONS)
         .then(res => res.json())
         .then(data=> {
@@ -172,8 +168,8 @@ function fetchAttraction() {
         })
 }
 
-const localACache = localAttractionCache()
-fetchAttraction()
+    const localACache = localAttractionCache()
+    fetchAttraction()
 
 
 /*function encode(str) {
