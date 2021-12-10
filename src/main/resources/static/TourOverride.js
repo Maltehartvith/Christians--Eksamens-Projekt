@@ -1,5 +1,6 @@
 
 function makeTourRows(){
+
     const rows = localTCache.getAll().map(u => `
          <tr>
            <td>${u.id}</td>
@@ -9,7 +10,7 @@ function makeTourRows(){
            <td>${u.duration}</td>
          </tr>
         `)
-    document.getElementById("tour-table-body").innerHTML = rows.join("")
+    document.getElementById("tour-table-body").innerHTML =  rows.join("")
 }
 /*function setUpHandlersTour() {
     //document.getElementById("tour-table-body").onclick = handleTableClickTour

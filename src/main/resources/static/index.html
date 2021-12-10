@@ -31,8 +31,22 @@
 				<h2 class="h1">Menu</h2>
 
 				<div id="tourDiv">
-					<div id="toursSwitch" onclick="hideTours()">
-						<h2 class="h2" style="position: center"> Tours</h2>
+					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2"  style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
+						<h2 class="h2" id="tourHeader" onclick="change_text()">Tours ^</h2>
+					</div>
+
+					<br>
+					<div>
+						<label for="interestPoints">Choose an interest point:</label>
+						<br>
+						<select name="interest-Points" id="interestPoints" style="width: 30.5%">
+							<option value="bygning">Bygninger</option>
+							<option value="natur">Natur</option>
+							<option value="spøgelser">Spørgelser</option>
+							<option value="sos">SOS</option>
+							<option value="skrald">Skrald</option>
+							<option value="krig">Krig</option>
+						</select>
 					</div>
 					<table id="tourTable" class="table">
 						<thead>
@@ -446,8 +460,20 @@
 			function updateCountdown(){
 
 			}
+
+
+
 		</script>
 	</body>
+<script>
+	function change_text(){
+		if (document.getElementById("tourHeader").innerHTML === "Tours ^"){
+		document.getElementById("tourHeader").innerHTML = "Tours v";
+	}else{
+		document.getElementById("tourHeader").innerHTML = "Tours ^";
+	}
+
+}</script>
 </html>
 
 <script src="Tour.js"></script>
