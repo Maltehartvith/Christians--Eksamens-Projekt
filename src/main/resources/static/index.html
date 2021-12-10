@@ -34,20 +34,6 @@
 					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2"  style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
 						<h2 class="h2" id="tourHeader" onclick="change_text()">Tours ^</h2>
 					</div>
-
-					<br>
-					<div>
-						<label for="interestPoints">Choose an interest point:</label>
-						<br>
-						<select name="interest-Points" id="interestPoints" style="width: 30.5%">
-							<option value="bygning">Bygninger</option>
-							<option value="natur">Natur</option>
-							<option value="spøgelser">Spørgelser</option>
-							<option value="sos">SOS</option>
-							<option value="skrald">Skrald</option>
-							<option value="krig">Krig</option>
-						</select>
-					</div>
                     <div id="tourContent">
                         <label for="interestPoints">Choose an interest point:</label>
                         <select name="interest-Points" id="interestPoints" style="width: 30.5%">
@@ -479,11 +465,6 @@
 				d.setMinutes( parseInt( time[2]) || 0 );
 				return d;
 			}
-			function updateCountdown(){
-
-			}
-
-
 
 		</script>
 	</body>
