@@ -15,7 +15,7 @@
 	<body class="container">
 
 	<br/>
-	<h1 class="h1"> Christians &#216 eksamensprojekt</h1>
+	<h1 class="h1"> Christians &Oslash; eksamensprojekt</h1>
 	<br/>
 
 	<ul>
@@ -27,7 +27,7 @@
 
 	<table class="table">
 		<tr>
-			<td id="menu">
+			<td id="menu" rowspan="2">
 				<h2 class="h1">Menu</h2>
 
 				<div id="tourDiv">
@@ -48,27 +48,39 @@
 							<option value="krig">Krig</option>
 						</select>
 					</div>
-					<table id="tourTable" class="table">
-						<thead>
-						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Description</th>
-							<th>maxMembers</th>
-							<th>Duration</th>
-
-						</tr>
-						</thead>
-						<tbody id="tour-table-body"></tbody>
-
-					</table>
-
+                    <div id="tourContent">
+                        <label for="interestPoints">Choose an interest point:</label>
+                        <select name="interest-Points" id="interestPoints" style="width: 30.5%">
+                            <option value="bygning">Bygninger</option>
+                            <option value="natur">Natur</option>
+                            <option value="spøgelser">Spørgelser</option>
+                            <option value="sos">SOS</option>
+                            <option value="skrald">Skrald</option>
+                            <option value="krig">Krig</option>
+                        </select>
+                        <table id="tourTable" class="table">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Navn</th>
+                                <th>Beskrivelse</th>
+                                <th>max Detergere</th>
+                                <th>Varighed</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tour-table-body"></tbody>
+                        </table>
+                    </div>
 				</div>
 				<br/>
 				<div id="routeDiv" >
 					<h2 class="h2"> Routes</h2>
-					<button id="routeButton" onclick="showRoute1()" class="btn btn-primary">Se rute 1</button>
 					<button id="routeEdit" onclick="enableRouteEdit()" class="btn btn-primary">Ny Rute</button>
+					<table>
+						<tr><td>
+							<button id="route1Button" onclick="showRoute1()" class="btn btn-primary">Rute 1 (vis)</button>
+						</td></tr>
+					</table>
 				</div>
 				<br/>
 				<div id="attractionDiv">
@@ -105,6 +117,7 @@
 
 
 			<td><div id="map"></div></td>
+			</tr><tr>
 			<td id="data-cell"></td>
 		</tr>
 	</table>
@@ -159,16 +172,15 @@
 				[55.319317, 15.186718],
 				[55.320229, 15.186411]
 			]
-
 			let route1=L.polyline(route1_coords, {color: 'red'})
 
 			function showRoute1(){
 				route1.addTo(map)
-				document.getElementById("routeButton").onclick=hideRoute1
+				document.getElementById("route1Button").onclick=hideRoute1
 			}
 			function hideRoute1(){
 				route1.remove()
-				document.getElementById("routeButton").onclick=showRoute1
+				document.getElementById("route1Button").onclick=showRoute1
 			}
 
 			/*
@@ -269,7 +281,6 @@
 					//document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
 					attractionToMarker(attraction)
 				})
-
 				makeLinesBetween(attractions)
 			}
 
@@ -285,7 +296,7 @@
 				document.getElementById('data-cell').innerHTML+="<br>"+lines
 				*/
 
-				let key="pk.eyJ1IjoidGhvcmZhIiwiYSI6ImNrd3Z3cWYyMjA3eGUycXM4ZTd1cnhreGEifQ.gvO7Znj1QoovnHj3_KiYSQ"
+				//let key="pk.eyJ1IjoidGhvcmZhIiwiYSI6ImNrd3Z3cWYyMjA3eGUycXM4ZTd1cnhreGEifQ.gvO7Znj1QoovnHj3_KiYSQ"
 				/*
 				let router=L.Routing.control({
 					router: L.Routing.mapbox(key, {profile: "mapbox/walking", polylinePrecision: 6}),
@@ -318,14 +329,14 @@
 			}
 //
 			function attractionToHTML(attraction){
-				let interestPoints=attraction.interestPoints==undefined?"?":attraction.interestPoints
+				let interestPoints=attraction.interestPoints==undefined?"interessepunkter":attraction.interestPoints
 				let timeToBoat=attraction.timeToBoat==undefined?"?":attraction.timeToBoat
-				let description=attraction.description==undefined?"?":attraction.description
+				let description=attraction.description==undefined?"(beskrivelse)":attraction.description
 				return `<p><b>${attraction.name}</b>
-						(${attraction.interestPoints})
-						(${attraction.timeToBoat} min. til b&#229;den)
+						(${interestPoints})
+						(${timeToBoat} min. til b&aring;den)
 						<br>
-						${attraction.description}
+						${description}
 						<br>
 						${attraction.latitude}, ${attraction.longtitude}
 						</p>`
@@ -359,24 +370,34 @@
 			}
 
 			function showTours() {
-				let tourTable = document.getElementById("tourTable")
+				let tourTable = document.getElementById("tourContent")
 				document.getElementById("tourDiv").style.height='350px'
-				tourTable.innerHTML=`<thead>
-					<tr>
-<th>Id</th>
-<th>Name</th>
-<th>Description</th>
-<th>maxMembers</th>
-<th>Duration</th>
-</tr>
-</thead>
-<tbody id="tour-table-body"></tbody>`
+				tourTable.innerHTML=`<label for="interestPoints">Choose an interest point:</label>
+                    <select name="interest-Points" id="interestPoints" style="width: 30.5%">
+                        <option value="bygning">Bygninger</option>
+                        <option value="natur">Natur</option>
+                        <option value="spøgelser">Spørgelser</option>
+                        <option value="sos">SOS</option>
+                        <option value="skrald">Skrald</option>
+                        <option value="krig">Krig</option>
+                    </select>
+                    <table id="tourTable" class="table"><thead>
+                        <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>maxMembers</th>
+                        <th>Duration</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tour-table-body"></tbody>
+                    </table>`
 				makeTourRows()
 				document.getElementById("toursSwitch").onclick=hideTours
 			}
 			function hideTours(){
 				document.getElementById("tourDiv").style.height="120px"
-				document.getElementById("tourTable").innerHTML=""
+				document.getElementById("tourContent").innerHTML=""
 				document.getElementById("toursSwitch").onclick=showTours
 			}
 
@@ -384,19 +405,19 @@
 				let attractionTable = document.getElementById("attractionTable")
 				document.getElementById("attractionDiv").style.height='350px'
 
-				attractionTable.innerHTML=`\t<thead>
-<tr>
-<th>Id</th>
-<th>Name</th>
-<th>Description</th>
-<th>Interestpoints</th>
-<th>Latitude</th>
-<th>Longtitude</th>
-<th>TimeToboat</th>
+				attractionTable.innerHTML=`<thead>
+					<tr>
+					<th>Id</th>
+					<th>Navn</th>
+					<th>Beskrivelse</th>
+					<th>Interessepunkter</th>
+					<th>L&aelig;ngdegrad</th>
+					<th>Breddegrad</th>
+					<th>Tid Til B&aring;den</th>
 
-</tr>
-</thead>
-<tbody id="attraction-table-body"></tbody>`
+					</tr>
+					</thead>
+					<tbody id="attraction-table-body"></tbody>`
 
 				makeAttractionRows()
 				document.getElementById("attractionSwitch").onclick=hideAttractions
@@ -407,15 +428,16 @@
 				document.getElementById("attractionTable").innerHTML=""
 				document.getElementById("attractionSwitch").onclick=showAttractions
 			}
-			let customRoute=L.polyline([], {color: 'red'})
+			let workingRoute=L.polyline([], {color: 'red'})
+			let routes=[]
 			function enableRouteEdit(){
-				customRoute=L.polyline([], {color: 'red'})
-				customRoute.addTo(map)
+				workingRoute=L.polyline([], {color: 'red'})
+				workingRoute.addTo(map)
 				map.on("click",(e)=>{
 					console.log(e)
 					let coords=map.mouseEventToLatLng(e.originalEvent)
 					console.log(coords.lat+","+coords.lng)
-					customRoute.addLatLng([coords.lat,coords.lng])
+					workingRoute.addLatLng([coords.lat,coords.lng])
 				})
 				let button=document.getElementById("routeEdit")
 				button.onclick=disableRouteEdit
@@ -423,7 +445,7 @@
 			}
 			function disableRouteEdit(){
 				document.getElementById("map").onclick=()=>{}
-				map.removeLayer(customRoute)
+				map.removeLayer(workingRoute)
 				let button=document.getElementById("routeEdit")
 				button.onclick=enableRouteEdit
 				button.innerText="enableRouteEdit"
@@ -479,7 +501,5 @@
 <script src="Tour.js"></script>
 <script src="TourOverride.js"></script>
 
-
 <script src="Attraction.js"></script>
 <script src="AttractionOverride.js"></script>
-
