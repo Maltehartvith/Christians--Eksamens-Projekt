@@ -34,6 +34,7 @@
 					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2"  style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
 						<h2 class="h2" id="tourHeader" onclick="change_text()">Tours ^</h2>
 					</div>
+					<br><br>
                     <div id="tourContent">
                         <label for="interestPoints">Choose an interest point:</label>
                         <select name="interest-Points" id="interestPoints" style="width: 30.5%">
@@ -59,13 +60,16 @@
                     </div>
 				</div>
 				<br/>
-				<div id="routeDiv" >
+				<div id="routeDiv" style="overflow: scroll">
 					<h2 class="h2"> Routes</h2>
 					<button id="routeEdit" onclick="enableRouteEdit()" class="btn btn-primary">Ny Rute</button>
-					<table>
-						<tr><td>
-							<button id="route1Button" onclick="showRoute1()" class="btn btn-primary">Rute 1 (vis)</button>
-						</td></tr>
+					<table id="routeList">
+						<tr id="route0">
+							<td>Rute 0</td>
+							<td>
+								<button id="route0Button" onclick="showRoute(0)" class="btn btn-primary">Vis</button>
+							</td>
+						</tr>
 					</table>
 				</div>
 				<br/>
@@ -82,7 +86,6 @@
 							<th>Latitude</th>
 							<th>Longtitude</th>
 							<th>TimeToboat</th>
-
 						</tr>
 						</thead>
 						<tbody id="attraction-table-body"></tbody>
@@ -98,7 +101,6 @@
 					<br/>
 					<h2>Tid til afgang: <label id="countDown"></label></h2>
 				</div>
-
 			</td>
 
 
@@ -143,7 +145,7 @@
 			let attractions=[]
 			let markers=[]
 
-			let route1_coords = [
+			let route0_coords = [
 				[55.320783, 15.186147],
 				[55.320865, 15.186308],
 				[55.320914, 15.186443],
@@ -158,15 +160,19 @@
 				[55.319317, 15.186718],
 				[55.320229, 15.186411]
 			]
-			let route1=L.polyline(route1_coords, {color: 'red'})
-
-			function showRoute1(){
-				route1.addTo(map)
-				document.getElementById("route1Button").onclick=hideRoute1
+			let route0=L.polyline(route0_coords, {color: 'red'})
+			let routes=[route0]
+			function showRoute(routeIndex){
+				routes[routeIndex].addTo(map)
+				let button= document.getElementById("route"+routeIndex+"Button")
+				button.onclick=()=>hideRoute(routeIndex)
+				button.innerText="Skjul"
 			}
-			function hideRoute1(){
-				route1.remove()
-				document.getElementById("route1Button").onclick=showRoute1
+			function hideRoute(routeIndex){
+				routes[routeIndex].remove()
+				let button= document.getElementById("route"+routeIndex+"Button")
+				button.onclick=()=>showRoute(routeIndex)
+				button.innerText="Vis"
 			}
 
 			/*
@@ -356,9 +362,13 @@
 			}
 
 			function showTours() {
-				let tourTable = document.getElementById("tourContent")
-				document.getElementById("tourDiv").style.height='350px'
-				tourTable.innerHTML=`<label for="interestPoints">Choose an interest point:</label>
+				let tourTable = document.getElementById("tourDiv")
+				tourTable.style.height='350px'
+				tourTable.innerHTML=`
+					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2" style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
+						<h2 class="h2" id="tourHeader">Tours ^</h2>
+					</div>
+					<br><br><label for="interestPoints">Choose an interest point:</label>
                     <select name="interest-Points" id="interestPoints" style="width: 30.5%">
                         <option value="bygning">Bygninger</option>
                         <option value="natur">Natur</option>
@@ -383,7 +393,10 @@
 			}
 			function hideTours(){
 				document.getElementById("tourDiv").style.height="120px"
-				document.getElementById("tourContent").innerHTML=""
+				document.getElementById("tourDiv").innerHTML=`
+					<div id="toursSwitch" onclick="showTours()" aria-colspan="2"  style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
+						<h2 class="h2" id="tourHeader">Tours v</h2>
+					</div>`
 				document.getElementById("toursSwitch").onclick=showTours
 			}
 
@@ -414,28 +427,38 @@
 				document.getElementById("attractionTable").innerHTML=""
 				document.getElementById("attractionSwitch").onclick=showAttractions
 			}
-			let workingRoute=L.polyline([], {color: 'red'})
-			let routes=[]
+
+			let workRoute=L.polyline([], {color: 'red'})
+
 			function enableRouteEdit(){
-				workingRoute=L.polyline([], {color: 'red'})
-				workingRoute.addTo(map)
+				workRoute=L.polyline([], {color: 'red'})
+				workRoute.addTo(map)
 				map.on("click",(e)=>{
-					console.log(e)
 					let coords=map.mouseEventToLatLng(e.originalEvent)
-					console.log(coords.lat+","+coords.lng)
-					workingRoute.addLatLng([coords.lat,coords.lng])
+					workRoute.addLatLng([coords.lat,coords.lng])
 				})
 				let button=document.getElementById("routeEdit")
-				button.onclick=disableRouteEdit
-				button.innerText="disableRouteEdit"
+				button.onclick=saveWorkRoute
+				button.innerText="Gem Rute"
 			}
-			function disableRouteEdit(){
+
+			function saveWorkRoute(){
 				document.getElementById("map").onclick=()=>{}
-				map.removeLayer(workingRoute)
+				map.removeLayer(workRoute)
+				let newIndex=routes.length
+				routes.push(workRoute)
 				let button=document.getElementById("routeEdit")
 				button.onclick=enableRouteEdit
-				button.innerText="enableRouteEdit"
+				button.innerText="Ny Rute"
+				let routeList=document.getElementById("routeList")
+				routeList.innerHTML+=`<tr id="route${newIndex}">
+						<td>Rute ${newIndex}</td>
+						<td>
+							<button id="route${newIndex}Button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
+						</td>
+					</tr>`
 			}
+
 			let departure
 			function calculateTime(){
 				clearInterval()
@@ -468,15 +491,6 @@
 
 		</script>
 	</body>
-<script>
-	function change_text(){
-		if (document.getElementById("tourHeader").innerHTML === "Tours ^"){
-		document.getElementById("tourHeader").innerHTML = "Tours v";
-	}else{
-		document.getElementById("tourHeader").innerHTML = "Tours ^";
-	}
-
-}</script>
 </html>
 
 <script src="Tour.js"></script>
