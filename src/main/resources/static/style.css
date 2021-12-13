@@ -86,8 +86,8 @@ li a:hover:not(.active) {
     bottom: 1%;
 }
 #toursSwitch{
-    position: absolute;
-    left: 25%;
+    position: relative;
+    left: 45%;
     margin-left: auto;
     margin-right: auto;
 }
