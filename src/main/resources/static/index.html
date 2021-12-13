@@ -33,7 +33,7 @@
 
 				<div id="tourDiv">
 					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2">
-						<h2 class="h2" id="tourHeader">Tours ^</h2>
+						<h2 class="h2" id="tourHeader">Tours &uarr;</h2>
 					</div>
 					<br><br>
                     <div id="tourContent">
@@ -138,6 +138,8 @@
 
 
 			let startCoords = [55.3205449,15.1883541]
+			//Denne linje sørger for at leaflet viser din position
+			//let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
 			let map = L.map('map').setView(startCoords,16)
 			const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
 			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -367,7 +369,7 @@
 				tourTable.style.height='350px'
 				tourTable.innerHTML=`
 					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2">
-						<h2 class="h2" id="tourHeader">Tours ^</h2>
+						<h2 class="h2" id="tourHeader">Tours &uarr;</h2>
 					</div>
 					<br><br><label for="interestPoints">Choose an interest point:</label>
                     <select name="interest-Points" id="interestPoints" style="width: 30.5%">
@@ -396,7 +398,7 @@
 				document.getElementById("tourDiv").style.height="120px"
 				document.getElementById("tourDiv").innerHTML=`
 					<div id="toursSwitch" onclick="showTours()" aria-colspan="2">
-						<h2 class="h2" id="tourHeader">Tours v</h2>
+						<h2 class="h2" id="tourHeader">Tours &darr;</h2>
 					</div>`
 				document.getElementById("toursSwitch").onclick=showTours
 			}
