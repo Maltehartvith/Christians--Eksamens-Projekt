@@ -3,9 +3,11 @@ package system.Configuration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import system.Model.Attraction;
+import system.Model.Coordinate;
 import system.Model.Route;
 import system.Model.Tour;
 import system.Repository.AttractionRepo;
+import system.Repository.CoordinateRepo;
 import system.Repository.RouteRepo;
 import system.Repository.TourRepo;
 
@@ -18,6 +20,7 @@ public class DatabaseSetup implements CommandLineRunner {
     TourRepo tourRepo;
     AttractionRepo attractionRepo;
     RouteRepo routeRepo;
+    CoordinateRepo coordinateRepo;
 
     public DatabaseSetup(TourRepo tourRepo, AttractionRepo attractionRepo, RouteRepo routeRepo) {
         this.tourRepo = tourRepo;
@@ -88,6 +91,30 @@ public class DatabaseSetup implements CommandLineRunner {
         tourRepo.save(t);
         //tourRepo.save(new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200));
         tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));
+
+        /*ArrayList<Coordinate> route0coords=new ArrayList<>();
+
+        route0coords.add(new Coordinate(55.320783, 15.186147));
+        route0coords.add(new Coordinate(55.320865, 15.186308));
+        route0coords.add(new Coordinate(55.320914, 15.186443));
+        route0coords.add(new Coordinate(55.320919, 15.187355));
+        route0coords.add(new Coordinate(55.320851, 15.187840));
+        route0coords.add(new Coordinate(55.321360, 15.189657));
+        route0coords.add(new Coordinate(55.320560, 15.189646));
+        route0coords.add(new Coordinate(55.320221, 15.189061));
+        route0coords.add(new Coordinate(55.319913, 15.189120));
+        route0coords.add(new Coordinate(55.319516, 15.188455));
+        route0coords.add(new Coordinate(55.319243, 15.187435));
+        route0coords.add(new Coordinate(55.319317, 15.186718));
+        route0coords.add(new Coordinate(55.320229, 15.186411));
+
+        routeRepo.save(new Route(1L));
+
+        route0coords.forEach(c->{
+            c.setRoute(routeRepo.getById(1L));
+            CoordinateRepo check=coordinateRepo;
+            coordinateRepo.save(c);
+        });*/
 
     }
 }

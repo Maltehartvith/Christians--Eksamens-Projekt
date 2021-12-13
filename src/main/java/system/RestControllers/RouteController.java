@@ -3,12 +3,11 @@ package system.RestControllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import system.Model.Coordinate;
 import system.Model.Route;
 import system.Model.Tour;
+import system.Repository.CoordinateRepo;
 import system.Repository.RouteRepo;
 
 import java.util.ArrayList;
@@ -23,10 +22,18 @@ public class RouteController {
     @Autowired
     RouteRepo routeRepo;
 
+    @Autowired
+    CoordinateRepo coordinateRepo;
+
     @GetMapping
     public ResponseEntity<List<Route>> findAll() {
         List<Route> routes = new ArrayList<>();
         routeRepo.findAll().forEach(routes::add);
+        routes.forEach(r->{
+            List<Coordinate> coords = coordinateRepo.findAll();
+            System.out.println(coords);
+            //r.setCoordinates(coords);
+        });
 
         return ResponseEntity.status(HttpStatus.OK).body(routes);
     }
@@ -41,4 +48,11 @@ public class RouteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(optionalRoute);
         }
     }
+
+    @PostMapping
+    public ResponseEntity<Route> create(@RequestBody Route route) {
+        Route newRoute = routeRepo.save(route);
+        return ResponseEntity.status(HttpStatus.CREATED).header("Route", "/routes/" + newRoute.getId()).body(newRoute);
+    }
+
 }
