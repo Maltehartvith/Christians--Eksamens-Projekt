@@ -1,3 +1,4 @@
+//CONSTRUCTOR
 class Attraction {
     constructor() {
         this.id;
@@ -10,20 +11,22 @@ class Attraction {
     }
 }
 
+//STORE API
 sessionStorage.setItem("SERVER_URL_ATTRACTION","api/attractions");
 const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
 
+    //LAVER RÆKKER MED NAVN OG ID TIL MAN SKAL TILFØJE ATTRAKTIONER TIL TURE
     function makeSelectRows(){
-
     const rows = localACache.getAll().map(a => `
         <option id="attraction-${a.id}" value="${a.id}">${a.id} : ${a.name}</option>
     `)
-
     document.getElementById("input-attraction-t").innerHTML = rows.join("")
-
 }
+
     // Metode der laver rækkerne i tabellen.
     function makeAttractionRows() {
+        //TIL ADMIN SIDE
+        if(document.title === "Admin side"){
     const rows = localACache.getAll().map(a => `
          <tr>
            <td>${a.id}</td>
@@ -38,7 +41,23 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
          </tr>
         `)
     document.getElementById("attraction-table-body").innerHTML = rows.join("")
+        //TIL MAP SIDE
+        }else if (document.title === "Map"){
+            const rows = localACache.getAll().map(a => `
+         <tr >
+         <td><button id="lego" type="button" data-id-get='${a.id}' data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer"></button></td>
+           <td>${encode(a.name)}</td>
+           <td>${encode(a.description)}</td>
+           <td>${encode(a.interestPoints)}</td>
+           <td>${a.latitude}</td>
+           <td>${a.longtitude}</td>
+           <td>${a.timeToBoat}</td>
+         </tr>
+        `)
+            document.getElementById("attraction-table-body-index").innerHTML = rows.join("")
+        }
 }
+    //METODE OVER LOCAL CACHE - INDEHOLDER FORSKELLIGE METODER
     function localAttractionCache(){
     let attractionData = []
     const addEdit = (attraction,method) =>{
@@ -49,7 +68,6 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
             attractionData = attractionData.map(a => a.id == attraction.id ? attraction: a)
         }
     }
-
     return {
         getAll : () => attractionData , //This is the same as above
         addAll : (all) => attractionData = all,
@@ -58,17 +76,28 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         addEdit :addEdit
     }
 }
+    //SETUP-HANDLERS
     function setUpHandlersAttraction() {
-        document.getElementById("attraction-table-body").onclick = handleTableClickAttraction
-        if(document.getElementById("btn-save-attraction") !==null)
-        document.getElementById("btn-save-attraction").onclick = saveAttraction
-        if(document.getElementById("btn-add-attraction") !== null)
-        document.getElementById("btn-add-attraction").onclick = makeNewAttraction
+        //TIL ADMIN SIDE
+    if (document.title === "Admin side"){
+            document.getElementById("attraction-table-body").onclick = handleTableClickAttraction
+        if (document.getElementById("btn-save-attraction") !== null)
+            document.getElementById("btn-save-attraction").onclick = saveAttraction
+        if (document.getElementById("btn-add-attraction") !== null)
+            document.getElementById("btn-add-attraction").onclick = makeNewAttraction
+    //TIL MAP SIDE
+    }else if(document.title === "Map"){
+            document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
+            if(document.getElementById("lego") !== null){
+                document.getElementById("lego").onclick = showAttractionModal
+            }
+        }
     }
 
     setUpHandlersAttraction()
-
+    //CLICK HANDLERS
     function handleTableClickAttraction(evt) {
+        debugger
         evt.preventDefault()
         evt.stopPropagation()
         const target = evt.target;
@@ -78,9 +107,7 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
             const options = {
                 method: "DELETE",
                 headers: {'Accept': 'application/json'},
-
             }
-
             fetch(SERVER_URL_ATTRACTIONS + "/" + idToDelete, options)
                 .then(res => {
                     if (res.ok) {
@@ -90,16 +117,21 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
                     }
                 })
         }
-        //Observe change compared to video
+        //EDIT
         if (target.dataset.idEdit) {
             const idToEdit = Number(target.dataset.idEdit)
             const attraction = localACache.findById(idToEdit)
             showAttractionModal(attraction)
         }
-
+        //GET
+        if (target.dataset.idGet){
+            const idToShow = Number(target.dataset.idGet)
+            const attraction = localACache.findById(idToShow)
+            showAttractionModal(attraction)
+        }
     }
 
-
+    //TOM MODAL TIL AT LAVE NY ATTRACTION
     function makeNewAttraction() {
     showAttractionModal({
         id: null,
@@ -112,20 +144,32 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
 
     })
 }
-
+    //HVIS EKSISTERENDE MODAL
     function showAttractionModal(attraction) {
-    const myModal = new bootstrap.Modal(document.getElementById('attraction-modal'))
-    document.getElementById("modal-title-attraction").innerText = attraction.id ? "Edit Attraction" : "Add Attraction"
-    document.getElementById("attraction-id-a").innerText = attraction.id
-    document.getElementById("input-name-a").value = attraction.name
-    document.getElementById("input-description-a").value = attraction.description
-    document.getElementById("input-interestPoints-a").value = attraction.interestPoints
-    document.getElementById("input-latitude-a").value = attraction.latitude
-    document.getElementById("input-longtitude-a").value = attraction.longtitude
-    document.getElementById("input-timeToBoat-a").value = attraction.timeToBoat
-    myModal.show()
+        //TIL ADMIN SIDE
+    if (document.title === "Admin side"){
+        const myModal = new bootstrap.Modal(document.getElementById('attraction-modal'))
+        document.getElementById("modal-title-attraction").innerText = attraction.id ? "Edit Attraction" : "Add Attraction"
+        document.getElementById("attraction-id-a").innerText = attraction.id
+        document.getElementById("input-name-a").value = attraction.name
+        document.getElementById("input-description-a").value = attraction.description
+        document.getElementById("input-interestPoints-a").value = attraction.interestPoints
+        document.getElementById("input-latitude-a").value = attraction.latitude
+        document.getElementById("input-longtitude-a").value = attraction.longtitude
+        document.getElementById("input-timeToBoat-a").value = attraction.timeToBoat
+        myModal.show()
+        //TIL MAP SIDE
+    }else if (document.title === "Map"){
+        const myModal = new bootstrap.Modal(document.getElementById('attraction-modal-index'))
+        document.getElementById("attraction-name").value = attraction.name
+        document.getElementById("attraction-description").value = attraction.description
+        document.getElementById("attraction-interestPoints").value = attraction.interestPoints
+        document.getElementById("attraction-map").value = attraction.longtitude
+        document.getElementById("attraction-timeToBoat").value = attraction.timeToBoat
+        myModal.show()
+        }
 }
-
+    //GEM ATTRAKTION ALT EFTER OM DET ER EDIT ELLER SAVE
     function saveAttraction() {
     const attraction = {}
     attraction.id = Number(document.getElementById("attraction-id-a").innerText)
@@ -156,17 +200,18 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         .then(attraction=>{
             localACache.addEdit(attraction,method)
             makeAttractionRows()
-            window.location.replace("test.html")
+            window.location.replace("admin.html")
         })
         .catch(e=>alert(e))
 }
-
+    //FETCH ATTRACTION
     function fetchAttraction() {
     fetch(SERVER_URL_ATTRACTIONS)
         .then(res => res.json())
         .then(data=> {
             localACache.addAll(data)
             makeAttractionRows()
+            localACache.getAll().forEach(a => attractionToMarker(a))
         })
 }
 
@@ -183,3 +228,5 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
     str = str.replace(/'/g, "&#039;");
     return str;
 }*/
+
+

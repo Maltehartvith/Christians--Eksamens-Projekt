@@ -13,19 +13,19 @@
     border: 1px solid black
 }
 
-#tourDiv {
+#tour-div {
     width: 599px;
     height: 350px;
     border: 1px solid black;
     overflow:scroll}
 
-#routeDiv {
+#route-div {
     width: 599px;
     height: 120px;
     border: 1px solid black
 }
 
-#attractionDiv {
+#attraction-div {
     width: 599px;
     height: 350px;
     border: 1px solid black;
@@ -85,10 +85,21 @@ li a:hover:not(.active) {
     position: absolute;
     bottom: 1%;
 }
-#toursSwitch{
+#tours-header-index, #attraction-header-index{
     position: relative;
     left: 45%;
     margin-left: auto;
     margin-right: auto;
     cursor: pointer;
+}
+#attraction-header-index{
+    left:40%
+}
+
+
+#tour-div, #attraction-div{
+    height: 120px;
+}
+#tour-content, #attraction-content{
+    display:none
 }

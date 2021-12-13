@@ -1,0 +1,16 @@
+
+        fetch('api/attractions').then(response=>response.json()).then(data=>{
+            attractions=data
+            attractions.forEach(attraction=>{
+                document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
+                attractionToMarker(attraction)
+            })
+            /*L.Routing.control({
+                waypoints: [
+                    L.latLng(55.3193823,15.1916354),
+                    L.latLng(55.3222804,15.188732)
+                ]
+            }).addTo(map)*/
+		//controller._router.options.serviceUrl="https://routing.openstreetmap.de/routed-foot/route/v1"
+		//})
+

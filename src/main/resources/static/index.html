@@ -12,8 +12,12 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
 			  integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 	</head>
 	<body class="container">
+	<script src="showAndHide.js"></script>
 
 	<br/>
 	<h1 class="h1"> Christians &Oslash; eksamensprojekt</h1>
@@ -31,12 +35,12 @@
 			<td id="menu" rowspan="2">
 				<h2 class="h1">Menu</h2>
 
-				<div id="tourDiv">
-					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2">
-						<h2 class="h2" id="tourHeader">Tours &uarr;</h2>
+				<div id="tour-div">
+					<div id="tours-header-index" onclick="showTours()" aria-colspan="2">
+						<h2 class="h2" id="tours-header">Tours &darr;</h2>
 					</div>
 					<br><br>
-                    <div id="tourContent">
+                    <div id="tour-content">
                         <label for="interestPoints">Choose an interest point:</label>
                         <select name="interest-Points" id="interestPoints" style="width: 30.5%">
                             <option value="bygning">Bygninger</option>
@@ -46,13 +50,13 @@
                             <option value="skrald">Skrald</option>
                             <option value="krig">Krig</option>
                         </select>
-                        <table id="tourTable" class="table">
+                        <table id="tour-table" class="table">
                             <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Navn</th>
                                 <th>Beskrivelse</th>
-                                <th>max Detergere</th>
+                                <th>max Deltagere</th>
                                 <th>Varighed</th>
                             </tr>
                             </thead>
@@ -61,10 +65,13 @@
                     </div>
 				</div>
 				<br/>
-				<div id="routeDiv" style="overflow: scroll">
+				<div id="route-div" style="overflow: scroll">
+					<div id="route-header-index">
 					<h2 class="h2"> Routes</h2>
-					<button id="routeEdit" onclick="enableRouteEdit()" class="btn btn-primary">Ny Rute</button>
-					<table id="routeList">
+					</div>
+					<div id="route-content">
+					<button id="route-edit" onclick="enableRouteEdit()" class="btn btn-primary">Ny Rute</button>
+					<table id="route-list">
 						<tr id="route0">
 							<td>Rute 0</td>
 							<td>
@@ -72,12 +79,16 @@
 							</td>
 						</tr>
 					</table>
+					</div>
 				</div>
 				<br/>
-				<div id="attractionDiv">
-					<h2 class="h2"> Attractions</h2>
-					<button id="attractionSwitch" class="btn btn-primary" onclick="hideAttractions()">Attractions on/off</button>
-					<table id="attractionTable" class="table">
+
+				<div id="attraction-div">
+					<div id="attraction-header-index" onclick="showAttractions()">
+					<h2 class="h2" id="attraction-header">Attractions &darr;</h2>
+					</div>
+						<div id="attraction-content">
+					<table id="attraction-table-index" class="table">
 						<thead>
 						<tr>
 							<th>Id</th>
@@ -89,9 +100,9 @@
 							<th>TimeToboat</th>
 						</tr>
 						</thead>
-						<tbody id="attraction-table-body"></tbody>
+						<tbody id="attraction-table-body-index"></tbody>
 					</table>
-
+					</div>
 				</div>
 				<br/>
 				<div id="boatDiv">
@@ -110,394 +121,157 @@
 			<td id="data-cell"></td>
 		</tr>
 	</table>
+	<!-- Modal -->
+	<div class="modal fade" id="attraction-modal-index" role="dialog" tabindex="-1">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title" id="attraction-name">attraction title</h4>
+				</div>
+				<div class="modal-body">
+					<div id="attraction-description"></div>
+					<div id="attraction-interestPoints"></div>
+					<div id="attraction-map"></div>
+					<div id="attraction-timeToBoat"></div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	</body>
+
+	<script src="Tour.js"></script>
+	<script src="TourOverride.js"></script>
+
+	<script src="Attraction.js"></script>
+
+<script>
 
 
-		<script>
-			/*class Attraction {
-				constructor() {
-					this.attractionID;
-					this.name;
-					this.description;
-					this.interestPoints;
-					this.latitude;
-					this.longtitude;
-					this.timeToBoat;
-				}
-			}
+//UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
+let departure
+function calculateTime(){
+	clearInterval()
+	let inputTime=document.getElementById("boatTimeInput").value
+	let arival=parseTime(inputTime)
+	departure=new Date(new Date(arival).setHours(new Date(arival).getHours()+3))
+	setInterval(()=>{
+		let timeLeft = departure - new Date()
+		let hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2,"0")
+		let minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2,"0")
+		let seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2,"0")
 
-			const att = new Attraction();
-			att.id = 1;
-			att.name = "frø";
-			att.description = "Se de spændende frøer";
-			att.latitude = 2.3;
-			att.longtitude = 2.2;
-			att.interestPoints = "frø";
-			att.timeToBoat = 10;
+		// Result is output to the specific element
+		document.getElementById("countDown").innerHTML = `${hours}:${minutes}:${seconds}`
 
-			newTour.attractions = [att]*/
+		// Display the message when countdown is over
+		if (timeLeft <= 0) {
+			clearInterval()
+			document.getElementById("countDown").innerHTML ="B&Aring;DEN ER ANKOMMET!!"
+		}
+	},1000)
+}
+function parseTime( t ) {
+	let d = new Date();
+	let time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+	d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+	d.setMinutes( parseInt( time[2]) || 0 );
+	return d;
+}
 
+</script>
+<script>
+	//SCRIPT TIL KORT OG FUNKTIONER TIL KORT
+	let startCoords = [55.3205449,15.1883541]
 
-			let startCoords = [55.3205449,15.1883541]
-			//Denne linje sørger for at leaflet viser din position
-			//let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
-			let map = L.map('map').setView(startCoords,16)
-			const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
-			const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-			const tiles = L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ })
-			tiles.addTo(map)
-			let attractions=[]
-			let markers=[]
+	//Denne linje sørger for at leaflet viser din position
+	//let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
 
-			let route0_coords = [
-				[55.320783, 15.186147],
-				[55.320865, 15.186308],
-				[55.320914, 15.186443],
-				[55.320919, 15.187355],
-				[55.320851, 15.187840],
-				[55.321360, 15.189657],
-				[55.320560, 15.189646],
-				[55.320221, 15.189061],
-				[55.319913, 15.189120],
-				[55.319516, 15.188455],
-				[55.319243, 15.187435],
-				[55.319317, 15.186718],
-				[55.320229, 15.186411]
-			]
-			let route0=L.polyline(route0_coords, {color: 'red'})
-			let routes=[route0]
-			function showRoute(routeIndex){
-				routes[routeIndex].addTo(map)
-				let button= document.getElementById("route"+routeIndex+"Button")
-				button.onclick=()=>hideRoute(routeIndex)
-				button.innerText="Skjul"
-			}
-			function hideRoute(routeIndex){
-				routes[routeIndex].remove()
-				let button= document.getElementById("route"+routeIndex+"Button")
-				button.onclick=()=>showRoute(routeIndex)
-				button.innerText="Vis"
-			}
+	let map = L.map('map').setView(startCoords,16)
+	const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
+	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+	const tiles = L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ })
+	tiles.addTo(map)
+	let attractions=[]
+	let markers=[]
 
-			/*
-			fetch('api/attractions').then(response=>response.json()).then(data=>{
-				attractions=data
-				attractions.forEach(attraction=>{
-					document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
-					attractionToMarker(attraction)
-				})
-				/*L.Routing.control({
-					waypoints: [
-						L.latLng(55.3193823,15.1916354),
-						L.latLng(55.3222804,15.188732)
-					]
-				}).addTo(map)*/
-				//controller._router.options.serviceUrl="https://routing.openstreetmap.de/routed-foot/route/v1"
-			//})
+	let route0_coords = [
+		[55.320783, 15.186147],
+		[55.320865, 15.186308],
+		[55.320914, 15.186443],
+		[55.320919, 15.187355],
+		[55.320851, 15.187840],
+		[55.321360, 15.189657],
+		[55.320560, 15.189646],
+		[55.320221, 15.189061],
+		[55.319913, 15.189120],
+		[55.319516, 15.188455],
+		[55.319243, 15.187435],
+		[55.319317, 15.186718],
+		[55.320229, 15.186411]
+	]
+	let route0=L.polyline(route0_coords, {color: 'red'})
+	let routes=[route0]
 
-			initializeAttractions()
+	function showRoute(routeIndex){
+		routes[routeIndex].addTo(map)
+		let button= document.getElementById("route"+routeIndex+"Button")
+		button.onclick=()=>hideRoute(routeIndex)
+		button.innerText="Skjul"
+	}
 
-			function initializeAttractions(){
-				// KLARET
-				attractions.push({name:"Det st&aring;r t&aring;rn",longtitude:15.1867559,latitude:55.3207358})
-				attractions.push({name:"Hvid dame",longtitude:15.1878977,latitude:55.3196099})
-				attractions.push({name:"Hvid dame",longtitude:15.1878071,latitude:55.3195853})
-				attractions.push({name:"Unavngivet",longtitude:15.1878440,latitude:55.3196098})
-				attractions.push({name:"Udsigt til den hvide dame",latitude:55.3194137,longtitude:15.1880874})
-				attractions.push({name:"Gryssehytten 98",latitude:55.3193422,longtitude:15.1878335})
-				attractions.push({name:"Skrald",latitude:55.3185370,longtitude:15.1875297})
-				attractions.push({name:"Arteje maler hus til kunst",latitude:55.3178818,longtitude:15.1887374})
-				attractions.push({name:"Kongensbakke",latitude:55.3179035,longtitude:15.1888505})
-				attractions.push({name:"Den bl&aring; hane hus",latitude:55.3184577,longtitude:15.1899624})
-				attractions.push({name:"Muren slutter og m&aring;ske ogs&aring; turen",latitude:55.3182452,longtitude:15.1904174})
-				attractions.push({name:"Verdensende",latitude:55.3194523,longtitude:15.1914865})
-				attractions.push({name:"Det &Oslash;stligest punkt i DK",latitude:55.3194966,longtitude:15.1914682})
-				attractions.push({name:"Sommerhytte uden vand og toilet",latitude:55.3202036,longtitude:15.1918046})
-				attractions.push({name:"Bumbemargasin",latitude:55.3202688,longtitude:15.1917908})
-				attractions.push({name:"Kanon",latitude:55.3206473,longtitude:15.1918498})
-				attractions.push({name:"Kenals vig her regned man ikke med angreb",latitude:55.3207767,longtitude:15.1909375})
-				attractions.push({name:"Sankt hans b&aring;l",latitude:55.3206729,longtitude:15.1905938})
-				attractions.push({name:"Kunst maler har st&aring;et her",latitude:55.3207202,longtitude:15.1896441})
-				attractions.push({name:"Sti til sanghans vandkilde",latitude:55.3210878,longtitude:15.1896714})
-				attractions.push({name:"Rugmarken",latitude:55.3223851,longtitude:15.1893255})
-				attractions.push({name:"Skole",latitude:55.3218778,longtitude:15.1895314})
-				attractions.push({name:"Telt hytte mm",latitude:55.3218028,longtitude:15.1899838})
-				attractions.push({name:"&AElig;bler plantage",latitude:55.3212630,longtitude:15.1891052})
-				attractions.push({name:"Haver",latitude:55.3211813,longtitude:15.1889087})
-				attractions.push({name:"Teltplands til 16 med k&oslash;leskab",latitude:55.3212452,longtitude:15.1893447})
-				attractions.push({name:"Krudthus ligger lavt",latitude:55.3209563,longtitude:15.1881492})
-				attractions.push({name:"Ruin",latitude:55.3209214,longtitude:15.1880076})
-				attractions.push({name:"Latterfr&oslash;er",latitude:55.3204756,longtitude:15.1876427})
-				attractions.push({name:"Rute start forslag",latitude:55.3204536,longtitude:15.1876307})
-				attractions.push({name:"Bryggeriet det gamle",latitude:55.3202843,longtitude:15.1868364})
-				attractions.push({name:"Trappe",latitude:55.3195776,longtitude:15.1849335})
-				attractions.push({name:"F&aelig;ngsel",latitude:55.3199894,longtitude:15.1845679})
-				attractions.push({name:"Skrald",latitude:55.3203696,longtitude:15.1854099})
-				attractions.push({name:"Bro",latitude:55.3204508,longtitude:15.1856262})
-				attractions.push({name:"Bro",latitude:55.3204404,longtitude:15.1862263})
-				attractions.push({name:"Gril",latitude:55.3203118,longtitude:15.1863215})
-				attractions.push({name:"Hjertestarter",latitude:55.3203103,longtitude:15.1863093})
-				attractions.push({name:"Havnekontor",latitude:55.3203060,longtitude:15.1863116})
-				attractions.push({name:"Trappe",latitude:55.3202163,longtitude:15.1864310})
-				attractions.push({name:"Trappe",latitude:55.3204373,longtitude:15.1872110})
-				attractions.push({name:"Fyrt&aring;rn",latitude:55.3204645,longtitude:15.1872536})
-				attractions.push({name:"&#216;je",latitude:55.3191383,longtitude:15.1888445})
-				attractions.push({name:"Beliggenhed 98",latitude:55.3191105,longtitude:15.1889450})
-				attractions.push({name:"Have",latitude:55.3192603,longtitude:15.1886435})
-				attractions.push({name:"Dam",latitude:55.3193819,longtitude:15.1886910})
-				attractions.push({name:"Trappe",latitude:55.3195648,longtitude:15.1895525})
+	function hideRoute(routeIndex){
+		routes[routeIndex].remove()
+		let button= document.getElementById("route"+routeIndex+"Button")
+		button.onclick=()=>showRoute(routeIndex)
+		button.innerText="Vis"
+	}
 
+	function attractionToMarker(attraction){
 
-				// MANGLER
+		let coords = [attraction.latitude,attraction.longtitude]
+		let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
+		let marker = L.marker(coords,{title:attraction.name})
+				.on('click',()=>{/*indsæt modal kald*/})
+				.addTo(map)
+				.bindPopup(popup).openPopup()
+		markers.push(marker)
+	}
+	let workRoute=L.polyline([], {color: 'red'})
 
-				attractions.push({name:"Duft",latitude:55.3195729,longtitude:15.1895470})
-				attractions.push({name:"Fr&oslash;",latitude:55.3196030,longtitude:15.1895981})
-				attractions.push({name:"Trappe",latitude:55.3196148,longtitude:15.1896232})
-				attractions.push({name:"B&aring;d",latitude:55.3195396,longtitude:15.1896946})
-				attractions.push({name:"Pas p&aring;",latitude:55.3194724,longtitude:15.1896920})
-				attractions.push({name:"Laxegade",latitude:55.3197598,longtitude:15.1895953})
-				attractions.push({name:"Dam",latitude:55.3201665,longtitude:15.1891147})
-				attractions.push({name:"Dam",latitude:55.3202814,longtitude:15.1891831})
-				attractions.push({name:"Stop ring",latitude:55.3203819,longtitude:15.1890576})
-				attractions.push({name:"Skraldespand",latitude:55.3205232,longtitude:15.1896118})
-				attractions.push({name:"Microbryggeriet Chr&oslash;&oslash;l",latitude:55.3203608,longtitude:15.1898805})
-				attractions.push({name:"&Aring;bning",latitude:55.3196529,longtitude:15.1912014})
-				attractions.push({name:"Fr&oslash; er set",latitude:55.3193691,longtitude:15.1913540})
-				attractions.push({name:"Havudsigt",latitude:55.3195210,longtitude:15.1915006})
-				attractions.push({name:"Havudsigt",latitude:55.3197136,longtitude:15.1918784})
-				attractions.push({name:"Havudsigt",latitude:55.3200820,longtitude:15.1919872})
-				attractions.push({name:"Hus",latitude:55.3202320,longtitude:15.1917813})
-				attractions.push({name:"Mur",latitude:55.3203778,longtitude:15.1919598})
-				attractions.push({name:"Pas p&aring;",latitude:55.3207338,longtitude:15.1918503})
-				attractions.push({name:"B&aelig;nk",latitude:55.3207256,longtitude:15.1909859})
-				attractions.push({name:"Trappe",latitude:55.3207584,longtitude:15.1908466})
-				attractions.push({name:"Ringm&aelig;rkning af fugle",latitude:55.3208897,longtitude:15.1906824})
+	function enableRouteEdit(){
+		workRoute=L.polyline([], {color: 'red'})
+		workRoute.addTo(map)
+		map.on("click",(e)=>{
+			let coords=map.mouseEventToLatLng(e.originalEvent)
+			workRoute.addLatLng([coords.lat,coords.lng])
+		})
+		let button=document.getElementById("routeEdit")
+		button.onclick=saveWorkRoute
+		button.innerText="Gem Rute"
+	}
 
-				attractions.forEach(attraction=>{
-					//document.getElementById('data-cell').innerHTML+=attractionToHTML(attraction)
-					attractionToMarker(attraction)
-				})
-				makeLinesBetween(attractions)
-			}
-
-			function makeLinesBetween(attractions){
-				/*
-				let coords=[]
-				for(let i=0;i<3;i++){
-					let a=attractions[i]
-					coords.push([a.latitude,a.longtitude])
-				}
-				let lines=L.polyline(coords)
-					lines.addTo(map)
-				document.getElementById('data-cell').innerHTML+="<br>"+lines
-				*/
-
-				//let key="pk.eyJ1IjoidGhvcmZhIiwiYSI6ImNrd3Z3cWYyMjA3eGUycXM4ZTd1cnhreGEifQ.gvO7Znj1QoovnHj3_KiYSQ"
-				/*
-				let router=L.Routing.control({
-					router: L.Routing.mapbox(key, {profile: "mapbox/walking", polylinePrecision: 6}),
-					waypoints: [
-						L.latLng(55.3193823,15.1916354),
-						L.latLng(55.3222804,15.188732)
-					]
-				})
-				router.addTo(map)
-				*/
-
-				/*
-				const directions = new MapboxDirections({
-					accessToken: key,
-					unit: 'metric',
-					profile: 'mapbox/walking',
-					alternatives: false,
-					geometries: 'geojson',
-					controls: { instructions: false },
-					flyTo: false
-				})
-				console.log(directions)
-
-
-				 */
-				//map.addControl(directions, 'top-right')
-
-
-
-			}
-//
-			function attractionToHTML(attraction){
-				let interestPoints=attraction.interestPoints==undefined?"interessepunkter":attraction.interestPoints
-				let timeToBoat=attraction.timeToBoat==undefined?"?":attraction.timeToBoat
-				let description=attraction.description==undefined?"(beskrivelse)":attraction.description
-				return `<p><b>${attraction.name}</b>
-						(${interestPoints})
-						(${timeToBoat} min. til b&aring;den)
-						<br>
-						${description}
-						<br>
-						${attraction.latitude}, ${attraction.longtitude}
-						</p>`
-			}
-			function attractionToMarker(attraction){
-				let coords = [attraction.latitude,attraction.longtitude]
-				let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
-				let marker = L.marker(coords,{title:attraction.name})
-						.on('click',()=>{displayAttractionData(attraction)})
-						.addTo(map)
-						.bindPopup(popup).openPopup()
-				markers.push(marker)
-			}
-
-			/*function testPUT() {
-				const options = {
-					method: "PUT",
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(newTour)
-				}
-				console.log(JSON.stringify(newTour))
-
-				fetch("api/tours",options)
-						.then(res=>res.json())
-			}*/
-
-			function displayAttractionData(attraction){
-				document.getElementById('data-cell').innerHTML=attractionToHTML(attraction)
-			}
-
-			function showTours() {
-				let tourTable = document.getElementById("tourDiv")
-				tourTable.style.height='350px'
-				tourTable.innerHTML=`
-					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2">
-						<h2 class="h2" id="tourHeader">Tours &uarr;</h2>
-					</div>
-					<br><br><label for="interestPoints">Choose an interest point:</label>
-                    <select name="interest-Points" id="interestPoints" style="width: 30.5%">
-                        <option value="bygning">Bygninger</option>
-                        <option value="natur">Natur</option>
-                        <option value="spøgelser">Spørgelser</option>
-                        <option value="sos">SOS</option>
-                        <option value="skrald">Skrald</option>
-                        <option value="krig">Krig</option>
-                    </select>
-                    <table id="tourTable" class="table"><thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>maxMembers</th>
-                        <th>Duration</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tour-table-body"></tbody>
-                    </table>`
-				makeTourRows()
-				document.getElementById("toursSwitch").onclick=hideTours
-			}
-			function hideTours(){
-				document.getElementById("tourDiv").style.height="120px"
-				document.getElementById("tourDiv").innerHTML=`
-					<div id="toursSwitch" onclick="showTours()" aria-colspan="2">
-						<h2 class="h2" id="tourHeader">Tours &darr;</h2>
-					</div>`
-				document.getElementById("toursSwitch").onclick=showTours
-			}
-
-			function showAttractions() {
-				let attractionTable = document.getElementById("attractionTable")
-				document.getElementById("attractionDiv").style.height='350px'
-
-				attractionTable.innerHTML=`<thead>
-					<tr>
-					<th>Id</th>
-					<th>Navn</th>
-					<th>Beskrivelse</th>
-					<th>Interessepunkter</th>
-					<th>L&aelig;ngdegrad</th>
-					<th>Breddegrad</th>
-					<th>Tid Til B&aring;den</th>
-
-					</tr>
-					</thead>
-					<tbody id="attraction-table-body"></tbody>`
-
-				makeAttractionRows()
-				document.getElementById("attractionSwitch").onclick=hideAttractions
-			}
-
-			function hideAttractions() {
-				document.getElementById("attractionDiv").style.height="120px"
-				document.getElementById("attractionTable").innerHTML=""
-				document.getElementById("attractionSwitch").onclick=showAttractions
-			}
-
-			let workRoute=L.polyline([], {color: 'red'})
-
-			function enableRouteEdit(){
-				workRoute=L.polyline([], {color: 'red'})
-				workRoute.addTo(map)
-				map.on("click",(e)=>{
-					let coords=map.mouseEventToLatLng(e.originalEvent)
-					workRoute.addLatLng([coords.lat,coords.lng])
-				})
-				let button=document.getElementById("routeEdit")
-				button.onclick=saveWorkRoute
-				button.innerText="Gem Rute"
-			}
-
-			function saveWorkRoute(){
-				document.getElementById("map").onclick=()=>{}
-				map.removeLayer(workRoute)
-				let newIndex=routes.length
-				routes.push(workRoute)
-				let button=document.getElementById("routeEdit")
-				button.onclick=enableRouteEdit
-				button.innerText="Ny Rute"
-				let routeList=document.getElementById("routeList")
-				routeList.innerHTML+=`<tr id="route${newIndex}">
+	function saveWorkRoute(){
+		document.getElementById("map").onclick=()=>{}
+		map.removeLayer(workRoute)
+		let newIndex=routes.length
+		routes.push(workRoute)
+		let button=document.getElementById("routeEdit")
+		button.onclick=enableRouteEdit
+		button.innerText="Ny Rute"
+		let routeList=document.getElementById("routeList")
+		routeList.innerHTML+=`<tr id="route${newIndex}">
 						<td>Rute ${newIndex}</td>
 						<td>
 							<button id="route${newIndex}Button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
 						</td>
 					</tr>`
-			}
-
-			let departure
-			function calculateTime(){
-				clearInterval()
-				let inputTime=document.getElementById("boatTimeInput").value
-				let arival=parseTime(inputTime)
-				departure=new Date(new Date(arival).setHours(new Date(arival).getHours()+3))
-				setInterval(()=>{
-					let timeLeft = departure - new Date()
-					let hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2,"0")
-					let minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2,"0")
-					let seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2,"0")
-
-					// Result is output to the specific element
-					document.getElementById("countDown").innerHTML = `${hours}:${minutes}:${seconds}`
-
-					// Display the message when countdown is over
-					if (timeLeft <= 0) {
-						clearInterval()
-						document.getElementById("countDown").innerHTML ="B&Aring;DEN ER ANKOMMET!!"
-					}
-				},1000)
-			}
-			function parseTime( t ) {
-				let d = new Date();
-				let time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
-				d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
-				d.setMinutes( parseInt( time[2]) || 0 );
-				return d;
-			}
-
-		</script>
-	</body>
+	}
+</script>
 </html>
 
-<script src="Tour.js"></script>
-<script src="TourOverride.js"></script>
-
-<script src="Attraction.js"></script>
-<script src="AttractionOverride.js"></script>
