@@ -19,9 +19,9 @@
 	<br/>
 
 	<ul>
-		<li><a class="active" href="index.html" accesskey="k">Kort / index</a> </li>
+		<li><a class="active" href="index.html" accesskey="k">Kort / index</a></li>
 		<li><a href="login.html" accesskey="a">Admin</a></li>
-		<li><a href="aboutUs.html" accesskey="o">Om os</a> </li>
+		<li><a href="aboutUs.html" accesskey="o">Om os</a></li>
 	</ul>
 
 
@@ -31,8 +31,8 @@
 				<h2 class="h1">Menu</h2>
 
 				<div id="tourDiv">
-					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2"  style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
-						<h2 class="h2" id="tourHeader" onclick="change_text()">Tours ^</h2>
+					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2">
+						<h2 class="h2" id="tourHeader">Tours ^</h2>
 					</div>
 					<br><br>
                     <div id="tourContent">
@@ -365,7 +365,7 @@
 				let tourTable = document.getElementById("tourDiv")
 				tourTable.style.height='350px'
 				tourTable.innerHTML=`
-					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2" style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
+					<div id="toursSwitch" onclick="hideTours()" aria-colspan="2">
 						<h2 class="h2" id="tourHeader">Tours ^</h2>
 					</div>
 					<br><br><label for="interestPoints">Choose an interest point:</label>
@@ -394,7 +394,7 @@
 			function hideTours(){
 				document.getElementById("tourDiv").style.height="120px"
 				document.getElementById("tourDiv").innerHTML=`
-					<div id="toursSwitch" onclick="showTours()" aria-colspan="2"  style="position: absolute; left: 30%; margin-left: auto; margin-right: auto;">
+					<div id="toursSwitch" onclick="showTours()" aria-colspan="2">
 						<h2 class="h2" id="tourHeader">Tours v</h2>
 					</div>`
 				document.getElementById("toursSwitch").onclick=showTours
