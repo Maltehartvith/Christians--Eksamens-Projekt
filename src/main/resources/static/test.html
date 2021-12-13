@@ -79,8 +79,13 @@
                     <div class="mb-3">
                         <label for="input-attraction-t" class="mdb main lable" for="input-attraction-t">Attractions</label>
                         <br>
-                        <select class="mdb-select md-form colorful-select dropdown-danger" id="input-attraction-t" for="attraction" multiple></select>
+                        <select class="" data-mdb-placeholder="example placeholder"
+                                id="input-attraction-t" for="attraction"  searchable="Search here..">
 
+
+                        </select>
+                        <label class="mdb-main-label">Vælg Attraktioner</label>
+                        <button class="btn-save btn btn-primary btn-sm">Save</button>
                     </div>
                 </form>
             </div>
@@ -172,7 +177,9 @@
     console.log(document.getElementById("tour-table-body"))
     console.log(document.querySelector("tour-table-body"))
 
-
+    $(document).ready(function() {
+        $('.mdb-select').materialSelect();
+    });
 </script>
 
 <script></script>
