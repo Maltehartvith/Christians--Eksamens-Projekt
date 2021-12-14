@@ -35,6 +35,12 @@ public class Attraction extends Object {
     @ManyToMany(mappedBy = "tourAttraction")
     private List<Tour> tourArrayList = new ArrayList<>();
 
+    @Column(name="imagefilename")
+    private String imagefilename;
+
+    @Column(name="soundfilename")
+    private String soundfilename;
+
     public Attraction(Long id, String name, String description, String interestPoints, double latitude, double longtitude, int timeToBoat) {
         this.id = id;
         this.name = name;
@@ -43,6 +49,18 @@ public class Attraction extends Object {
         this.latitude = latitude;
         this.longtitude = longtitude;
         this.timeToBoat = timeToBoat;
+    }
+
+    public Attraction(Long id, String name, String description, String interestPoints, double latitude, double longtitude, int timeToBoat, String imagefilename, String soundfilename) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.interestPoints = interestPoints;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.timeToBoat = timeToBoat;
+        this.imagefilename = imagefilename;
+        this.soundfilename = soundfilename;
     }
 
     public Attraction(){}
@@ -103,4 +121,19 @@ public class Attraction extends Object {
         this.timeToBoat=timeToBoat;
     }
 
+    public String getImagefilename() {
+        return imagefilename;
+    }
+
+    public void setImagefilename(String imagefilename) {
+        this.imagefilename = imagefilename;
+    }
+
+    public String getSoundfilename() {
+        return soundfilename;
+    }
+
+    public void setSoundfilename(String soundfilename) {
+        this.soundfilename = soundfilename;
+    }
 }

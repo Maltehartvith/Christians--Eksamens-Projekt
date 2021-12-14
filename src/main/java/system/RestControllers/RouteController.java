@@ -31,7 +31,7 @@ public class RouteController {
         routeRepo.findAll().forEach(routes::add);
         routes.forEach(r->{
             List<Coordinate> coords = coordinateRepo.findAll();
-            System.out.println(coords);
+            //System.out.println(coords);
             //r.setCoordinates(coords);
         });
 

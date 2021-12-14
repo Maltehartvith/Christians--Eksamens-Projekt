@@ -1,41 +1,42 @@
-#map {
+#map, #menu {
     width: 600px;
     height: 600px;
+}
+#menu {
+    border: 1px solid black
 }
 
 #data-cell {
     vertical-align: top;
 }
 
-#menu {
-    width: 600px;
-    height: 600px;
-    border: 1px solid black
-}
-
-#tour-div {
-    width: 599px;
-    height: 350px;
-    border: 1px solid black;
-    overflow:scroll}
-
-#route-div {
+#tour-div, #route-div, #attraction-div, #boatDiv{
     width: 599px;
     height: 120px;
-    border: 1px solid black
-}
-
-#attraction-div {
-    width: 599px;
-    height: 350px;
     border: 1px solid black;
-    overflow: scroll
 }
 
-#boatDiv {
-    width: 599px;
-    height: 120px;
-    border: 1px solid black
+#tour-div, #route-div, #attraction-div {
+    overflow:scroll
+}
+
+#tours-header-index, #attraction-header-index{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+#tours-header-index{
+    left: 45%;
+}
+
+#attraction-header-index{
+    left:40%
+}
+
+#tour-content, #attraction-content{
+    display:none
 }
 
 .h1{
@@ -47,7 +48,6 @@
     font-size: 25px
 }
 
-
 ul {
     list-style-type: none;
     margin: 0;
@@ -55,9 +55,11 @@ ul {
     overflow: hidden;
     background-color: #333;
 }
+
 li {
     float: left;
 }
+
 li a {
     display: block;
     color: white;
@@ -65,9 +67,11 @@ li a {
     padding: 18px 55px;
     text-decoration: none;
 }
+
 li a:hover:not(.active) {
     background-color: #111;
 }
+
 .active{
     background-color: deepskyblue;
 }
@@ -84,22 +88,4 @@ li a:hover:not(.active) {
     border: 1px solid black;
     position: absolute;
     bottom: 1%;
-}
-#tours-header-index, #attraction-header-index{
-    position: relative;
-    left: 45%;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-}
-#attraction-header-index{
-    left:40%
-}
-
-
-#tour-div, #attraction-div{
-    height: 120px;
-}
-#tour-content, #attraction-content{
-    display:none
 }

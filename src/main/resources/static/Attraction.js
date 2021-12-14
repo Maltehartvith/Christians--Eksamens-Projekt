@@ -44,7 +44,7 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         //TIL MAP SIDE
         }else if (document.title === "Map"){
             const rows = localACache.getAll().map(a => `
-         <tr >
+         <tr>
          <td><button id="lego" type="button" data-id-get='${a.id}' data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer"></button></td>
            <td>${encode(a.name)}</td>
            <td>${encode(a.description)}</td>
@@ -114,6 +114,7 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
                         localACache.deleteOne(idToDelete)
                         console.log(idToDelete)
                         makeAttractionRows()
+                        localACache.getAll().forEach(a=>attractionToMarker(a))
                     }
                 })
         }

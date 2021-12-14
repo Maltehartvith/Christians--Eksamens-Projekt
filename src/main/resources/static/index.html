@@ -150,128 +150,147 @@
 
 	<script src="Attraction.js"></script>
 
-<script>
+    <script>
 
+        //UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
+        let departure
+        function calculateTime(){
+            clearInterval()
+            let inputTime=document.getElementById("boatTimeInput").value
+            let arival=parseTime(inputTime)
+            departure=new Date(new Date(arival).setHours(new Date(arival).getHours()+3))
+            setInterval(()=>{
+                let timeLeft = departure - new Date()
+                let hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2,"0")
+                let minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2,"0")
+                let seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2,"0")
 
-//UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
-let departure
-function calculateTime(){
-	clearInterval()
-	let inputTime=document.getElementById("boatTimeInput").value
-	let arival=parseTime(inputTime)
-	departure=new Date(new Date(arival).setHours(new Date(arival).getHours()+3))
-	setInterval(()=>{
-		let timeLeft = departure - new Date()
-		let hours = String(Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2,"0")
-		let minutes = String(Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))).padStart(2,"0")
-		let seconds = String(Math.floor((timeLeft % (1000 * 60)) / 1000)).padStart(2,"0")
+                // Result is output to the specific element
+                document.getElementById("countDown").innerHTML = `${hours}:${minutes}:${seconds}`
 
-		// Result is output to the specific element
-		document.getElementById("countDown").innerHTML = `${hours}:${minutes}:${seconds}`
+                // Display the message when countdown is over
+                if (timeLeft <= 0) {
+                    clearInterval()
+                    document.getElementById("countDown").innerHTML ="B&Aring;DEN ER ANKOMMET!!"
+                }
+            },1000)
+        }
+        function parseTime( t ) {
+            let d = new Date();
+            let time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
+            d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
+            d.setMinutes( parseInt( time[2]) || 0 );
+            return d;
+        }
 
-		// Display the message when countdown is over
-		if (timeLeft <= 0) {
-			clearInterval()
-			document.getElementById("countDown").innerHTML ="B&Aring;DEN ER ANKOMMET!!"
+    </script>
+    <script>
+        //SCRIPT TIL KORT OG FUNKTIONER TIL KORT
+        let startCoords = [55.3205449,15.1883541]
+
+        //Denne linje sørger for at leaflet viser din position
+        //let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
+
+        let map = L.map('map').setView(startCoords,16)
+        const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        const tiles = L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ })
+        tiles.addTo(map)
+        let attractions=[]
+        let markers=[]
+
+        let route0_coords = [
+            [55.320783, 15.186147],
+            [55.320865, 15.186308],
+            [55.320914, 15.186443],
+            [55.320919, 15.187355],
+            [55.320851, 15.187840],
+            [55.321360, 15.189657],
+            [55.320560, 15.189646],
+            [55.320221, 15.189061],
+            [55.319913, 15.189120],
+            [55.319516, 15.188455],
+            [55.319243, 15.187435],
+            [55.319317, 15.186718],
+            [55.320229, 15.186411]
+        ]
+        let route0=L.polyline(route0_coords, {color: 'red'})
+        let routes=[route0]
+
+        function showRoute(routeIndex){
+            routes[routeIndex].addTo(map)
+            let button= document.getElementById("route"+routeIndex+"Button")
+            button.onclick=()=>hideRoute(routeIndex)
+            button.innerText="Skjul"
+        }
+
+        function hideRoute(routeIndex){
+            routes[routeIndex].remove()
+            let button= document.getElementById("route"+routeIndex+"Button")
+            button.onclick=()=>showRoute(routeIndex)
+            button.innerText="Vis"
+        }
+
+		function attractionToHTML(a){
+			let interestPoints=a.interestPoints?`(${a.interestPoints})`:""
+			let timeToBoat=a.timeToBoat?`(${a.timeToBoat} min. til b&aring;den)<br>`:""
+			let description=a.description?a.description:"(Der er ingen beskrivelse)"
+			let image=a.imagefilename?`<br><img src="images/${a.imagefilename}" width="40%"/>`:""
+			let sound=a.soundfilename?`<br><audio controls>
+				<source src="sounds/${a.soundfilename}" type="audio/mpeg">
+			</audio>`:""
+			return `<p>
+				<b>${a.name}</b> ${interestPoints}<br>
+				${timeToBoat}
+				${description}<br>
+				(${a.latitude}, ${a.longtitude})
+				${image}
+				${sound}
+			</p>`
 		}
-	},1000)
-}
-function parseTime( t ) {
-	let d = new Date();
-	let time = t.match( /(\d+)(?::(\d\d))?\s*(p?)/ );
-	d.setHours( parseInt( time[1]) + (time[3] ? 12 : 0) );
-	d.setMinutes( parseInt( time[2]) || 0 );
-	return d;
-}
 
-</script>
-<script>
-	//SCRIPT TIL KORT OG FUNKTIONER TIL KORT
-	let startCoords = [55.3205449,15.1883541]
+        function attractionToMarker(attraction){
+            let coords = [attraction.latitude,attraction.longtitude]
+            let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
+            let marker = L.marker(coords,{title:attraction.name})
+                    .on('click',()=>{
+						document.getElementById("data-cell").innerHTML=attractionToHTML(attraction)
+                    	/*indsæt modal kald*/
+                    })
+                    .addTo(map)
+                    .bindPopup(popup).openPopup()
+            markers.push(marker)
+        }
+        let workRoute=L.polyline([], {color: 'red'})
 
-	//Denne linje sørger for at leaflet viser din position
-	//let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
+        function enableRouteEdit(){
+            workRoute=L.polyline([], {color: 'red'})
+            workRoute.addTo(map)
+            map.on("click",(e)=>{
+                let coords=map.mouseEventToLatLng(e.originalEvent)
+                workRoute.addLatLng([coords.lat,coords.lng])
+            })
+            let button=document.getElementById("routeEdit")
+            button.onclick=saveWorkRoute
+            button.innerText="Gem Rute"
+        }
 
-	let map = L.map('map').setView(startCoords,16)
-	const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
-	const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-	const tiles = L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ })
-	tiles.addTo(map)
-	let attractions=[]
-	let markers=[]
-
-	let route0_coords = [
-		[55.320783, 15.186147],
-		[55.320865, 15.186308],
-		[55.320914, 15.186443],
-		[55.320919, 15.187355],
-		[55.320851, 15.187840],
-		[55.321360, 15.189657],
-		[55.320560, 15.189646],
-		[55.320221, 15.189061],
-		[55.319913, 15.189120],
-		[55.319516, 15.188455],
-		[55.319243, 15.187435],
-		[55.319317, 15.186718],
-		[55.320229, 15.186411]
-	]
-	let route0=L.polyline(route0_coords, {color: 'red'})
-	let routes=[route0]
-
-	function showRoute(routeIndex){
-		routes[routeIndex].addTo(map)
-		let button= document.getElementById("route"+routeIndex+"Button")
-		button.onclick=()=>hideRoute(routeIndex)
-		button.innerText="Skjul"
-	}
-
-	function hideRoute(routeIndex){
-		routes[routeIndex].remove()
-		let button= document.getElementById("route"+routeIndex+"Button")
-		button.onclick=()=>showRoute(routeIndex)
-		button.innerText="Vis"
-	}
-
-	function attractionToMarker(attraction){
-
-		let coords = [attraction.latitude,attraction.longtitude]
-		let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
-		let marker = L.marker(coords,{title:attraction.name})
-				.on('click',()=>{/*indsæt modal kald*/})
-				.addTo(map)
-				.bindPopup(popup).openPopup()
-		markers.push(marker)
-	}
-	let workRoute=L.polyline([], {color: 'red'})
-
-	function enableRouteEdit(){
-		workRoute=L.polyline([], {color: 'red'})
-		workRoute.addTo(map)
-		map.on("click",(e)=>{
-			let coords=map.mouseEventToLatLng(e.originalEvent)
-			workRoute.addLatLng([coords.lat,coords.lng])
-		})
-		let button=document.getElementById("routeEdit")
-		button.onclick=saveWorkRoute
-		button.innerText="Gem Rute"
-	}
-
-	function saveWorkRoute(){
-		document.getElementById("map").onclick=()=>{}
-		map.removeLayer(workRoute)
-		let newIndex=routes.length
-		routes.push(workRoute)
-		let button=document.getElementById("routeEdit")
-		button.onclick=enableRouteEdit
-		button.innerText="Ny Rute"
-		let routeList=document.getElementById("routeList")
-		routeList.innerHTML+=`<tr id="route${newIndex}">
-						<td>Rute ${newIndex}</td>
-						<td>
-							<button id="route${newIndex}Button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
-						</td>
-					</tr>`
-	}
-</script>
+        function saveWorkRoute(){
+            document.getElementById("map").onclick=()=>{}
+            map.removeLayer(workRoute)
+            let newIndex=routes.length
+            routes.push(workRoute)
+            let button=document.getElementById("routeEdit")
+            button.onclick=enableRouteEdit
+            button.innerText="Ny Rute"
+            let routeList=document.getElementById("routeList")
+            routeList.innerHTML+=`<tr id="route${newIndex}">
+                    <td>Rute ${newIndex}</td>
+                    <td>
+                        <button id="route${newIndex}Button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
+                    </td>
+                </tr>`
+        }
+    </script>
 </html>
 
