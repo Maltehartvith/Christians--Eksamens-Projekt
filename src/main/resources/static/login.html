@@ -19,10 +19,10 @@
 
 <script>
     function checkPswd() {
-        var confirmPassword = "admin";
-        var password = document.getElementById("pswd").value;
+        const confirmPassword = "admin";
+        let password = document.getElementById("pswd").value;
         if (password == confirmPassword) {
-            window.location="test.html";
+            window.location="admin.html";
         }
         else{
             alert("Forkert password");
