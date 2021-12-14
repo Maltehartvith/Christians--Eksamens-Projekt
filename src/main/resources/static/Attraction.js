@@ -1,3 +1,5 @@
+//import {Modal} from "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js";
+
 //CONSTRUCTOR
 class Attraction {
     constructor() {
@@ -45,13 +47,16 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         }else if (document.title === "Map"){
             const rows = localACache.getAll().map(a => `
          <tr>
+         
+           <td><button id="lego" type="button" data-id-get='${a.id}' class="btn btn-primary" data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
+         <tr>
          <td><button id="lego" type="button" data-id-get='${a.id}' data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer"></button></td>
            <td>${encode(a.name)}</td>
-           <td>${encode(a.description)}</td>
+           
            <td>${encode(a.interestPoints)}</td>
-           <td>${a.latitude}</td>
-           <td>${a.longtitude}</td>
+           <br>
            <td>${a.timeToBoat}</td>
+           
          </tr>
         `)
             document.getElementById("attraction-table-body-index").innerHTML = rows.join("")
@@ -93,11 +98,11 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
             }
         }
     }
+setUpHandlersAttraction()
 
-    setUpHandlersAttraction()
     //CLICK HANDLERS
     function handleTableClickAttraction(evt) {
-        debugger
+        console.log("Her er vi nu")
         evt.preventDefault()
         evt.stopPropagation()
         const target = evt.target;
@@ -145,7 +150,7 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
 
     })
 }
-    //HVIS EKSISTERENDE MODAL
+    //SHOW EKSISTERENDE MODAL
     function showAttractionModal(attraction) {
         //TIL ADMIN SIDE
     if (document.title === "Admin side"){
@@ -160,13 +165,18 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         document.getElementById("input-timeToBoat-a").value = attraction.timeToBoat
         myModal.show()
         //TIL MAP SIDE
-    }else if (document.title === "Map"){
+    }if (document.title === "Map"){
         const myModal = new bootstrap.Modal(document.getElementById('attraction-modal-index'))
-        document.getElementById("attraction-name").value = attraction.name
-        document.getElementById("attraction-description").value = attraction.description
-        document.getElementById("attraction-interestPoints").value = attraction.interestPoints
-        document.getElementById("attraction-map").value = attraction.longtitude
-        document.getElementById("attraction-timeToBoat").value = attraction.timeToBoat
+        //const myModal = new Modal(document.getElementById('attraction-modal-index'))
+        const beskrivelse = "Beskrivelse: <br>"
+        const interessePoint = "Interesse punkter: <br>"
+        const est = "Estimeret tid det tager at gå til båden: "
+        document.getElementById("attraction-name").innerHTML = attraction.name
+        document.getElementById("attraction-description").innerHTML = beskrivelse + attraction.description + "<br>"
+        document.getElementById("attraction-interestPoints").innerHTML = interessePoint + attraction.interestPoints + "<br>"
+            //få mappet ind i den her
+        document.getElementById("attraction-map").innerHTML = attraction.longtitude + "<br>"
+        document.getElementById("attraction-timeToBoat").innerHTML = est + attraction.timeToBoat + " min"
         myModal.show()
         }
 }
