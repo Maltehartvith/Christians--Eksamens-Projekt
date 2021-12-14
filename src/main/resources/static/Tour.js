@@ -23,7 +23,7 @@ function makeTourRows() {
            <td>${u.maxMembers}</td>
            <td>${u.duration}</td>
            <td><button data-id-delete=${u.id} class="btn-danger" style="color: black" href="#">Delete</td>
-            <td><button data-id-edit='${u.id}' class="btn-warning" style="color: black" href="#">Edit</button> </td>
+           <td><button data-id-edit='${u.id}' class="btn-warning" style="color: black" href="#">Edit</button> </td>
          </tr>
         `)
     document.getElementById("tour-table-body").innerHTML = rows.join("")
@@ -90,6 +90,7 @@ function handleTableClickTour(evt) {
         const tour = localTCache.findById(idToEdit)
         showTourModal(tour)
     }
+
 
 }
 
@@ -164,7 +165,7 @@ function saveTour() {
         .then(tour=>{
             localTCache.addEdit(tour,method)
             makeTourRows()
-            window.location.replace("test.html")
+            window.location.replace("admin.html")
         })
         .catch(e=>alert(e))
 }
