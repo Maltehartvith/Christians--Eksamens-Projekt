@@ -9,12 +9,12 @@
 	    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 	    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 	    crossorigin=""></script>
-		<link rel="stylesheet" type="text/css" href="style.css">
+
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 			  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body class="container">
 	<script src="showAndHide.js"></script>
@@ -29,10 +29,10 @@
 		<li><a href="aboutUs.html" accesskey="o">Om os</a></li>
 	</ul>
 
-
+	<br>
 	<table class="table">
 		<tr>
-			<td id="menu" rowspan="2">
+			<td id="menu" rowspan="2" style="border: 1px solid black; width: 678px">
 				<h2 class="h1">Menu</h2>
 
 				<div id="tour-div">
@@ -44,7 +44,7 @@
                         <label for="interestPoints">Choose an interest point:</label>
                         <select name="interest-Points" id="interestPoints" style="width: 30.5%">
                             <option value="bygning">Bygninger</option>
-                            <option value="natur">Natur</option>
+                            <option value="Natur">Natur</option>
                             <option value="spøgelser">Spørgelser</option>
                             <option value="sos">SOS</option>
                             <option value="skrald">Skrald</option>
@@ -53,7 +53,7 @@
                         <table id="tour-table" class="table">
                             <thead>
                             <tr>
-                                <th>Id</th>
+								<th>Knap</th>
                                 <th>Navn</th>
                                 <th>Beskrivelse</th>
                                 <th>max Deltagere</th>
@@ -64,6 +64,26 @@
                         </table>
                     </div>
 				</div>
+				<br/>
+				<div id="attraction-div">
+					<div id="attraction-header-index" onclick="showAttractions()">
+						<h2 class="h2" id="attraction-header">Attractions &darr;</h2>
+					</div>
+					<div id="attraction-content">
+						<table id="attraction-table-index" class="table">
+							<thead>
+							<tr>
+								<th>Info</th>
+								<th style="width: 35px">Navn</th>
+								<th>Interesse emner</th>
+								<th>Estimeret tid til båden</th>
+							</tr>
+							</thead>
+							<tbody id="attraction-table-body-index"></tbody>
+						</table>
+					</div>
+				</div>
+
 				<br/>
 				<div id="route-div" style="overflow: scroll">
 					<div id="route-header-index">
@@ -83,25 +103,7 @@
 				</div>
 				<br/>
 
-				<div id="attraction-div">
-					<div id="attraction-header-index" onclick="showAttractions()">
-					<h2 class="h2" id="attraction-header">Attractions &darr;</h2>
-					</div>
-						<div id="attraction-content">
-					<table id="attraction-table-index" class="table">
-						<thead>
-						<tr>
-							<th>Info</th>
-							<th style="width: 35px">Navn</th>
-							<th>Interesse emner</th>
-							<th>Estimeret tid til båden</th>
-						</tr>
-						</thead>
-						<tbody id="attraction-table-body-index"></tbody>
-					</table>
-					</div>
-				</div>
-				<br/>
+
 				<div id="boatDiv">
 					<h2 class="h2"> Tid til b&aring;den kommer</h2>
 					<label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
@@ -122,13 +124,16 @@
 	<div class="modal fade" id="attraction-modal-index" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-
 				<div class="modal-header">
-					<h5 class="modal-title" id="attraction-name"></h5>
-					<p id="attraction-timeToBoat" style="margin-left: auto; margin-right: 0; text-align: right"></p>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
+					<div class="col-8">
+					<h5 class="modal-title" id="attraction-name">Attraction title</h5>
 
+					</div>
+					<div class="col">
+						<p id="attraction-timeToBoat" style="text-align: center" ></p>
+					</div>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin: 2px"></button>
+				</div>
 				<div class="modal-body">
 					<div class="mb-3">
 						<p id="attraction-interestPoints" style="vertical-align: bottom"></p>
@@ -156,7 +161,6 @@
 	</body>
 
 	<script src="Tour.js"></script>
-	<script src="TourOverride.js"></script>
 
 	<script src="Attraction.js" type="module"></script>
 

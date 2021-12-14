@@ -20,9 +20,14 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
     //LAVER RÆKKER MED NAVN OG ID TIL MAN SKAL TILFØJE ATTRAKTIONER TIL TURE
     function makeSelectRows(){
     const rows = localACache.getAll().map(a => `
-        <option id="attraction-${a.id}" value="${a.id}">${a.id} : ${a.name}</option>
+        <label>
+            <input type='checkbox' id='attraction-${a.id}' value='${a.id}'>${a.id} : ${a.name}</input>
+        </label>
+        <br/>
+        
     `)
-    document.getElementById("input-attraction-t").innerHTML = rows.join("")
+    document.getElementById("box-for-select").innerHTML = rows.join("")
+
 }
 
     // Metode der laver rækkerne i tabellen.
@@ -46,20 +51,46 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         //TIL MAP SIDE
         }else if (document.title === "Map"){
             const rows = localACache.getAll().map(a => `
-                 <tr>
-                   <td><button id="lego" type="button" data-id-get='${a.id}' class="btn btn-primary" data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
-                   <td>${encode(a.name)}</td>
-                   <td>${encode(a.interestPoints)}</td>
-                   <br>
-                   <td>${a.timeToBoat}</td>
-                 </tr>
-            `)
+         <tr>
+           <td><button id="lego" type="button" data-id-get='${a.id}' class="btn btn-primary" data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
+           <td>${encode(a.name)}</td>
+           <td>${encode(a.interestPoints)}</td>
+           <br>
+           <td>${a.timeToBoat}</td>
+           
+         </tr>
+        `)
             document.getElementById("attraction-table-body-index").innerHTML = rows.join("")
         }
+}
+/*function filterTable() {
+
+    let table = document.getElementById("tour-table-body"),
+        tr = table.getElementsByTagName("tr"),
+        selected = this.value;
+
+    for (let i = 1; i < tr.length; i++) {
+        let interestPoints = tr[i].cells[0].innerHTML;
+        if (interestPoints) {
+            tr[i].style.display=selected==="" || interestPoints.indexOf(selected) > -1 ?"":"none";
+        }
     }
+}*/
+function filterTable(optionValue) {
+
+    const match = localACache.getAll().filter(a => a.interestPoints === optionValue)
+    document.getElementById("tour-table-body").innerHTML = match.map(m => `
+        <tr> 
+           <td>${encode(m.name)}</td>
+           <td>${encode(m.description)}</td>
+           <td>${m.maxMembers}</td>
+           <td>${m.duration}</td>
+         </tr>
+        `)
+}
 
     //METODE OVER LOCAL CACHE - INDEHOLDER FORSKELLIGE METODER
-function localAttractionCache(){
+    function localAttractionCache(){
     let attractionData = []
     const addEdit = (attraction,method) =>{
         if(method==="POST"){
@@ -77,9 +108,9 @@ function localAttractionCache(){
         addEdit :addEdit
     }
 }
-//SETUP-HANDLERS
-function setUpHandlersAttraction() {
-    //TIL ADMIN SIDE
+    //SETUP-HANDLERS
+    function setUpHandlersAttraction() {
+        //TIL ADMIN SIDE
     if (document.title === "Admin side"){
         document.getElementById("attraction-table-body").onclick = handleTableClickAttraction
         if (document.getElementById("btn-save-attraction") !== null)
@@ -88,12 +119,12 @@ function setUpHandlersAttraction() {
             document.getElementById("btn-add-attraction").onclick = makeNewAttraction
     //TIL MAP SIDE
     }else if(document.title === "Map"){
-        document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
-        if(document.getElementById("lego") !== null){
-            document.getElementById("lego").onclick = showAttractionModal
+            document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
+            if(document.getElementById("lego") !== null){
+                document.getElementById("lego").onclick = showAttractionModal
+            }
         }
     }
-}
 setUpHandlersAttraction()
 
 //CLICK HANDLERS

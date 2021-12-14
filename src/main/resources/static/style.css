@@ -2,42 +2,12 @@
     width: 600px;
     height: 600px;
 }
-#menu {
-    border: 1px solid black
-}
+
 
 #data-cell {
     vertical-align: top;
 }
 
-#tour-div, #route-div, #attraction-div, #boatDiv{
-    width: 599px;
-    height: 120px;
-    border: 1px solid black;
-}
-
-#tour-div, #route-div, #attraction-div {
-    overflow:scroll
-}
-
-#tours-header-index, #attraction-header-index{
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-}
-
-#tours-header-index{
-    left: 45%;
-}
-
-#attraction-header-index{
-    left:40%
-}
-
-#tour-content, #attraction-content{
-    display:none
-}
 
 .h1{
     text-align: center;
@@ -88,4 +58,36 @@ li a:hover:not(.active) {
     border: 1px solid black;
     position: absolute;
     bottom: 1%;
+}
+<!-- CSS TIL INDEX SIDEN -->
+
+#menu {
+    width: 690px;
+    border: 1px solid black;
+}
+#tour-div, #route-div, #attraction-div, #boatDiv{
+    padding: 2px;
+    width: 100%;
+    height: 120px;
+    border: 1px solid black;
+    overflow: auto;
+    overflow-x: hidden;
+
+}
+
+#tours-header-index, #attraction-header-index{
+    position: relative;
+    cursor: pointer;
+}
+
+#tours-header-index{
+    left: 45%;
+}
+
+#attraction-header-index{
+    left:40%
+}
+
+#tour-content, #attraction-content{
+    display:none
 }

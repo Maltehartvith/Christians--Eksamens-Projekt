@@ -15,18 +15,48 @@ const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
 
 
 function makeTourRows() {
-    const rows = localTCache.getAll().map(u => `
+    if (document.title === "Admin side"){
+        const rows = localTCache.getAll().map(t => `
          <tr>
-           <td>${u.id}</td>
-           <td>${encode(u.name)}</td>
-           <td>${encode(u.description)}</td>
-           <td>${u.maxMembers}</td>
-           <td>${u.duration}</td>
-           <td><button data-id-delete=${u.id} class="btn-danger" style="color: black" href="#">Delete</td>
-           <td><button data-id-edit='${u.id}' class="btn-warning" style="color: black" href="#">Edit</button> </td>
+           <td>${t.id}</td>
+           <td>${encode(t.name)}</td>
+           <td>${encode(t.description)}</td>
+           <td>${t.maxMembers}</td>
+           <td>${t.duration}</td>
+           <td><button data-id-delete=${t.id} class="btn-danger" style="color: black" href="#">Delete</td>
+           <td><button data-id-edit='${t.id}' class="btn-warning" style="color: black" href="#">Edit</button> </td>
          </tr>
         `)
     document.getElementById("tour-table-body").innerHTML = rows.join("")
+    }if (document.title === "Map"){
+        const rows = localTCache.getAll().map(t => `
+         <tr>
+         <td><button id="tour-info" type="button" data-id-get='${t.id}' class="btn btn-primary" 
+         data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
+           <td>${encode(t.name)}</td>
+           <td>${encode(t.description)}</td>
+           <td>${t.maxMembers}</td>
+           <td>${t.duration}</td>
+         </tr>
+        `)
+        document.getElementById("tour-table-body").innerHTML =  rows.join("")
+    }
+}
+function filterTable(optionValue) {
+    const match = localTCache.getAll().filter(t => t.attractions.interestPoints === optionValue)
+    console.log("dnaksjfnkjasndkajsndadnakjsn")
+    //Kan man ikke sætte tourRow ind her?
+    const row = match.map(m => `
+        <tr> 
+        <td><button id="tour-info" type="button" data-id-get='${t.id}' class="btn btn-primary" 
+         data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
+           <td>${encode(m.name)}</td>
+           <td>${encode(m.description)}</td>
+           <td>${m.maxMembers}</td>
+           <td>${m.duration}</td>
+         </tr>
+        `)
+    document.getElementById("tour-table-body").innerHTML = row.join("")
 }
 
 function localTourCache(){
@@ -36,27 +66,35 @@ function localTourCache(){
             tourData.push(tour)
         }
         else if(method==="PUT") {
-            tourData = tourData.map(u => u.id == tour.id ? tour: u)
+            tourData = tourData.map(t => t.id == tour.id ? tour: t)
         }
     }
 
     return {
         getAll : () => tourData , //This is the same as above
         addAll : (all) => tourData = all,
-        deleteOne: (id) => tourData = tourData.filter(u => u.id !== Number(id)),
-        findById : (id) => tourData.find(u => u.id == id),
+        deleteOne: (id) => tourData = tourData.filter(t => t.id !== Number(id)),
+        findById : (id) => tourData.find(t => t.id == id),
         addEdit :addEdit
     }
 }
 
 
-function setUpHandlersTour(){
-
-    document.getElementById("tour-table-body").onclick = handleTableClickTour
-    if (document.getElementById("btn-save-tour") !== null) {
-        document.getElementById("btn-save-tour").onclick = saveTour
-    }if (document.getElementById("btn-add-tour") !== null) {
-        document.getElementById("btn-add-tour").onclick = makeNewTour
+function setUpHandlersTour() {
+    if(document.title === "Admin side")
+        document.getElementById("tour-table-body").onclick = handleTableClickTour
+        if (document.getElementById("btn-save-tour") !== null) {
+            document.getElementById("btn-save-tour").onclick = saveTour
+        }if (document.getElementById("btn-add-tour") !== null) {
+            document.getElementById("btn-add-tour").onclick = makeNewTour
+        }
+    if(document.title === "Map"){
+        document.getElementById("tour-table-body").onclick = handleTableClickTour
+        if(document.getElementById("tour-info") !== null){
+            document.getElementById("tour-info").onclick = showTourModal
+        }if(document.getElementById("interestPoints") !== null) {
+            document.getElementById("interestPoints").onchange = filterTable
+        }
     }
 }
 
@@ -75,7 +113,6 @@ function handleTableClickTour(evt) {
             headers: {'Accept': 'application/json'},
 
         }
-
         fetch(SERVER_URL_TOURS+"/"+idToDelete,options)
             .then(res=>{if(res.ok){
                 localTCache.deleteOne(idToDelete)
@@ -88,6 +125,12 @@ function handleTableClickTour(evt) {
     if (target.dataset.idEdit) {
         const idToEdit = Number(target.dataset.idEdit)
         const tour = localTCache.findById(idToEdit)
+        showTourModal(tour)
+    }
+    //GET
+    if (target.dataset.idGet){
+        const idToShow = Number(target.dataset.idGet)
+        const tour = localTCache.findById(idToShow)
         showTourModal(tour)
     }
 
@@ -106,18 +149,32 @@ function makeNewTour() {
 }
 
 function showTourModal(tour) {
-    const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
-    document.getElementById("modal-title-tour").innerText = tour.id ? "Edit Tour" : "Add Tour"
-    document.getElementById("tour-id-t").innerText = tour.id
-    document.getElementById("input-name-t").value = tour.name
-    document.getElementById("input-description-t").value = tour.description
-    document.getElementById("input-maxMembers-t").value = tour.maxMembers
-    document.getElementById("input-duration-t").value = tour.duration
-    makeSelectRows()
-    if(document.getElementById("modal-title-tour").innerText === "Edit Tour") {
-        makeRowsSetSelected(tour)
+    if(document.title === "Admin side") {
+        const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
+        document.getElementById("modal-title-tour").innerText = tour.id ? "Edit Tour" : "Add Tour"
+        document.getElementById("tour-id-t").innerText = tour.id
+        document.getElementById("input-name-t").value = tour.name
+        document.getElementById("input-description-t").value = tour.description
+        document.getElementById("input-maxMembers-t").value = tour.maxMembers
+        document.getElementById("input-duration-t").value = tour.duration
+        makeSelectRows()
+        if (document.getElementById("modal-title-tour").innerText === "Edit Tour") {
+            makeRowsSetSelected(tour)
+        }
+        myModal.show()
+    }else if (document.title === "Map"){
+        const myModal = new bootstrap.Modal(document.getElementById('attraction-modal-index'))
+
+        const beskrivelse = "Beskrivelse: <br>"
+        const maxMembers = "Max deltagere: <br>"
+        const duration = "Turen varer : <br>"
+        document.getElementById("attraction-name").innerHTML = tour.name
+        document.getElementById("attraction-description").innerHTML = beskrivelse + tour.description + "<br>"
+        document.getElementById("attraction-interestPoints").innerHTML = maxMembers + tour.maxMembers + "<br>"
+        //document.getElementById("attraction-map").innerHTML = tour.duration + "<br>"
+        document.getElementById("attraction-timeToBoat").innerHTML = duration + tour.duration + " min"
+        myModal.show()
     }
-    myModal.show()
 }
     function makeRowsSetSelected(tour){
          for (let i = 0, iLen= tour.attractions.length; i < iLen; i++){
@@ -135,10 +192,11 @@ function saveTour() {
     tour.duration = document.getElementById("input-duration-t").value
     tour.attractions = []
 
-    const select = Array.from(document.getElementById("input-attraction-t").options).filter(option => option.selected).map(option => option.value);
-    for(let i = 0, iLen = select.length; i<iLen; i++){
-        tour.attractions.push(localACache.findById(select[i]))
+    let checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+    for(let i = 0, iLen = checkboxes.length; i<iLen; i++){
+        tour.attractions.push(localACache.findById(checkboxes[i].value))
     }
+
 
     const method = tour.id ? "PUT" : "POST"
     const url = (method === "PUT") ? SERVER_URL_TOURS+"/"+tour.id : SERVER_URL_TOURS
