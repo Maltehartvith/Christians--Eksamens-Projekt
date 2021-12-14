@@ -124,20 +124,26 @@
 			<div class="modal-content">
 
 				<div class="modal-header">
-
-					<h5 class="modal-title" id="attraction-name">Attraction title</h5>
-					<p id="attraction-timeToBoat"></p>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-
+					<h5 class="modal-title" id="attraction-name"></h5>
+					<p id="attraction-timeToBoat" style="margin-left: auto; margin-right: 0; text-align: right"></p>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 
 				<div class="modal-body">
 					<div class="mb-3">
+						<p id="attraction-interestPoints" style="vertical-align: bottom"></p>
 						<div id="attraction-description"></div>
-						<div id="attraction-interestPoints"></div>
-						<div id="attraction-map"></div>
-						<!--<div id="attraction-timeToBoat"></div>-->
+						<br>
+						<table><tbody><tr><td>
+							<div id="attraction-map" style="width:300px; height: 300px;"></div>
+						</td>
+						<td width="50px"></td>
+						<td style="vertical-align: top">
+							<div id="attraction-image"></div>
+							<br>
+							<div id="attraction-sound"></div>
+						</td>
+						</tr></tbody></table>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -198,10 +204,13 @@
         let map = L.map('map').setView(startCoords,16)
         const attribution = '&copy <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributers'
         const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        const tiles = L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ })
-        tiles.addTo(map)
+        L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ }).addTo(map)
         let attractions=[]
         let markers=[]
+
+		let modalMap = L.map('attraction-map').setView(startCoords,16)
+		L.tileLayer(tileUrl,{ attribution/*, minZoom: 16*/ }).addTo(modalMap)
+		let modalMarker=L.marker(startCoords,{title:"Attraction"}).addTo(modalMap)
 
         let route0_coords = [
             [55.320783, 15.186147],
@@ -235,30 +244,12 @@
             button.innerText="Vis"
         }
 
-		function attractionToHTML(a){
-			let interestPoints=a.interestPoints?`(${a.interestPoints})`:""
-			let timeToBoat=a.timeToBoat?`(${a.timeToBoat} min. til b&aring;den)<br>`:""
-			let description=a.description?a.description:"(Der er ingen beskrivelse)"
-			let image=a.imagefilename?`<br><img src="images/${a.imagefilename}" width="40%"/>`:""
-			let sound=a.soundfilename?`<br><audio controls>
-				<source src="sounds/${a.soundfilename}" type="audio/mpeg">
-			</audio>`:""
-			return `<p>
-				<b>${a.name}</b> ${interestPoints}<br>
-				${timeToBoat}
-				${description}<br>
-				(${a.latitude}, ${a.longtitude})
-				${image}
-				${sound}
-			</p>`
-		}
-
         function attractionToMarker(attraction){
             let coords = [attraction.latitude,attraction.longtitude]
             let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
             let marker = L.marker(coords,{title:attraction.name})
                     .on('click',()=>{
-						document.getElementById("data-cell").innerHTML=attractionToHTML(attraction)
+						//document.getElementById("data-cell").innerHTML=attractionToHTML(attraction)
                     	/*indsæt modal kald*/
                     })
                     .addTo(map)
