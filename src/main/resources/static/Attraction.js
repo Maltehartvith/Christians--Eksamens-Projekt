@@ -224,10 +224,13 @@ function showAttractionModal(attraction) {
 
 function attractionOnMap(a){
     let latLng = new L.LatLng(a.latitude, a.longtitude)
-    //modalMap.invalidateSize()
-    //map.panTo([a.latitude, a.longtitude])
-    modalMap.panTo([a.latitude, a.longtitude])
+
     modalMarker.setLatLng(latLng)
+
+    modalMap.setView([a.latitude, a.longtitude])
+
+    //modalMap.panTo([a.latitude, a.longtitude])
+
 }
 
 //GEM ATTRAKTION ALT EFTER OM DET ER EDIT ELLER SAVE

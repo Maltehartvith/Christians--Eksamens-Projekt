@@ -185,7 +185,7 @@ function showTourModal(tour) {
                 }
                 if (length != 0) {
                     interestPointsValue += tour.attractions[length - 1].interestPoints;
-//
+
                 } else {
                     interestPointsValue = "Der er ingen interesse punkter"
                 }
