@@ -177,18 +177,19 @@
         const duration = "Turen varer : "
 
         let interestPointsValue = ""
-        const length = localTCache.findById(tour.id).attractions.length
-        console.log(length)
-        localTCache.findById(tour.id).attractions.forEach(a => {
-            for(let i = 0; i < Object.keys(a.attractions).length; i++) {
-                if (a.attractions[i] !== length && a.attractions.length < 0) {
-                    interestPointsValue += (a.interestPoints) + ", ";
-                } else {
-                    interestPointsValue += (a.interestPoints)
-                }
-            }
-        })
-        //
+        let length = tour.attractions.length
+
+        for(let i = 0; i < length - 1; i++) {
+                interestPointsValue += tour.attractions[i].interestPoints + ", ";
+        }
+        if(length != 0){
+            interestPointsValue += tour.attractions[length - 1].interestPoints;
+        }else{
+            interestPointsValue = "Der er ingen interesse punkter"
+        }
+        console.log(interestPointsValue)
+
+
         console.log(interestPointsValue)
         document.getElementById("tour-name").innerHTML = tour.name
         document.getElementById("tour-interest-points").innerHTML = interestPoints + interestPointsValue
