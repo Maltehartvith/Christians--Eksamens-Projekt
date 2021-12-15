@@ -9,12 +9,12 @@
     }
 }*/
 
-sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
-const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
+    sessionStorage.setItem("SERVER_URL_TOURS","api/tours");
+    const SERVER_URL_TOURS = sessionStorage.getItem("SERVER_URL_TOURS");
 
 
 
-function makeTourRows() {
+    function makeTourRows() {
     if (document.title === "Admin side"){
         const rows = localTCache.getAll().map(t => `
          <tr>
@@ -42,29 +42,30 @@ function makeTourRows() {
         document.getElementById("tour-table-body").innerHTML =  rows.join("")
     }
 }
-function filterTable() {
+    function filterTable() {
     const optionValue = document.getElementById("interestPoints").value
-    const match = localTCache.getAll().filter(t => {
-        for(i in t.attractions)
-            if(t.attractions[i].interestPoints == optionValue) return true
+    const matches = localTCache.getAll().filter(t => {
+        for (let i = 0; i < t.attractions.length; i++) {
+            if (t.attractions[i].interestPoints === optionValue) {
+                return true
+            }
+        }
         return false
     })
-    console.log("Filtering tours with interestpoint: "+optionValue)
-    //Kan man ikke sætte tourRow ind her?
-    const row = match.map(t => `
+    const row = matches.map(m => `
         <tr> 
-        <td><button id="tour-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
+        <td><button id="tour-info-${t.id}" type="button" data-id-get='${t.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
-           <td>${encode(t.name)}</td>
-           <td>${encode(t.description)}</td>
-           <td>${t.maxMembers}</td>
-           <td>${t.duration}</td>
+           <td>${encode(m.name)}</td>
+           <td>${encode(m.description)}</td>
+           <td>${m.maxMembers}</td>
+           <td>${m.duration}</td>
          </tr>
         `)
     document.getElementById("tour-table-body").innerHTML = row.join("")
-}
+    }
 
-function localTourCache(){
+    function localTourCache(){
     let tourData = []
     const addEdit = (tour,method) =>{
         if(method==="POST"){
@@ -85,7 +86,7 @@ function localTourCache(){
 }
 
 
-function setUpHandlersTour() {
+    function setUpHandlersTour() {
     if(document.title === "Admin side")
         document.getElementById("tour-table-body").onclick = handleTableClickTour
         if (document.getElementById("btn-save-tour") !== null) {
@@ -104,9 +105,9 @@ function setUpHandlersTour() {
 }
 
 
-setUpHandlersTour()
+    setUpHandlersTour()
 
-function handleTableClickTour(evt) {
+    function handleTableClickTour(evt) {
     evt.preventDefault()
     evt.stopPropagation()
     const target = evt.target;
@@ -142,7 +143,7 @@ function handleTableClickTour(evt) {
 
 }
 
-function makeNewTour() {
+    function makeNewTour() {
     showTourModal({
         id: null,
         name: "",
@@ -153,7 +154,7 @@ function makeNewTour() {
     })
 }
 
-function showTourModal(tour) {
+    function showTourModal(tour) {
     if(document.title === "Admin side") {
         const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
         document.getElementById("modal-title-tour").innerText = tour.id ? "Edit Tour" : "Add Tour"
@@ -168,16 +169,33 @@ function showTourModal(tour) {
         }
         myModal.show()
     }else if (document.title === "Map"){
-        const myModal = new bootstrap.Modal(document.getElementById('attraction-modal-index'))
+        const myModal = new bootstrap.Modal(document.getElementById('tour-modal-index'))
 
         const beskrivelse = "Beskrivelse: <br>"
-        const maxMembers = "Max deltagere: <br>"
-        const duration = "Turen varer : <br>"
-        document.getElementById("attraction-name").innerHTML = tour.name
-        document.getElementById("attraction-description").innerHTML = beskrivelse + tour.description + "<br>"
-        document.getElementById("attraction-interestPoints").innerHTML = maxMembers + tour.maxMembers + "<br>"
+        const interestPoints = "Turens interesse emner: <br>"
+        const maxMembers = "Max deltagere: "
+        const duration = "Turen varer : "
+
+        let interestPointsValue = ""
+        const length = localTCache.findById(tour.id).attractions.length
+        console.log(length)
+        localTCache.findById(tour.id).attractions.forEach(a => {
+            for(let i = 0; i < Object.keys(a.attractions).length; i++) {
+                if (a.attractions[i] !== length && a.attractions.length < 0) {
+                    interestPointsValue += (a.interestPoints) + ", ";
+                } else {
+                    interestPointsValue += (a.interestPoints)
+                }
+            }
+        })
+        //
+        console.log(interestPointsValue)
+        document.getElementById("tour-name").innerHTML = tour.name
+        document.getElementById("tour-interest-points").innerHTML = interestPoints + interestPointsValue
+        document.getElementById("tour-maxMembers").innerHTML = maxMembers + tour.maxMembers
+        document.getElementById("tour-duration").innerHTML = duration + tour.duration + "min"
+        document.getElementById("tour-description").innerHTML = beskrivelse + tour.description + "<br>"
         //document.getElementById("attraction-map").innerHTML = tour.duration + "<br>"
-        document.getElementById("attraction-timeToBoat").innerHTML = duration + tour.duration + " min"
         myModal.show()
     }
 }
@@ -188,7 +206,7 @@ function showTourModal(tour) {
          }
     }
 
-function saveTour() {
+    function saveTour() {
     const tour = {}
     tour.id = Number(document.getElementById("tour-id-t").innerText)
     tour.name = document.getElementById("input-name-t").value
@@ -229,7 +247,7 @@ function saveTour() {
 }
 
 
-function fetchTour() {
+    function fetchTour() {
     fetch(SERVER_URL_TOURS)
         .then(res => res.json())
         .then(data=> {
@@ -238,12 +256,12 @@ function fetchTour() {
         })
 }
 
-const localTCache = localTourCache();
-fetchTour()
+    const localTCache = localTourCache();
+    fetchTour()
 
 
 
-function encode(str) {
+    function encode(str) {
     str = ""+str
     str = str.replace(/&/g, "&amp;");
     str = str.replace(/>/g, "&gt;");

@@ -14,7 +14,7 @@ import system.Repository.TourRepo;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
+//@Configuration
 public class DatabaseSetup implements CommandLineRunner {
 
     TourRepo tourRepo;
