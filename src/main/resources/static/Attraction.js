@@ -131,8 +131,8 @@ function filterTableA() {
             document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
             if(document.getElementById("lego") !== null){
                 document.getElementById("lego").onclick = showAttractionModal
-            }if(document.getElementById("interestPointsAttraction") !== null) {
-            document.getElementById("interestPointsAttraction").onchange = filterTableA
+            }if(document.getElementById("interest-points-attraction") !== null) {
+            document.getElementById("interest-points-attraction").onchange = filterTableA
             }
         }
     }
