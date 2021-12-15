@@ -77,7 +77,7 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
     }
 }*/
 function filterTableA() {
-    const optionValue = document.getElementById("interestPointsAttraction").value
+    const optionValue = document.getElementById("interest-points-attraction").value
     const matches = localACache.getAll().filter(a => {
         if (a.interestPoints === optionValue) {
             return true
@@ -131,7 +131,7 @@ function filterTableA() {
             document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
             if(document.getElementById("lego") !== null){
                 document.getElementById("lego").onclick = showAttractionModal
-            }if(document.getElementById("interestPoints") !== null) {
+            }if(document.getElementById("interestPointsAttraction") !== null) {
             document.getElementById("interestPointsAttraction").onchange = filterTableA
             }
         }
@@ -208,7 +208,7 @@ function showAttractionModal(attraction) {
         //const myModal = new Modal(document.getElementById('attraction-modal-index'))
         const beskrivelse = "Beskrivelse: <br>"
         const interessePoint = "Interesse punkter: "
-        const est = "Estimeret tid det tager at gå til båden: "
+        const est = "Estimeret tid det tager <br> at gå til båden: "
         document.getElementById("attraction-name").innerHTML = attraction.name
         document.getElementById("attraction-description").innerHTML = beskrivelse + attraction.description + "<br>"
         document.getElementById("attraction-interestPoints").innerHTML = interessePoint + attraction.interestPoints + "<br>"
@@ -224,10 +224,13 @@ function showAttractionModal(attraction) {
 
 function attractionOnMap(a){
     let latLng = new L.LatLng(a.latitude, a.longtitude)
-    //modalMap.invalidateSize()
-    //map.panTo([a.latitude, a.longtitude])
-    modalMap.panTo([a.latitude, a.longtitude])
+
     modalMarker.setLatLng(latLng)
+
+    modalMap.setView([a.latitude, a.longtitude])
+
+    //modalMap.panTo([a.latitude, a.longtitude])
+
 }
 
 //GEM ATTRAKTION ALT EFTER OM DET ER EDIT ELLER SAVE

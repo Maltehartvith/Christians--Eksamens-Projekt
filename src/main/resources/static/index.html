@@ -151,32 +151,33 @@
 
             </div>
 
-        <div class="modal-body">
-            <div class="mb-3">
-                <div id="tour-description"></div>
-                <br>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <div id="tour-map" style="width:300px; height: 300px;"></div>
-                        </td>
-                        <td style="vertical-align: top">
-                            <div id="tour-image"></div>
-                            <br>
-                            <div id="tour-sound"></div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div id="tour-description"></div>
+                    <br>
+                    <div id="tour-attraction"></div>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div id="tour-map" style="width:300px; height: 300px;"></div>
+                            </td>
+                            <td style="vertical-align: top">
+                                <div id="tour-image"></div>
+                                <br>
+                                <div id="tour-sound"></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Luk</button>
+
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Luk</button>
-
-        </div>
     </div>
-</div>
 </div>
 <!-------------------------------------------MODAL TIL ATTRACTION------------------------------------------------------>
 <div class="modal fade" id="attraction-modal-index" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -184,19 +185,35 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="col-8">
-                    <h5 class="modal-title" id="attraction-name">Attraction title</h5>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg">
+                            <h5 class="modal-title" id="attraction-name">Attraction title</h5>
 
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                style="margin: 2px"></button>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p id="attraction-interestPoints"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p id="attraction-timeToBoat" style="font-size: 14px "></p>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                    <p id="attraction-timeToBoat" style="text-align: center"></p>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        style="margin: 2px"></button>
+
             </div>
+
             <div class="modal-body">
                 <div class="mb-3">
-                    <p id="attraction-interestPoints" style="vertical-align: bottom"></p>
+
                     <div id="attraction-description"></div>
                     <br>
                     <table>
@@ -279,10 +296,21 @@
     let attractions = []
     let markers = []
 
+    let modalMarker = L.marker(startCoords, {title: "Attraction"})
     let modalMap = L.map('attraction-map').setView(startCoords, 16)
-    L.tileLayer(tileUrl, {attribution/*, minZoom: 16*/}).addTo(modalMap)
-    let modalMarker = L.marker(startCoords, {title: "Attraction"}).addTo(modalMap)
 
+/*    const data = document.querySelector('#electric-cars');
+    L.tileLayer(tileUrl, {attribution/!*, minZoom: 16*!/}).addTo(modalMap)
+    modalMarker.addTo(modalMap)
+    document.getElementById("mybutton").onclick = function () {
+        document.getElementById('mymodal').style.display = 'block';
+        setTimeout(function() {
+            modalMap.invalidateSize();
+
+            attractionOnMap(attraction.findById())
+        }, 100);
+    }
+    */
     let route0_coords = [
         [55.320783, 15.186147],
         [55.320865, 15.186308],
