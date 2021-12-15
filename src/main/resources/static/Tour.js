@@ -176,22 +176,12 @@ function showTourModal(tour) {
 
         let interestPointsValue = ""
         let length = tour.attractions.length
-//
-        for (let i = 0; i < length - 1; i++) {
-            for (let j = 0; j < i; j++) {
-                if (tour.attractions[i].interestPoints !== tour.attractions[j].interestPoints) {
-                    interestPointsValue += tour.attractions[j].interestPoints + ", ";
-
-                }
-                if (length != 0) {
-                    interestPointsValue += tour.attractions[length - 1].interestPoints;
-
-                } else {
-                    interestPointsValue = "Der er ingen interesse punkter"
-                }
-            }
+        let mySet = new Set;
+        for (let i = 0; i < length; i++) {
+                mySet.add(tour.attractions[i].interestPoints);
         }
-        console.log(interestPointsValue)
+        let myArr = Array.from(mySet)
+        interestPointsValue = myArr.join(", ")
 
         const beskrivelse = "Beskrivelse: <br>"
         const interestPoints = "Turens interesse emner: <br>"
