@@ -91,12 +91,12 @@
                     <h2 class="h2"> Routes</h2>
                 </div>
                 <div id="route-content">
-                    <button id="route-edit" onclick="enableRouteEdit()" class="btn btn-primary">Ny Rute</button>
+                    <button id="route-edit" onclick="enableRouteCreation()" class="btn btn-primary">Ny Rute</button>
                     <table id="route-list">
                         <tr id="route0">
                             <td>Rute 0</td>
                             <td>
-                                <button id="route0Button" onclick="showRoute(0)" class="btn btn-primary">Vis</button>
+                                <button id="route-0-button" onclick="showRoute(0)" class="btn btn-primary">Vis</button>
                             </td>
                         </tr>
                     </table>
@@ -301,20 +301,6 @@
     let route0 = L.polyline(route0_coords, {color: 'red'})
     let routes = [route0]
 
-    function showRoute(routeIndex) {
-        routes[routeIndex].addTo(map)
-        let button = document.getElementById("route" + routeIndex + "Button")
-        button.onclick = () => hideRoute(routeIndex)
-        button.innerText = "Skjul"
-    }
-
-    function hideRoute(routeIndex) {
-        routes[routeIndex].remove()
-        let button = document.getElementById("route" + routeIndex + "Button")
-        button.onclick = () => showRoute(routeIndex)
-        button.innerText = "Vis"
-    }
-
     function attractionToMarker(attraction) {
         let coords = [attraction.latitude, attraction.longtitude]
         let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
@@ -330,14 +316,14 @@
 
     let workRoute = L.polyline([], {color: 'red'})
 
-    function enableRouteEdit() {
+    function enableRouteCreation() {
         workRoute = L.polyline([], {color: 'red'})
         workRoute.addTo(map)
         map.on("click", (e) => {
             let coords = map.mouseEventToLatLng(e.originalEvent)
             workRoute.addLatLng([coords.lat, coords.lng])
         })
-        let button = document.getElementById("routeEdit")
+        let button = document.getElementById("route-edit")
         button.onclick = saveWorkRoute
         button.innerText = "Gem Rute"
     }
@@ -348,16 +334,30 @@
         map.removeLayer(workRoute)
         let newIndex = routes.length
         routes.push(workRoute)
-        let button = document.getElementById("routeEdit")
-        button.onclick = enableRouteEdit
+        let button = document.getElementById("route-edit")
+        button.onclick = enableRouteCreation
         button.innerText = "Ny Rute"
-        let routeList = document.getElementById("routeList")
+        let routeList = document.getElementById("route-list")
         routeList.innerHTML += `<tr id="route${newIndex}">
                     <td>Rute ${newIndex}</td>
                     <td>
-                        <button id="route${newIndex}Button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
+                        <button id="route-${newIndex}-button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
                     </td>
                 </tr>`
+    }
+
+    function showRoute(routeIndex){
+        routes[routeIndex].addTo(map)
+        let button= document.getElementById("route-"+routeIndex+"-button")
+        button.onclick=()=>hideRoute(routeIndex)
+        button.innerText="Skjul"
+    }
+
+    function hideRoute(routeIndex){
+        map.removeLayer(routes[routeIndex])
+        let button= document.getElementById("route-"+routeIndex+"-button")
+        button.onclick=()=>showRoute(routeIndex)
+        button.innerText="Vis"
     }
 </script>
 </html>
