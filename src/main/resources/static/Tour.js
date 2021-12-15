@@ -43,12 +43,22 @@ function makeTourRows() {
     }
 }
 function filterTable(optionValue) {
-    const match = localTCache.getAll().filter(t => t.attractions.interestPoints === optionValue)
+
+    const lol = localTCache.findById(149).attractions.interestPoints
+    console.log(optionValue, lol)
+    const matches = localTCache.getAll().filter(t => {
+        for(let i = 0; i < t.attractions.length; i++){
+            if(t.attractions[i].interestPoints === optionValue){
+                return true
+            }
+        }
+        return false
+    })
     console.log("dnaksjfnkjasndkajsndadnakjsn")
     //Kan man ikke sætte tourRow ind her?
-    const row = match.map(m => `
+    const row = matches.map(m => `
         <tr> 
-        <td><button id="tour-info" type="button" data-id-get='${t.id}' class="btn btn-primary" 
+        <td><button id="tour-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(m.name)}</td>
            <td>${encode(m.description)}</td>
@@ -179,7 +189,7 @@ function showTourModal(tour) {
     function makeRowsSetSelected(tour){
          for (let i = 0, iLen= tour.attractions.length; i < iLen; i++){
              let aID = tour.attractions[i].id
-             document.getElementById("attraction-"+aID).selected = true
+             document.getElementById("attraction-"+aID).checked = true
          }
     }
 
