@@ -76,17 +76,26 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         }
     }
 }*/
-function filterTable(optionValue) {
-
-    const match = localACache.getAll().filter(a => a.interestPoints === optionValue)
-    document.getElementById("tour-table-body").innerHTML = match.map(m => `
+function filterTableA() {
+    const optionValue = document.getElementById("interestPointsAttraction").value
+    const matches = localACache.getAll().filter(a => {
+        if (a.interestPoints === optionValue) {
+            return true
+        } else {
+            return false
+        }
+    })
+    const row = matches.map(m => `
         <tr> 
+        <td><button id="tour-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
+         data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(m.name)}</td>
-           <td>${encode(m.description)}</td>
-           <td>${m.maxMembers}</td>
-           <td>${m.duration}</td>
+           <td>${encode(m.interestPoints)}</td>
+           <td>${m.timeToBoat}</td>
+          
          </tr>
         `)
+    document.getElementById("attraction-table-body-index").innerHTML = row.join("")
 }
 
     //METODE OVER LOCAL CACHE - INDEHOLDER FORSKELLIGE METODER
@@ -122,6 +131,8 @@ function filterTable(optionValue) {
             document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
             if(document.getElementById("lego") !== null){
                 document.getElementById("lego").onclick = showAttractionModal
+            }if(document.getElementById("interestPoints") !== null) {
+            document.getElementById("interestPointsAttraction").onchange = filterTableA
             }
         }
     }
