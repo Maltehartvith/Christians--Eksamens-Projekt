@@ -51,6 +51,17 @@ public class Attraction extends Object {
         this.timeToBoat = timeToBoat;
     }
 
+    public Attraction(Long id, String name, String description, String interestPoints, double latitude, double longtitude, int timeToBoat, String imagefilename) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.interestPoints = interestPoints;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
+        this.timeToBoat = timeToBoat;
+        this.imagefilename = imagefilename;
+    }
+
     public Attraction(Long id, String name, String description, String interestPoints, double latitude, double longtitude, int timeToBoat, String imagefilename, String soundfilename) {
         this.id = id;
         this.name = name;
