@@ -184,8 +184,7 @@
         }
         if(length != 0){
             interestPointsValue += tour.attractions[length - 1].interestPoints;
-        }
-        if(length == 0){
+        }else{
             interestPointsValue = "Der er ingen interesse punkter"
         }
         console.log(interestPointsValue)
