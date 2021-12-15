@@ -53,7 +53,7 @@ function filterTable() {
     //Kan man ikke sætte tourRow ind her?
     const row = match.map(t => `
         <tr> 
-        <td><button id="tour-info" type="button" data-id-get='${t.id}' class="btn btn-primary" 
+        <td><button id="tour-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(t.name)}</td>
            <td>${encode(t.description)}</td>
