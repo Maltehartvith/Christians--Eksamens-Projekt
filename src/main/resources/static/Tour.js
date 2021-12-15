@@ -190,7 +190,7 @@ function showTourModal(tour) {
                 interestPointsValue = "Der er ingen interesse punkter"
             }
         }
-    }
+        console.log(interestPointsValue)
 
         const beskrivelse = "Beskrivelse: <br>"
         const interestPoints = "Turens interesse emner: <br>"
