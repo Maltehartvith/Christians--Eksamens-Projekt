@@ -42,18 +42,23 @@ function makeTourRows() {
         document.getElementById("tour-table-body").innerHTML =  rows.join("")
     }
 }
-function filterTable(optionValue) {
-    const match = localTCache.getAll().filter(t => t.attractions.interestPoints === optionValue)
-    console.log("dnaksjfnkjasndkajsndadnakjsn")
+function filterTable() {
+    const optionValue = document.getElementById("interestPoints").value
+    const match = localTCache.getAll().filter(t => {
+        for(i in t.attractions)
+            if(t.attractions[i].interestPoints == optionValue) return true
+        return false
+    })
+    console.log("Filtering tours with interestpoint: "+optionValue)
     //Kan man ikke sætte tourRow ind her?
-    const row = match.map(m => `
+    const row = match.map(t => `
         <tr> 
         <td><button id="tour-info" type="button" data-id-get='${t.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
-           <td>${encode(m.name)}</td>
-           <td>${encode(m.description)}</td>
-           <td>${m.maxMembers}</td>
-           <td>${m.duration}</td>
+           <td>${encode(t.name)}</td>
+           <td>${encode(t.description)}</td>
+           <td>${t.maxMembers}</td>
+           <td>${t.duration}</td>
          </tr>
         `)
     document.getElementById("tour-table-body").innerHTML = row.join("")
