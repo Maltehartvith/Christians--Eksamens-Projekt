@@ -55,7 +55,7 @@ function filterTable() {
     })
     const row = matches.map(m => `
         <tr> 
-        <td><button id="tour-info-${t.id}" type="button" data-id-get='${t.id}' class="btn btn-primary" 
+        <td><button id="tour-info-${m.id}" type="button" data-id-get='${m.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(m.name)}</td>
            <td>${encode(m.description)}</td>
