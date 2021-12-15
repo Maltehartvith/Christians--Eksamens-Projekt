@@ -52,7 +52,7 @@ const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
         }else if (document.title === "Map"){
             const rows = localACache.getAll().map(a => `
          <tr>
-           <td><button id="lego" type="button" data-id-get='${a.id}' class="btn btn-primary" data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
+           <td><button id="attraction-info-${a.id}" onclick="resetMap()" type="button" data-id-get='${a.id}' class="btn btn-primary" data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(a.name)}</td>
            <td>${encode(a.interestPoints)}</td>
            <br>
@@ -87,7 +87,7 @@ function filterTableA() {
     })
     const row = matches.map(m => `
         <tr> 
-        <td><button id="tour-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
+        <td><button id="attraction-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(m.name)}</td>
            <td>${encode(m.interestPoints)}</td>

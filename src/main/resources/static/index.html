@@ -298,19 +298,17 @@
 
     let modalMarker = L.marker(startCoords, {title: "Attraction"})
     let modalMap = L.map('attraction-map').setView(startCoords, 16)
+    L.tileLayer(tileUrl, {attribution/*, minZoom: 16*/}).addTo(modalMap)
 
-/*    const data = document.querySelector('#electric-cars');
-    L.tileLayer(tileUrl, {attribution/!*, minZoom: 16*!/}).addTo(modalMap)
     modalMarker.addTo(modalMap)
-    document.getElementById("mybutton").onclick = function () {
-        document.getElementById('mymodal').style.display = 'block';
+
+    function resetMap() {
+        document.getElementById('attraction-modal-index').style.display = 'block';
         setTimeout(function() {
             modalMap.invalidateSize();
-
-            attractionOnMap(attraction.findById())
         }, 100);
     }
-    */
+
     let route0_coords = [
         [55.320783, 15.186147],
         [55.320865, 15.186308],
