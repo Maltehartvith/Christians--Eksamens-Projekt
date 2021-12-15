@@ -91,3 +91,13 @@ li a:hover:not(.active) {
 #tour-content, #attraction-content{
     display:none
 }
+
+#tour-name, #tour-maxMembers, #tour-duration{
+    text-align: center;
+    border: 1px solid #948c8c;
+    border-radius: 5px;
+}
+#tour-interest-points{
+    text-align: center;
+}
+

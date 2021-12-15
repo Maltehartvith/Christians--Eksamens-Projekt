@@ -53,7 +53,7 @@ function filterTable() {
     //Kan man ikke sætte tourRow ind her?
     const row = match.map(t => `
         <tr> 
-        <td><button id="tour-info" type="button" data-id-get='${m.id}' class="btn btn-primary" 
+        <td><button id="tour-info-${t.id}" type="button" data-id-get='${t.id}' class="btn btn-primary" 
          data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(t.name)}</td>
            <td>${encode(t.description)}</td>
@@ -168,16 +168,32 @@ function showTourModal(tour) {
         }
         myModal.show()
     }else if (document.title === "Map"){
-        const myModal = new bootstrap.Modal(document.getElementById('attraction-modal-index'))
+        const myModal = new bootstrap.Modal(document.getElementById('tour-modal-index'))
 
         const beskrivelse = "Beskrivelse: <br>"
-        const maxMembers = "Max deltagere: <br>"
-        const duration = "Turen varer : <br>"
-        document.getElementById("attraction-name").innerHTML = tour.name
-        document.getElementById("attraction-description").innerHTML = beskrivelse + tour.description + "<br>"
-        document.getElementById("attraction-interestPoints").innerHTML = maxMembers + tour.maxMembers + "<br>"
+        const interestPoints = "Turens interesse emner: <br>"
+        const maxMembers = "Max deltagere: "
+        const duration = "Turen varer : "
+
+        let interestPointsValue = ""
+        const length = localTCache.findById(tour.id).attractions.length
+        console.log(length)
+        localTCache.findById(tour.id).attractions.forEach(a => {
+            for(let i = 0; i < Object.keys(a.attractions).length; i++) {
+                if (a.attractions[i] !== length && a.attractions.length < 0) {
+                    interestPointsValue += (a.interestPoints) + ", ";
+                } else {
+                    interestPointsValue += (a.interestPoints)
+                }
+            }
+        })
+        console.log(interestPointsValue)
+        document.getElementById("tour-name").innerHTML = tour.name
+        document.getElementById("tour-interest-points").innerHTML = interestPoints + interestPointsValue
+        document.getElementById("tour-maxMembers").innerHTML = maxMembers + tour.maxMembers
+        document.getElementById("tour-duration").innerHTML = duration + tour.duration + "min"
+        document.getElementById("tour-description").innerHTML = beskrivelse + tour.description + "<br>"
         //document.getElementById("attraction-map").innerHTML = tour.duration + "<br>"
-        document.getElementById("attraction-timeToBoat").innerHTML = duration + tour.duration + " min"
         myModal.show()
     }
 }
