@@ -190,7 +190,7 @@
         }
         console.log(interestPointsValue)
 
-        //
+
         console.log(interestPointsValue)
         document.getElementById("tour-name").innerHTML = tour.name
         document.getElementById("tour-interest-points").innerHTML = interestPoints + interestPointsValue
