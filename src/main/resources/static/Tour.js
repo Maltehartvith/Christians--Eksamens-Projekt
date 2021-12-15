@@ -179,7 +179,7 @@ function showTourModal(tour) {
     function makeRowsSetSelected(tour){
          for (let i = 0, iLen= tour.attractions.length; i < iLen; i++){
              let aID = tour.attractions[i].id
-             document.getElementById("attraction-"+aID).selected = true
+             document.getElementById("attraction-"+aID).checked = true
          }
     }
 
