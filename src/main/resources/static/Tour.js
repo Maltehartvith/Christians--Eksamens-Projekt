@@ -44,7 +44,6 @@ function makeTourRows() {
 }
 function filterTable(optionValue) {
 
-    const lol = localTCache.findById(149).attractions.interestPoints
     console.log(optionValue, lol)
     const matches = localTCache.getAll().filter(t => {
         for(let i = 0; i < t.attractions.length; i++){
