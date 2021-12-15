@@ -92,12 +92,15 @@ li a:hover:not(.active) {
     display:none
 }
 
-#tour-name, #tour-maxMembers, #tour-duration{
+#tour-name, #tour-maxMembers, #tour-duration, #attraction-name{
     text-align: center;
     border: 1px solid #948c8c;
     border-radius: 5px;
 }
-#tour-interest-points{
+#tour-interest-points, #attraction-interestPoints{
     text-align: center;
+}
+#attraction-timeToBoat{
+
 }
 
