@@ -179,15 +179,16 @@ function showTourModal(tour) {
 
         for (let i = 0; i < length - 1; i++) {
             for (let j = 0; j < i; j++) {
-                if(tour.attractions[i].interestPoints !== tour.attractions[j].interestPoints){
-                interestPointsValue += tour.attractions[j].interestPoints + ", ";
+                if (tour.attractions[i].interestPoints !== tour.attractions[j].interestPoints) {
+                    interestPointsValue += tour.attractions[j].interestPoints + ", ";
 
-            }
-            if (length != 0) {
-                interestPointsValue += tour.attractions[length - 1].interestPoints;
-
-            }else{
-                interestPointsValue = "Der er ingen interesse punkter"
+                }
+                if (length != 0) {
+                    interestPointsValue += tour.attractions[length - 1].interestPoints;
+//
+                } else {
+                    interestPointsValue = "Der er ingen interesse punkter"
+                }
             }
         }
         console.log(interestPointsValue)
