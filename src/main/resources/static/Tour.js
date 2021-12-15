@@ -176,7 +176,7 @@ function showTourModal(tour) {
 
         let interestPointsValue = ""
         let length = tour.attractions.length
-
+//
         for (let i = 0; i < length - 1; i++) {
             for (let j = 0; j < i; j++) {
                 if (tour.attractions[i].interestPoints !== tour.attractions[j].interestPoints) {
