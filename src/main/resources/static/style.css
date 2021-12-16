@@ -3,6 +3,10 @@
     height: 600px;
 }
 #map {  top:0; bottom:0; width:600px; height: 650px }
+#attraction-map{
+    height: 300px;
+    width: 300px;
+}
 
 #data-cell {
     vertical-align: top;
@@ -103,4 +107,5 @@ li a:hover:not(.active) {
 #attraction-timeToBoat{
 
 }
+
 

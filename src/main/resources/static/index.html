@@ -217,6 +217,7 @@
                     <div class="row">
                         <div class="col">
                             <p id="attraction-timeToBoat" style="font-size: 14px "></p>
+                            <button type="button" onclick="distanceToBoat()" id="button-to-boat">knap</button>
                         </div>
                         <div class="col">
 
@@ -305,31 +306,59 @@
     //Denne linje sørger for at leaflet viser din position
     //let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
     let accesstoken = L.mapbox.accessToken = 'pk.eyJ1IjoibWFsdGVoYXJ0dml0aCIsImEiOiJja3g4empjOTMxbW9pMnJvNTh4YXpxYThwIn0.wLiLsRfoWYK_mvQlFO4j-g';
+    let accesstoken2 = L.mapbox.accessToken = 'pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ';
     //pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ
+    //--------------------------------------MAPBOXTILES TIL INDEX MAPPET SAMT MAP---------------------------------------
     let mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken, {
         attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+
+    });
+
+    let map = L.map('map', {
         tileSize: 512,
         zoomOffset: -1,
         zoom: 16,
         center: [55.3205449, 15.1883541]
-    });
-
-    let map = L.map('map')
+    })
         .addLayer(mapboxTiles)
     L.Routing.control({
         router: L.Routing.mapbox(L.mapbox.accessToken, {
             profile: 'mapbox/walking',
             language: 'da',
         }),
+        show: false,
         waypoints: [],
+        //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
     }).addTo(map);
     map.setZoom(16)
     map.setView(startCoords)
 
+//----------------------------------------------MAPBOXTILES TIL MODAL SAMT MAP------------------------------------------
+    let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken, {
+        attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+
+    });
+
+    let modalMap = L.map('attraction-map', {
+        tileSize: 300,
+        zoomOffset: -1,
+        zoom: 16,
+        center: [55.3205449, 15.1883541]
+    })
+        .addLayer(mapboxTiles2)
+    L.Routing.control({
+        router: L.Routing.mapbox(L.mapbox.accessToken, {
+            profile: 'mapbox/walking',
+            language: 'da',
+        }),
+        show: false,
+        waypoints: [],
+    }).addTo(modalMap);
+    modalMap.setZoom(16)
     let attractions = []
     let markers = []
 
-    let modalMap = L.map('attraction-map').setView(startCoords, 16)
+
     let modalMarker = L.marker(startCoords, {title: "Attraction"}).addTo(modalMap)
     //L.tileLayer(mapboxTiles).addTo(modalMap)
 
@@ -339,7 +368,7 @@
         document.getElementById('attraction-modal-index').style.display = 'block';
         setTimeout(function () {
             modalMap.invalidateSize();
-        }, 1000);
+        }, 100)
     }
 
     let route0_coords = [
@@ -420,6 +449,15 @@
         let button = document.getElementById("route-" + routeIndex + "-button")
         button.onclick = () => showRoute(routeIndex)
         button.innerText = "Vis"
+    }
+    function distanceToBoat(){
+        //Der skal hives fat i den markør som allerede eksisterende koordinater hvor denne så skal sættes på
+        //modalMap.setWaypoints({latLng: L.latLng([55.320768, 15.186081])})
+
+        //v virker til at sætte et koordinat ind, men kan ikke få den til at lave en rute
+        //https://stackoverflow.com/questions/62648150/how-to-implement-open-route-service-in-leaflet side hvor en får det til at fungere
+        //L.marker([55.320768, 15.186081]).addTo(modalMap)
+
     }
 </script>
 
