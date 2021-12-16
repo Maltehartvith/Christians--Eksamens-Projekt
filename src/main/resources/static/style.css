@@ -1,8 +1,8 @@
-#map, #menu {
+#menu {
     width: 600px;
     height: 600px;
 }
-
+#map {  top:0; bottom:0; width:600px; height: 650px }
 
 #data-cell {
     vertical-align: top;
