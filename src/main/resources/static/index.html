@@ -25,11 +25,11 @@
 </head>
 <body class="container">
 <script src="showAndHide.js"></script>
-
+<!-------------------------------------------------OVERSKRIFT-------------------------------------------------->
 <br/>
 <h1 class="h1"> Christians &Oslash; eksamensprojekt</h1>
 <br/>
-
+<!-------------------------------------------------TOP MENU-------------------------------------------------->
 <ul>
     <li><a class="active" href="index.html" accesskey="k">Kort / index</a></li>
     <li><a href="login.html" accesskey="a">Admin</a></li>
@@ -37,11 +37,12 @@
 </ul>
 
 <br>
+<!-------------------------------------------------MENUES-------------------------------------------------->
 <table class="table">
     <tr>
         <td id="menu" rowspan="2" style="border: 1px solid black; width: 678px">
             <h2 class="h1">Menu</h2>
-
+<!-------------------------------------------------TOUR MENU-------------------------------------------------->
             <div id="tour-div">
                 <div id="tours-header-index" onclick="showTours()" aria-colspan="2">
                     <h2 class="h2" id="tours-header">Tours &darr;</h2>
@@ -72,6 +73,7 @@
                 </div>
             </div>
             <br/>
+<!-------------------------------------------------ATTRACTIOM MENU-------------------------------------------------->
             <div id="attraction-div">
                 <div id="attraction-header-index" onclick="showAttractions()">
                     <h2 class="h2" id="attraction-header">Attractions &darr;</h2>
@@ -99,7 +101,7 @@
                     </table>
                 </div>
             </div>
-
+<!-------------------------------------------------ROUTE MENU-------------------------------------------------->
             <br/>
             <div id="route-div" style="overflow: scroll">
                 <div id="route-header-index">
@@ -118,6 +120,7 @@
                 </div>
             </div>
             <br/>
+<!-------------------------------------------------BOAT MENU-------------------------------------------------->
             <div id="boatDiv">
                 <h2 class="h2"> Tid til b&aring;den kommer</h2>
                 <label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
@@ -127,6 +130,7 @@
                 <h2>Tid til afgang: <label id="countDown"></label></h2>
             </div>
         </td>
+<!-------------------------------------------------MAP-------------------------------------------------->
         <td>
             <div id="map"></div>
         </td>
@@ -261,12 +265,12 @@
 
 <script src="Attraction.js" type="module"></script>
 
-<script>
+<script> //----------------- KODE TIL BÅDEN ----------------------------------
 
     //UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
     let departure
 
-    function calculateTime() {
+    function calculateTime(){
         clearInterval()
         let inputTime = document.getElementById("boatTimeInput").value
         let arival = parseTime(inputTime)
@@ -297,7 +301,7 @@
     }
 
 </script>
-<script>
+<script> //----------------- KODE TIL KORTET, MARKØRER OG RUTER ----------------------------------
 
     //SCRIPT TIL KORT OG FUNKTIONER TIL KORT
     let startCoords = [55.3205449, 15.1883541]
@@ -316,13 +320,7 @@
 
     let map = L.map('map')
         .addLayer(mapboxTiles)
-    L.Routing.control({
-        router: L.Routing.mapbox(L.mapbox.accessToken, {
-            profile: 'mapbox/walking',
-            language: 'da',
-        }),
-        waypoints: [],
-    }).addTo(map);
+
     map.setZoom(16)
     map.setView(startCoords)
 
@@ -342,6 +340,23 @@
         }, 1000);
     }
 
+    function attractionToMarker(attraction) {
+        let coords = [attraction.latitude, attraction.longtitude]
+        let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
+        let marker = L.marker(coords, {title: attraction.name})
+            .on('click', () => {
+                //document.getElementById("data-cell").innerHTML=attractionToHTML(attraction)
+                /*indsæt modal kald*/
+            })
+            .addTo(map)
+            .bindPopup(popup).openPopup()
+        markers.push(marker)
+    }
+
+</script>
+<script>//KODE TIL RUTE MENUEN
+
+    //KOORDINATER TIL RUTE 0
     let route0_coords = [
         [55.320783, 15.186147],
         [55.320865, 15.186308],
@@ -358,25 +373,21 @@
         [55.320229, 15.186411]
     ]
 
-
+    //EN HARDCODET RUTE
     let route0 = L.polyline(route0_coords, {color: 'red'})
+    //LOKAL CASHE FOR RUTER
     let routes = [route0]
-
-    function attractionToMarker(attraction) {
-        let coords = [attraction.latitude, attraction.longtitude]
-        let popup = L.popup().setContent(`<b>${attraction.name}</b>`)
-        let marker = L.marker(coords, {title: attraction.name})
-            .on('click', () => {
-                //document.getElementById("data-cell").innerHTML=attractionToHTML(attraction)
-                /*indsæt modal kald*/
-            })
-            .addTo(map)
-            .bindPopup(popup).openPopup()
-        markers.push(marker)
-    }
-
+    //RUTEN DER KAN
     let workRoute = L.polyline([], {color: 'red'})
 
+
+    L.Routing.control({
+        router: L.Routing.mapbox(L.mapbox.accessToken, {
+            profile: 'mapbox/walking',
+            language: 'da',
+        }),
+        waypoints: [[55.3194966, 15.1914682],[55.320772, 15.186001]],
+    }).addTo(map);
 
     function enableRouteCreation() {
         workRoute = L.polyline([], {color: 'red'})
@@ -391,8 +402,7 @@
     }
 
     function saveWorkRoute() {
-        document.getElementById("map").onclick = () => {
-        }
+        document.getElementById("map").onclick = () => {}
         map.removeLayer(workRoute)
         let newIndex = routes.length
         routes.push(workRoute)
@@ -421,10 +431,6 @@
         button.onclick = () => showRoute(routeIndex)
         button.innerText = "Vis"
     }
-</script>
-
-<script>
-
 </script>
 </body>
 </html>
