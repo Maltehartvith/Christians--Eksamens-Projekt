@@ -317,7 +317,6 @@
         attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 
     });
-
     let map = L.map('map', {
         tileSize: 512,
         zoomOffset: -1,
@@ -332,11 +331,32 @@
         }),
         show: false,
         waypoints: [],
-        //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
     }).addTo(map);
     map.setZoom(16)
     map.setView(startCoords)
+//--------------------------------------MAPBOXTILES TIL MODAL MAPPET SAMT MAP---------------------------------------
+let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken2, {
+    attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 
+});
+let modalMap = L.map('attraction-map', {
+    tileSize: 300,
+    zoomOffset: -1,
+    zoom: 16,
+    center: [55.3205449, 15.1883541]
+})
+    .addLayer(mapboxTiles2)
+L.Routing.control({
+    router: L.Routing.mapbox(L.mapbox.accessToken, {
+        profile: 'mapbox/walking',
+        language: 'da',
+    }),
+    show: false,
+    waypoints: [],
+    //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
+}).addTo(map);
+map.setZoom(16)
+map.setView(startCoords)
     let attractions = []
     let markers = []
 
