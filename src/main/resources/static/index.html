@@ -42,7 +42,7 @@
     <tr>
         <td id="menu" rowspan="2" style="border: 1px solid black; width: 678px">
             <h2 class="h1">Menu</h2>
-<!--------------------------------------------------TOUR MENU---------------------------------------------------------->
+            <!--------------------------------------------------TOUR MENU---------------------------------------------------------->
             <div id="tour-div">
                 <div id="tours-header-index" onclick="showTours()" aria-colspan="2">
                     <h2 class="h2" id="tours-header">Tours &darr;</h2>
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <br/>
-<!-----------------------------------------------ATTRACTION MENU------------------------------------------------------->
+            <!-----------------------------------------------ATTRACTION MENU------------------------------------------------------->
             <div id="attraction-div">
                 <div id="attraction-header-index" onclick="showAttractions()">
                     <h2 class="h2" id="attraction-header">Attractions &darr;</h2>
@@ -101,7 +101,7 @@
                     </table>
                 </div>
             </div>
-<!-------------------------------------------------ROUTE MENU---------------------------------------------------------->
+            <!-------------------------------------------------ROUTE MENU---------------------------------------------------------->
             <br/>
             <div id="route-div" style="overflow: scroll">
                 <div id="route-header-index">
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <br/>
-<!--------------------------------------------------BOAT MENU---------------------------------------------------------->
+            <!--------------------------------------------------BOAT MENU---------------------------------------------------------->
             <div id="boatDiv">
                 <h2 class="h2"> Tid til b&aring;den kommer</h2>
                 <label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
@@ -130,7 +130,7 @@
                 <h2>Tid til afgang: <label id="countDown"></label></h2>
             </div>
         </td>
-<!-----------------------------------------------------MAP------------------------------------------------------------->
+        <!-----------------------------------------------------MAP------------------------------------------------------------->
         <td>
             <div id="map"></div>
         </td>
@@ -267,12 +267,12 @@
 <script src="Attraction.js" type="module"></script>
 
 <script>
-//---------------------------------------------- KODE TIL BÅDEN --------------------------------------------------------
+    //---------------------------------------------- KODE TIL BÅDEN --------------------------------------------------------
 
     //UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
     let departure
 
-    function calculateTime(){
+    function calculateTime() {
         clearInterval()
         let inputTime = document.getElementById("boatTimeInput").value
         let arival = parseTime(inputTime)
@@ -304,7 +304,7 @@
 
 </script>
 <script>
-//------------------------------------ KODE TIL KORTET, MARKØRER OG RUTER ----------------------------------------------
+    //------------------------------------ KODE TIL KORTET, MARKØRER OG RUTER ----------------------------------------------
 
     //SCRIPT TIL KORT OG FUNKTIONER TIL KORT
     let startCoords = [55.3205449, 15.1883541]
@@ -332,34 +332,36 @@
             language: 'da',
         }),
         show: false,
+        show: false,
         waypoints: [],
     }).addTo(map);
     map.setZoom(16)
     map.setView(startCoords)
-//--------------------------------------MAPBOXTILES TIL MODAL MAPPET SAMT MAP---------------------------------------
-let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token='
-    + accesstoken2, {
-    attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    //--------------------------------------MAPBOXTILES TIL MODAL MAPPET SAMT MAP---------------------------------------
+    let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token='
+        + accesstoken2, {
+        attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a ' +
+            'href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    });
 
-});
-let modalMap = L.map('attraction-map', {
-    tileSize: 300,
-    zoomOffset: -1,
-    zoom: 16,
-    center: [55.3205449, 15.1883541]
-})
-    .addLayer(mapboxTiles2)
-L.Routing.control({
-    router: L.Routing.mapbox(L.mapbox.accessToken, {
-        profile: 'mapbox/walking',
-        language: 'da',
-    }),
-    show: false,
-    waypoints: [],
-    //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
-}).addTo(map);
-map.setZoom(16)
-map.setView(startCoords)
+    let modalMap = L.map('attraction-map', {
+        tileSize: 300,
+        zoomOffset: -1,
+        zoom: 16,
+        center: [55.3205449, 15.1883541]
+    })
+        .addLayer(mapboxTiles2)
+    L.Routing.control({
+        router: L.Routing.mapbox(L.mapbox.accessToken, {
+            profile: 'mapbox/walking',
+            language: 'da',
+        }),
+        show: false,
+        waypoints: [],
+        //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
+    }).addTo(modalMap);
+    modalMap.setZoom(16)
+    modalMap.setView(startCoords)
 
     let attractions = []
     let markers = []
@@ -393,90 +395,92 @@ map.setView(startCoords)
 </script>
 <script>//KODE TIL RUTE MENUEN
 
-    //KOORDINATER TIL RUTE 0
-    let route0_coords = [
-        [55.320783, 15.186147],
-        [55.320865, 15.186308],
-        [55.320914, 15.186443],
-        [55.320919, 15.187355],
-        [55.320851, 15.187840],
-        [55.321360, 15.189657],
-        [55.320560, 15.189646],
-        [55.320221, 15.189061],
-        [55.319913, 15.189120],
-        [55.319516, 15.188455],
-        [55.319243, 15.187435],
-        [55.319317, 15.186718],
-        [55.320229, 15.186411]
-    ]
+//KOORDINATER TIL RUTE 0
+let route0_coords = [
+    [55.320783, 15.186147],
+    [55.320865, 15.186308],
+    [55.320914, 15.186443],
+    [55.320919, 15.187355],
+    [55.320851, 15.187840],
+    [55.321360, 15.189657],
+    [55.320560, 15.189646],
+    [55.320221, 15.189061],
+    [55.319913, 15.189120],
+    [55.319516, 15.188455],
+    [55.319243, 15.187435],
+    [55.319317, 15.186718],
+    [55.320229, 15.186411]
+]
 
-    //EN HARDCODET RUTE
-    let route0 = L.polyline(route0_coords, {color: 'red'})
-    //LOKAL CASHE FOR RUTER
-    let routes = [route0]
-    //RUTEN DER KAN
-    let workRoute = L.polyline([], {color: 'red'})
+//EN HARDCODET RUTE
+let route0 = L.polyline(route0_coords, {color: 'red'})
+//LOKAL CASHE FOR RUTER
+let routes = [route0]
+//RUTEN DER KAN
+let workRoute = L.polyline([], {color: 'red'})
 
 
-    L.Routing.control({
-        router: L.Routing.mapbox(L.mapbox.accessToken, {
-            profile: 'mapbox/walking',
-            language: 'da',
-        }),
-        waypoints: [[55.3194966, 15.1914682],[55.320772, 15.186001]],
-    }).addTo(map);
+/*L.Routing.control({
+    router: L.Routing.mapbox(L.mapbox.accessToken, {
+        profile: 'mapbox/walking',
+        language: 'da',
+    }),
+    waypoints: [[55.3194966, 15.1914682], [55.320772, 15.186001]],
+}).addTo(map);*/
 
-    function enableRouteCreation() {
-        workRoute = L.polyline([], {color: 'red'})
-        workRoute.addTo(map)
-        map.on("click", (e) => {
-            let coords = map.mouseEventToLatLng(e.originalEvent)
-            workRoute.addLatLng([coords.lat, coords.lng])
-        })
-        let button = document.getElementById("route-edit")
-        button.onclick = saveWorkRoute
-        button.innerText = "Gem Rute"
+function enableRouteCreation() {
+    workRoute = L.polyline([], {color: 'red'})
+    workRoute.addTo(map)
+    map.on("click", (e) => {
+        let coords = map.mouseEventToLatLng(e.originalEvent)
+        workRoute.addLatLng([coords.lat, coords.lng])
+    })
+    let button = document.getElementById("route-edit")
+    button.onclick = saveWorkRoute
+    button.innerText = "Gem Rute"
+}
+
+function saveWorkRoute() {
+    document.getElementById("map").onclick = () => {
     }
-
-    function saveWorkRoute() {
-        document.getElementById("map").onclick = () => {}
-        map.removeLayer(workRoute)
-        let newIndex = routes.length
-        routes.push(workRoute)
-        let button = document.getElementById("route-edit")
-        button.onclick = enableRouteCreation
-        button.innerText = "Ny Rute"
-        let routeList = document.getElementById("route-list")
-        routeList.innerHTML += `<tr id="route${newIndex}">
+    map.removeLayer(workRoute)
+    let newIndex = routes.length
+    routes.push(workRoute)
+    let button = document.getElementById("route-edit")
+    button.onclick = enableRouteCreation
+    button.innerText = "Ny Rute"
+    let routeList = document.getElementById("route-list")
+    routeList.innerHTML += `<tr id="route${newIndex}">
                     <td>Rute ${newIndex}</td>
                     <td>
                         <button id="route-${newIndex}-button" onclick="showRoute(${newIndex})" class="btn btn-primary">Vis</button>
                     </td>
                 </tr>`
-    }
+}
 
-    function showRoute(routeIndex) {
-        routes[routeIndex].addTo(map)
-        let button = document.getElementById("route-" + routeIndex + "-button")
-        button.onclick = () => hideRoute(routeIndex)
-        button.innerText = "Skjul"
-    }
+function showRoute(routeIndex) {
+    routes[routeIndex].addTo(map)
+    let button = document.getElementById("route-" + routeIndex + "-button")
+    button.onclick = () => hideRoute(routeIndex)
+    button.innerText = "Skjul"
+}
 
-    function hideRoute(routeIndex) {
-        map.removeLayer(routes[routeIndex])
-        let button = document.getElementById("route-" + routeIndex + "-button")
-        button.onclick = () => showRoute(routeIndex)
-        button.innerText = "Vis"
-    }
-    function distanceToBoat(){
-        //Der skal hives fat i den markør som allerede eksisterende koordinater hvor denne så skal sættes på
-        //modalMap.setWaypoints({latLng: L.latLng([55.320768, 15.186081])})
+function hideRoute(routeIndex) {
+    map.removeLayer(routes[routeIndex])
+    let button = document.getElementById("route-" + routeIndex + "-button")
+    button.onclick = () => showRoute(routeIndex)
+    button.innerText = "Vis"
+}
 
-        //v virker til at sætte et koordinat ind, men kan ikke få den til at lave en rute
-        //https://stackoverflow.com/questions/62648150/how-to-implement-open-route-service-in-leaflet side hvor en får det til at fungere
-        //L.marker([55.320768, 15.186081]).addTo(modalMap)
+function distanceToBoat() {
+    //Der skal hives fat i den markør som allerede eksisterende koordinater hvor denne så skal sættes på
+    //modalMap.setWaypoints({latLng: L.latLng([55.320768, 15.186081])})
+
+    //v virker til at sætte et koordinat ind, men kan ikke få den til at lave en rute
+    //https://stackoverflow.com/questions/62648150/how-to-implement-open-route-service-in-leaflet side hvor en får det til at fungere
+    //L.marker([55.320768, 15.186081]).addTo(modalMap)
 //
-    }
+}
 </script>
 </body>
 </html>
