@@ -37,12 +37,12 @@
 </ul>
 
 <br>
-<!-------------------------------------------------MENUES-------------------------------------------------->
+<!----------------------------------------------------MENUS------------------------------------------------------------>
 <table class="table">
     <tr>
         <td id="menu" rowspan="2" style="border: 1px solid black; width: 678px">
             <h2 class="h1">Menu</h2>
-<!-------------------------------------------------TOUR MENU-------------------------------------------------->
+<!--------------------------------------------------TOUR MENU---------------------------------------------------------->
             <div id="tour-div">
                 <div id="tours-header-index" onclick="showTours()" aria-colspan="2">
                     <h2 class="h2" id="tours-header">Tours &darr;</h2>
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <br/>
-<!-------------------------------------------------ATTRACTIOM MENU-------------------------------------------------->
+<!-----------------------------------------------ATTRACTION MENU------------------------------------------------------->
             <div id="attraction-div">
                 <div id="attraction-header-index" onclick="showAttractions()">
                     <h2 class="h2" id="attraction-header">Attractions &darr;</h2>
@@ -101,7 +101,7 @@
                     </table>
                 </div>
             </div>
-<!-------------------------------------------------ROUTE MENU-------------------------------------------------->
+<!-------------------------------------------------ROUTE MENU---------------------------------------------------------->
             <br/>
             <div id="route-div" style="overflow: scroll">
                 <div id="route-header-index">
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <br/>
-<!-------------------------------------------------BOAT MENU-------------------------------------------------->
+<!--------------------------------------------------BOAT MENU---------------------------------------------------------->
             <div id="boatDiv">
                 <h2 class="h2"> Tid til b&aring;den kommer</h2>
                 <label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
@@ -130,7 +130,7 @@
                 <h2>Tid til afgang: <label id="countDown"></label></h2>
             </div>
         </td>
-<!-------------------------------------------------MAP-------------------------------------------------->
+<!-----------------------------------------------------MAP------------------------------------------------------------->
         <td>
             <div id="map"></div>
         </td>
@@ -139,7 +139,7 @@
         <td id="data-cell"></td>
     </tr>
 </table>
-<!-------------------------------------------------MODAL TIL TOUR-------------------------------------------------->
+<!-----------------------------------------------MODAL TIL TOUR--------------------------------------------------------->
 <div class="modal fade" id="tour-modal-index" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -198,7 +198,7 @@
         </div>
     </div>
 </div>
-<!-------------------------------------------MODAL TIL ATTRACTION------------------------------------------------------>
+<!--------------------------------------------MODAL TIL ATTRACTION----------------------------------------------------->
 <div class="modal fade" id="attraction-modal-index" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -266,7 +266,8 @@
 
 <script src="Attraction.js" type="module"></script>
 
-<script> //----------------- KODE TIL BÅDEN ----------------------------------
+<script>
+//---------------------------------------------- KODE TIL BÅDEN --------------------------------------------------------
 
     //UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
     let departure
@@ -302,7 +303,8 @@
     }
 
 </script>
-<script> //----------------- KODE TIL KORTET, MARKØRER OG RUTER ----------------------------------
+<script>
+//------------------------------------ KODE TIL KORTET, MARKØRER OG RUTER ----------------------------------------------
 
     //SCRIPT TIL KORT OG FUNKTIONER TIL KORT
     let startCoords = [55.3205449, 15.1883541]
@@ -335,7 +337,8 @@
     map.setZoom(16)
     map.setView(startCoords)
 //--------------------------------------MAPBOXTILES TIL MODAL MAPPET SAMT MAP---------------------------------------
-let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken2, {
+let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token='
+    + accesstoken2, {
     attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 
 });
@@ -357,6 +360,7 @@ L.Routing.control({
 }).addTo(map);
 map.setZoom(16)
 map.setView(startCoords)
+
     let attractions = []
     let markers = []
 
