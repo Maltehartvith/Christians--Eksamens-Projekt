@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <meta charset=utf-8/>
+    <meta charset=utf-8 language="da-DK"/>
     <title>Map</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
@@ -27,11 +27,11 @@
 <script src="showAndHide.js"></script>
 <!-------------------------------------------------OVERSKRIFT-------------------------------------------------->
 <br/>
-<h1 class="h1"> Christians &Oslash; eksamensprojekt</h1>
+<h1 class="h1"> Besøg Christiansø</h1>
 <br/>
 <!-------------------------------------------------TOP MENU-------------------------------------------------->
 <ul>
-    <li><a class="active" href="index.html" accesskey="k">Kort / index</a></li>
+    <li><a class="active" href="index.html" accesskey="k">Kort</a></li>
     <li><a href="login.html" accesskey="a">Admin</a></li>
     <li><a href="aboutUs.html" accesskey="o">Om os</a></li>
 </ul>
@@ -45,7 +45,7 @@
             <!--------------------------------------------------TOUR MENU---------------------------------------------------------->
             <div id="tour-div">
                 <div id="tours-header-index" onclick="showTours()" aria-colspan="2">
-                    <h2 class="h2" id="tours-header">Tours &darr;</h2>
+                    <h2 class="h2" id="tours-header">Ture &darr;</h2>
                 </div>
                 <br><br>
                 <div id="tour-content">
@@ -76,7 +76,7 @@
             <!-----------------------------------------------ATTRACTION MENU------------------------------------------------------->
             <div id="attraction-div">
                 <div id="attraction-header-index" onclick="showAttractions()">
-                    <h2 class="h2" id="attraction-header">Attractions &darr;</h2>
+                    <h2 class="h2" id="attraction-header">Attraktioner &darr;</h2>
                 </div>
                 <div id="attraction-content">
                     <label for="interestPoints">Choose an interest point:</label>
@@ -105,7 +105,7 @@
             <br/>
             <div id="route-div" style="overflow: scroll">
                 <div id="route-header-index">
-                    <h2 class="h2"> Routes</h2>
+                    <h2 class="h2"> Ruter</h2>
                 </div>
                 <div id="route-content">
                     <button id="route-edit" onclick="enableRouteCreation()" class="btn btn-primary">Ny Rute</button>
@@ -315,28 +315,35 @@
     let accesstoken2 = L.mapbox.accessToken = 'pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ';
     //pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ
     //--------------------------------------MAPBOXTILES TIL INDEX MAPPET SAMT MAP---------------------------------------
+    /*let mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken, {
+        attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+
+    });*/
+
     let mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken, {
         attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 
     });
     let map = L.map('map', {
-        tileSize: 512,
-        zoomOffset: -1,
+        tileSize: 256,
+        zoomOffset: 0,
         zoom: 16,
-        center: [55.3205449, 15.1883541]
+        center: [55.3205449, 15.1883541],
+        zoomDelta: 0
     })
         .addLayer(mapboxTiles)
-    L.Routing.control({
+    let control = L.Routing.control({
         router: L.Routing.mapbox(L.mapbox.accessToken, {
             profile: 'mapbox/walking',
             language: 'da',
         }),
         show: false,
-        show: false,
         waypoints: [],
     }).addTo(map);
     map.setZoom(16)
     map.setView(startCoords)
+
+
     //--------------------------------------MAPBOXTILES TIL MODAL MAPPET SAMT MAP---------------------------------------
     let mapboxTiles2 = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token='
         + accesstoken2, {
@@ -351,13 +358,15 @@
         center: [55.3205449, 15.1883541]
     })
         .addLayer(mapboxTiles2)
-    L.Routing.control({
+   let control2 = L.Routing.control({
         router: L.Routing.mapbox(L.mapbox.accessToken, {
             profile: 'mapbox/walking',
             language: 'da',
         }),
         show: false,
-        waypoints: [],
+        waypoints: [
+        ],
+
         //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
     }).addTo(modalMap);
     modalMap.setZoom(16)
@@ -472,15 +481,7 @@ function hideRoute(routeIndex) {
     button.innerText = "Vis"
 }
 
-function distanceToBoat() {
-    //Der skal hives fat i den markør som allerede eksisterende koordinater hvor denne så skal sættes på
-    //modalMap.setWaypoints({latLng: L.latLng([55.320768, 15.186081])})
 
-    //v virker til at sætte et koordinat ind, men kan ikke få den til at lave en rute
-    //https://stackoverflow.com/questions/62648150/how-to-implement-open-route-service-in-leaflet side hvor en får det til at fungere
-    //L.marker([55.320768, 15.186081]).addTo(modalMap)
-//
-}
 </script>
 </body>
 </html>

@@ -22,8 +22,8 @@ function makeTourRows() {
            <td>${encode(t.description)}</td>
            <td>${t.maxMembers}</td>
            <td>${t.duration}</td>
-           <td><button data-id-delete=${t.id} class="btn-danger" style="color: black" href="#">Delete</td>
-           <td><button data-id-edit='${t.id}' class="btn-warning" style="color: black" href="#">Edit</button> </td>
+           <td><button data-id-delete=${t.id} class="btn-danger" style="color: black" href="#">Slet</td>
+           <td><button data-id-edit='${t.id}' class="btn-warning" style="color: black" href="#">Rediger</button> </td>
          </tr>
         `)
         document.getElementById("tour-table-body").innerHTML = rows.join("")
@@ -160,14 +160,14 @@ function makeNewTour() {
 function showTourModal(tour) {
     if (document.title === "Admin side") {
         const myModal = new bootstrap.Modal(document.getElementById('tour-modal'))
-        document.getElementById("modal-title-tour").innerText = tour.id ? "Edit Tour" : "Add Tour"
+        document.getElementById("modal-title-tour").innerText = tour.id ? "Rediger tur" : "Tilføj tur"
         document.getElementById("tour-id-t").innerText = tour.id
         document.getElementById("input-name-t").value = tour.name
         document.getElementById("input-description-t").value = tour.description
         document.getElementById("input-maxMembers-t").value = tour.maxMembers
         document.getElementById("input-duration-t").value = tour.duration
         makeSelectRows()
-        if (document.getElementById("modal-title-tour").innerText === "Edit Tour") {
+        if (document.getElementById("modal-title-tour").innerText === "Rediger tur") {
             makeRowsSetSelected(tour)
         }
         myModal.show()

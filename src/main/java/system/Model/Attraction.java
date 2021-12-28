@@ -14,7 +14,7 @@ public class Attraction extends Object {
     @Column(name="name")
     private String name;
 
-    @Column(name="description")
+    @Column(name="description", length = 600)
     private String description;
 
     @Column(name="interestPoints")

@@ -25,23 +25,23 @@
 <br/>
 
 <ul>
-    <li><a  href="index.html" accesskey="k">Kort / index</a> </li>
+    <li><a  href="index.html" accesskey="k">Kort</a> </li>
     <li><a class="active" href="login.html" accesskey="a">Admin</a></li>
     <li><a href="aboutUs.html" accesskey="o">Om os</a> </li>
 </ul>
 
 <br/>
 
-<h1 style="font-size: 25px">Tours tabel</h1>
+<h1 style="font-size: 25px">Ture</h1>
 
 <table class="table">
     <thead>
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>maxMembers</th>
-        <th>Duration</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Max deltagere</th>
+        <th>Varighed</th>
 
     </tr>
     </thead>
@@ -50,32 +50,32 @@
 </table>
 
 <button type="button" class="btn btn-primary" id="btn-add-tour" data-bs-target="#staticBackdrop">
-    Add new Tour
+    Tilføj ny tur
 </button>
 <div class="modal fade" id="tour-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title-tour" id="modal-title-tour">Add tour</h5>
+                <h5 class="modal-title-tour" id="modal-title-tour">Tilføj tur</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Tour ID: <span id="tour-id-t"></span></p>
+                <p>Tur ID: <span id="tour-id-t"></span></p>
                 <form>
                     <div class="mb-3">
-                        <label for="input-name-t" class="form-label">Name</label>
+                        <label for="input-name-t" class="form-label">Navn</label>
                         <input type="text" class="form-control" id="input-name-t">
                     </div>
                     <div class="mb-3">
-                        <label for="input-description-t" class="form-label">Description</label>
+                        <label for="input-description-t" class="form-label">Beskrivelse</label>
                         <input type="text" class="form-control" id="input-description-t">
                     </div>
                     <div class="mb-3">
-                        <label for="input-maxMembers-t" class="form-label">Max Members</label>
+                        <label for="input-maxMembers-t" class="form-label">Max deltagere</label>
                         <input type="text" class="form-control" id="input-maxMembers-t">
                     </div>
                     <div class="mb-3">
-                        <label for="input-duration-t" class="form-label">Duration</label>
+                        <label for="input-duration-t" class="form-label">Varighed</label>
                         <input type="text" class="form-control" id="input-duration-t">
                     </div>
                     <div class="mb-3">
@@ -91,8 +91,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-                <button id="btn-save-tour" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+                <button id="btn-save-tour" type="button" class="btn btn-primary" data-bs-dismiss="modal">Gem ændringer
                 </button>
             </div>
         </div>
@@ -105,18 +105,18 @@
 <br/>
 <br/>
 
-<h1 style="font-size: 25px">Attractions tabel</h1>
+<h1 style="font-size: 25px">Attraktioner</h1>
 
 <table class="table">
     <thead>
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Interestpoints</th>
-        <th>Latitude</th>
-        <th>Longtitude</th>
-        <th>TimeToboat</th>
+        <th>Navn</th>
+        <th>Beskrivelse</th>
+        <th>Interesse punkter</th>
+        <th>Breddegrad</th>
+        <th>Længdegrad</th>
+        <th>Tid til båden</th>
 
     </tr>
     </thead>
@@ -127,48 +127,48 @@
 
 </table>
 <button type="button" class="btn btn-primary" id="btn-add-attraction" data-bs-target="#staticBackdrop">
-    Add new Attraction
+    Tilføj ny attraktion
 </button>
 <div class="modal fade" id="attraction-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title-attraction" id="modal-title-attraction">Add Attraction</h5>
+                <h5 class="modal-title-attraction" id="modal-title-attraction">Tilføj attraktion</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Attraction ID: <span id="attraction-id-a"></span></p>
+                <p>Attraktion ID: <span id="attraction-id-a"></span></p>
                 <form>
                     <div class="mb-3">
-                        <label for="input-name-a" class="form-label">Name</label>
+                        <label for="input-name-a" class="form-label">Navn</label>
                         <input type="text" class="form-control" id="input-name-a">
                     </div>
                     <div class="mb-3">
-                        <label for="input-description-a" class="form-label">Description</label>
+                        <label for="input-description-a" class="form-label">Beskrivelse</label>
                         <input type="text" class="form-control" id="input-description-a">
                     </div>
                     <div class="mb-3">
-                        <label for="input-interestPoints-a" class="form-label">Interest points</label>
+                        <label for="input-interestPoints-a" class="form-label">Interesse punkter</label>
                         <input type="text" class="form-control" id="input-interestPoints-a">
                     </div>
                     <div class="mb-3">
-                        <label for="input-latitude-a" class="form-label">latitude</label>
+                        <label for="input-latitude-a" class="form-label">Breddegrad</label>
                         <input type="number" step=".0001" class="form-control" id="input-latitude-a">
                     </div>
                     <div class="mb-3">
-                        <label for="input-longtitude-a" class="form-label">Longitude</label>
+                        <label for="input-longtitude-a" class="form-label">Længdegrad</label>
                         <input type="number" step=".0001" class="form-control" id="input-longtitude-a">
                     </div>
                     <div class="mb-3">
-                        <label for="input-timeToBoat-a" class="form-label">Time to boat</label>
+                        <label for="input-timeToBoat-a" class="form-label">Tid til båd (i minutter)</label>
                         <input type="number" class="form-control" id="input-timeToBoat-a">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-                <button id="btn-save-attraction" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
+                <button id="btn-save-attraction" type="button" class="btn btn-primary" data-bs-dismiss="modal">Gem ændringer
                 </button>
             </div>
         </div>
