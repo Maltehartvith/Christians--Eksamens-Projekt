@@ -39,8 +39,10 @@
 <br>
 <!----------------------------------------------------MENUS------------------------------------------------------------>
 <table class="table">
+
     <tr>
         <td id="menu" rowspan="2" style="border: 1px solid black; width: 678px">
+
             <h2 class="h1">Menu</h2>
             <!--------------------------------------------------TOUR MENU---------------------------------------------------------->
             <div id="tour-div">
@@ -83,7 +85,7 @@
                     <select name="interest-Points" id="interest-points-attraction" style="width: 30.5%">
                         <option value="Bygning">Bygninger</option>
                         <option value="Natur">Natur</option>
-                        <option value="Spøgelser">Spørgelser</option>
+                        <option value="Spøgelser">Spøgelser</option>
                         <option value="SOS">SOS</option>
                         <option value="Skrald">Skrald</option>
                         <option value="Krig">Krig</option>
@@ -103,11 +105,14 @@
             </div>
             <!-------------------------------------------------ROUTE MENU---------------------------------------------------------->
             <br/>
-            <div id="route-div" style="overflow: scroll">
-                <div id="route-header-index">
-                    <h2 class="h2"> Ruter</h2>
-                </div>
+            <div id="route-div">
+                    <h2 class="h2" style="text-align: center"> Ruter <a id="question-button">
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Her kan du lave en rute. Når du trykker på knappen,
+så sætter du en usynlig markør, hver gang du trykker på kortet.&#10;Tryk flere gange for at lave flere punkter,&#10;og når du er tilfreds med ruten, kan du trykke på gem rute.">
+  <button class="btn btn-primary" type="button" style="border-radius: 20px; padding: 0px; height: 20px; width: 20px; font-size: 12px; left: 100%" disabled>?</button>
+</span></a></h2>
                 <div id="route-content">
+
                     <button id="route-edit" onclick="enableRouteCreation()" class="btn btn-primary">Ny Rute</button>
                     <table id="route-list">
                         <tr id="route0">
@@ -122,7 +127,13 @@
             <br/>
             <!--------------------------------------------------BOAT MENU---------------------------------------------------------->
             <div id="boatDiv">
-                <h2 class="h2"> Tid til b&aring;den kommer</h2>
+
+                <h2 class="h2" style="text-align: center"> Tid til b&aring;den kommer
+                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip"
+                          title="Der går altid 3 timer fra man kommer til båden sejler.&#10;Indtast hvornår du er kommet, og så vil denne funktion udregne
+hvor længe der er til din båd kommer.">
+                        <button class="btn btn-primary" type="button" style="border-radius: 20px; padding: 0px; height: 20px; width: 20px; font-size: 12px" disabled >?</button>
+</span></h2>
                 <label> Hvorn&aring;r ankom du med f&aelig;rgen</label>
                 <input id="boatTimeInput" type="time">
                 <button onclick="calculateTime()">Godkend</button>
@@ -358,14 +369,13 @@
         center: [55.3205449, 15.1883541]
     })
         .addLayer(mapboxTiles2)
-   let control2 = L.Routing.control({
+    let control2 = L.Routing.control({
         router: L.Routing.mapbox(L.mapbox.accessToken, {
             profile: 'mapbox/walking',
             language: 'da',
         }),
         show: false,
-        waypoints: [
-        ],
+        waypoints: [],
 
         //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
     }).addTo(modalMap);

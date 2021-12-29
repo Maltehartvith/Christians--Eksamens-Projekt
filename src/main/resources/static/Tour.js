@@ -21,7 +21,7 @@ function makeTourRows() {
            <td>${encode(t.name)}</td>
            <td>${encode(t.description)}</td>
            <td>${t.maxMembers}</td>
-           <td>${t.duration}</td>
+           <td>${t.duration} min</td>
            <td><button data-id-delete=${t.id} class="btn-danger" style="color: black" href="#">Slet</td>
            <td><button data-id-edit='${t.id}' class="btn-warning" style="color: black" href="#">Rediger</button> </td>
          </tr>
@@ -36,7 +36,7 @@ function makeTourRows() {
            <td>${encode(t.name)}</td>
            <td>${encode(t.description)}</td>
            <td>${t.maxMembers}</td>
-           <td>${t.duration}</td>
+           <td>${t.duration} min</td>
          </tr>
         `)
         document.getElementById("tour-table-body").innerHTML = rows.join("")
@@ -193,7 +193,7 @@ function showTourModal(tour) {
         document.getElementById("tour-name").innerHTML = tour.name
         document.getElementById("tour-interest-points").innerHTML = interestPoints + interestPointsValue
         document.getElementById("tour-maxMembers").innerHTML = maxMembers + tour.maxMembers
-        document.getElementById("tour-duration").innerHTML = duration + tour.duration + "min"
+        document.getElementById("tour-duration").innerHTML = duration + tour.duration + " min"
         document.getElementById("tour-description").innerHTML = beskrivelse + tour.description + "<br>"
         document.getElementById("tour-attraction").innerHTML = attraction + "<br>"
         //document.getElementById("attraction-map").innerHTML = tour.duration + "<br>"

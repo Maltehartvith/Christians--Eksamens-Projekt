@@ -42,7 +42,7 @@ function makeAttractionRows() {
                <td>${encode(a.interestPoints)}</td>
                <td>${a.latitude}</td>
                <td>${a.longtitude}</td>
-               <td>${a.timeToBoat}</td>
+               <td>${a.timeToBoat} min</td>
                <td><button data-id-delete=${a.id} class="btn-danger" style="color: black" href="#">Slet</td>
                <td><button data-id-edit='${a.id}' class="btn-warning" style="color: black" href="#">Rediger</button> </td>
              </tr>
@@ -56,7 +56,7 @@ function makeAttractionRows() {
            <td>${encode(a.name)}</td>
            <td>${encode(a.interestPoints)}</td>
            <br>
-           <td>${a.timeToBoat}</td>
+           <td>${a.timeToBoat} min</td>
            
          </tr>
         `)
