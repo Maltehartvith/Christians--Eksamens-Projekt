@@ -232,7 +232,7 @@ hvor længe der er til din båd kommer.">
                     <div class="row">
                         <div class="col">
                             <p id="attraction-timeToBoat" style="font-size: 14px "></p>
-                            <button type="button" onclick="distanceToBoat()" id="button-to-boat">knap</button>
+                            <button type="button" onclick="distanceToBoat()"  id="button-to-boat">knap</button>
                         </div>
                         <div class="col">
 
@@ -322,8 +322,8 @@ hvor længe der er til din båd kommer.">
 
     //Denne linje sørger for at leaflet viser din position
     //let map = L.map('map', {doubleClickZoom: false}).locate({setView: true, maxZoom: 16});
-    let accesstoken = L.mapbox.accessToken = 'pk.eyJ1IjoibWFsdGVoYXJ0dml0aCIsImEiOiJja3g4empjOTMxbW9pMnJvNTh4YXpxYThwIn0.wLiLsRfoWYK_mvQlFO4j-g';
-    let accesstoken2 = L.mapbox.accessToken = 'pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ';
+    let accesstoken2 = L.mapbox.accessToken = 'pk.eyJ1IjoibWFsdGVoYXJ0dml0aCIsImEiOiJja3g4empjOTMxbW9pMnJvNTh4YXpxYThwIn0.wLiLsRfoWYK_mvQlFO4j-g';
+    let accesstoken = L.mapbox.accessToken = 'pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ';
     //pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ
     //--------------------------------------MAPBOXTILES TIL INDEX MAPPET SAMT MAP---------------------------------------
     /*let mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + accesstoken, {
@@ -370,7 +370,7 @@ hvor længe der er til din båd kommer.">
     })
         .addLayer(mapboxTiles2)
     let control2 = L.Routing.control({
-        router: L.Routing.mapbox(L.mapbox.accessToken, {
+        router: L.Routing.mapbox(accesstoken2, {
             profile: 'mapbox/walking',
             language: 'da',
         }),
@@ -395,6 +395,7 @@ hvor længe der er til din båd kommer.">
         document.getElementById('attraction-modal-index').style.display = 'block';
         setTimeout(function () {
             modalMap.invalidateSize();
+
         }, 100)
     }
 

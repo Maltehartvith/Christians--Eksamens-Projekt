@@ -1,18 +1,3 @@
-//import {Modal} from "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js";
-
-//CONSTRUCTOR
-class Attraction {
-    constructor() {
-        this.id;
-        this.name;
-        this.description;
-        this.interestPoints;
-        this.latitude;
-        this.longtitude;
-        this.timeToBoat;
-    }
-}
-
 //STORE API
 sessionStorage.setItem("SERVER_URL_ATTRACTION", "api/attractions");
 const SERVER_URL_ATTRACTIONS = sessionStorage.getItem("SERVER_URL_ATTRACTION");
@@ -52,7 +37,8 @@ function makeAttractionRows() {
     } else if (document.title === "Map") {
         const rows = localACache.getAll().map(a => `
          <tr>
-           <td><button id="attraction-info-${a.id}" onclick="resetMap()" type="button" data-id-get='${a.id}' class="btn btn-primary" data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
+           <td><button id="attraction-info-${a.id}" onclick="resetMap()" type="button" data-id-get='${a.id}' class="btn btn-primary" 
+           data-toggle="modal" data-target="#attraction-modal-index"  style="cursor: pointer">Info</button></td>
            <td>${encode(a.name)}</td>
            <td>${encode(a.interestPoints)}</td>
            <br>
@@ -69,20 +55,25 @@ function distanceToBoat(attraction) {
     //control.getRouter().options.waypoints[0].lat = L.latLng(55.320768, 15.186081)
     //control.route()
     //mapboxTiles2.setWaypoints({latLng: L.latLng([55.320768, 15.186081])})
+
+    modalMarker.remove()
+    console.log(attraction)
+    let lat = attraction.latitude;
+    let longi = attraction.longtitude;
     control2 = L.Routing.control({
-        router: L.Routing.mapbox(L.mapbox.accessToken, {
+        router: L.Routing.mapbox(accesstoken2, {
             profile: 'mapbox/walking',
             language: 'da',
         }),
         show: false,
         waypoints: [
-            L.latLng(attraction.latitude, attraction.longtitude),
-            L.latLng(55.320768, 15.186081)
+            L.latLng(55.320768, 15.186081),
+            L.latLng(lat, longi)
         ],
 
         //55.3205449, 15.1883541 <- koordinater til båd som skal ind her på en eller anden måde
     }).addTo(modalMap);
-    control2.route()
+
     //v virker til at sætte et koordinat ind, men kan ikke få den til at lave en rute
     //https://stackoverflow.com/questions/62648150/how-to-implement-open-route-service-in-leaflet side hvor en får det til at fungere
     //L.marker([55.320768, 15.186081]).addTo(modalMap)
@@ -143,8 +134,8 @@ function setUpHandlersAttraction() {
         //TIL MAP SIDE
     } else if (document.title === "Map") {
         document.getElementById("attraction-table-body-index").onclick = handleTableClickAttraction
-        if (document.getElementById("lego") !== null) {
-            document.getElementById("lego").onclick = showAttractionModal
+        if (document.getElementById("attraction-info") !== null) {
+            document.getElementById("attraction-info").onclick = showAttractionModal
         }
         if (document.getElementById("interest-points-attraction") !== null) {
             document.getElementById("interest-points-attraction").onchange = filterTableA
@@ -190,7 +181,10 @@ function handleTableClickAttraction(evt) {
     if (target.dataset.idGet) {
         const idToShow = Number(target.dataset.idGet)
         const attraction = localACache.findById(idToShow)
+
+        //
         showAttractionModal(attraction)
+        distanceToBoat(attraction)
     }
 }
 
@@ -222,8 +216,9 @@ function showAttractionModal(attraction) {
         document.getElementById("input-longtitude-a").value = attraction.longtitude
         document.getElementById("input-timeToBoat-a").value = attraction.timeToBoat
         myModal.show()
-        //TIL MAP SIDE
+
     }
+    //TIL MAP SIDE
     if (document.title === "Map") {
         const myModal = new bootstrap.Modal(document.getElementById('attraction-modal-index'))
         //const myModal = new Modal(document.getElementById('attraction-modal-index'))
