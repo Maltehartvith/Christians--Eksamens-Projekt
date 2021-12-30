@@ -17,7 +17,6 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 
 
-
 </head>
 <body class="container">
 <br/>
@@ -25,9 +24,9 @@
 <br/>
 
 <ul>
-    <li><a  href="index.html" accesskey="k">Kort</a> </li>
+    <li><a href="index.html" accesskey="k">Kort</a></li>
     <li><a class="active" href="login.html" accesskey="a">Admin</a></li>
-    <li><a href="aboutUs.html" accesskey="o">Om os</a> </li>
+    <li><a href="aboutUs.html" accesskey="o">Om os</a></li>
 </ul>
 
 <br/>
@@ -52,7 +51,8 @@
 <button type="button" class="btn btn-primary" id="btn-add-tour" data-bs-target="#staticBackdrop">
     Tilføj ny tur
 </button>
-<div class="modal fade" id="tour-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="tour-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -79,9 +79,11 @@
                         <input type="text" class="form-control" id="input-duration-t">
                     </div>
                     <div class="mb-3">
-                        <label for="box-for-select" class="form-label">Klik de attraktioner af, som tilhører denne rute</label>
+                        <label for="box-for-select" class="form-label">Klik de attraktioner af, som tilhører denne
+                            rute</label>
                         <div style="overflow:hidden">
-                            <div id='box-for-select' style='padding-left:1em; height:150px; max-width: 100%; border:2px solid #ccc; overflow-y: scroll; '>
+                            <div id='box-for-select'
+                                 style='padding-left:1em; height:150px; max-width: 100%; border:2px solid #ccc; overflow-y: scroll; '>
 
                             </div>
                         </div>
@@ -99,7 +101,6 @@
     </div>
 </div>
 <!--END OF MODAL -->
-
 
 
 <br/>
@@ -168,7 +169,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuller</button>
-                <button id="btn-save-attraction" type="button" class="btn btn-primary" data-bs-dismiss="modal">Gem ændringer
+                <button id="btn-save-attraction" type="button" class="btn btn-primary" data-bs-dismiss="modal">Gem
+                    ændringer
                 </button>
             </div>
         </div>
@@ -179,5 +181,18 @@
 </body>
 <script src="Tour.js" defer></script>
 <script src="Attraction.js" defer></script>
+<script>
+    //Tjekker om man er logget ind ved at sige at hvis status har en værdi så har man logget gyldigt ind på denne session.
+    //hvis ikke bliver man kastet tilbage til login
+    window.onload = function()
+    {
+        if (sessionStorage.getItem('status') != null) {
+            console.log("Welcome")
+        } else {
+            alert('You\'re not logged in - redirecting')
+            window.location = "login.html";
+        }
+    }
 
+</script>
 </html>

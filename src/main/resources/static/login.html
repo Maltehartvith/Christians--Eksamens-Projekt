@@ -5,29 +5,94 @@
     <title>Login side</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styleForLogin.css">
+
+    <script>
+        //Funktion som tjekker om man er logget ind - hvis man er bliver man sendt hurtigt videre til admin siden
+        window.onload =  function (){
+            if (sessionStorage.getItem('status') != null) {
+                window.location = "admin.html"
+            } else {
+                console.log("login")
+            }
+        }
+    </script>
 </head>
 <body class="container">
 <br/>
-<h1>Login til Admin </h1>
+<h1 style="color: black">Login til Admin </h1>
+<br>
+<ul>
+    <li><a href="index.html" accesskey="k">Kort</a></li>
+    <li><a class="active" href="login.html" accesskey="a">Admin</a></li>
+    <li><a href="aboutUs.html" accesskey="o">Om os</a></li>
+</ul>
+
 <br/>
 
-<form>
-    <label for="pswd">Skriv venligst password for at tilgå Admin siden: </label>
-    <input type="password" id="pswd">
-    <input type="button" value="Submit" onclick="checkPswd();" accesskey="enter"/>
+<form class="box" id="login-box">
+    <!--Knap til at gå direkte til admin siden-->
+    <button class="btn btn-primary" type="button" style=" position: absolute; border-radius: 20px; padding: 0px; height: 40px; width: 40px;
+    font-size: 20px; left: 85%; top: 5%" onclick="redirectToAdmin()">&rarr;</button>
+    <h1>Login</h1>
+    <input type="text" name="userName" placeholder="Username" id="usrn">
+    <input type="password" name="password" placeholder="Password" id="pswd">
+    <input type="submit" placeholder="Login" onclick="checkPswd()">
 </form>
 
+</body>
 <script>
+//Funktion der er sat på knappen til at sende én til admin siden.
+function redirectToAdmin(){
+    window.location ="admin.html"
+}
+//Funktion som tjekker efter om man har skrevet brugernavn og password rigtigt.
     function checkPswd() {
+        const confirmedUsername = "admin";
         const confirmPassword = "admin";
+        let username = document.getElementById("usrn").value;
         let password = document.getElementById("pswd").value;
-        if (password == confirmPassword) {
+
+        if (password === confirmPassword && username === confirmedUsername) {
+            /*Hvis brugernavn og password er rigtigt, så gemmer den loggedIn i status på sessionstorage
+                som starter en session som logged in og derefter kan man tilgå admin siden uden at skulle logge ind igen.
+                Samtidigt så ved at vi gemmer denne status, så kan vi også tjekke på admin siden, som brugeren har fået
+                denne loggedin status.*/
+            sessionStorage.setItem('status','loggedIn')
             window.location="admin.html";
         }
         else{
             alert("Forkert password");
         }
     }
+    //gør at når man trykker enter, så kan man submitte hvad man har skrevet, så man ikke behøver at trykke på knappen
+    document.getElementById('pswd').addEventListener('keypress', function(event) {
+        if (event.key === "Enter") {
+            checkPswd()
+            event.preventDefault();
+        }
+    });
+    //De to nedenstående funktioner gør at man ikke kan trykke på visse knapper eller højreklikke på vinduet som gør
+//det sværere (dog ikke umuligt) at finde password og username i javascripted.
+    document.onkeydown = function(e) {
+        if(e.key === "F12") {
+            return false;
+        }
+
+        if(e.ctrlKey && e.shiftKey && e.key === "I"){
+            return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.key === "J"){
+            return false;
+        }
+        if(e.ctrlKey && e.key === "U"){
+            return false;
+        }
+    }
+    window.oncontextmenu = function (){
+        return false;
+    }
+
 </script>
 </body>
 </html>

@@ -1,15 +1,13 @@
 body{
-    background: url(background2.jpg) no-repeat;
     background-size: cover;
     background-color: white;
-
 
 }
 
 .box{
-    width: 300px;
+    width: 400px;
     padding: 40px;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -27,7 +25,7 @@ body{
 }
 
 .box input[type = "text"], .box input[type = "password"] {
-    border: 0;
+
     background: none;
     display: block;
     margin: 20px auto;
@@ -38,7 +36,7 @@ body{
     outline: none;
     color: white;
     border-radius: 24px;
-    transition: 0.25;
+    transition: 0.5s;
     font-family: sans-serif;
 }
 
@@ -49,7 +47,6 @@ body{
 }
 
 .box input[type = "submit"]{
-    border: 0;
     background: none;
     display: block;
     margin: 20px auto;
@@ -59,8 +56,8 @@ body{
     outline: none;
     color: white;
     border-radius: 24px;
-    transition: 0.25;
-    cursor: pointer;
+    transition: 0.5s;
+
     font-family: sans-serif;
 }
 
@@ -75,8 +72,6 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #333;
-    /*width: 99%;
-    position: absolute;*/
 }
 li {
     float: left;
@@ -131,5 +126,5 @@ h1{
     text-align: center;
 }
 .active{
-    background-color: green;
+    background-color: deepskyblue;
 }
