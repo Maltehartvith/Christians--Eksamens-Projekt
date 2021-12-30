@@ -81,7 +81,7 @@ li a:hover:not(.active) {
     overflow-x: hidden;
 
 }
-#tour-div, #attraction-div{
+#tour-div, #attraction-div, #route-div{
     height: 92px;
     overflow: auto;
     overflow-x: hidden;
@@ -100,7 +100,7 @@ li a:hover:not(.active) {
     left:40%
 }
 
-#tour-content, #attraction-content{
+#tour-content, #attraction-content, #route-content{
     display:none
 }
 

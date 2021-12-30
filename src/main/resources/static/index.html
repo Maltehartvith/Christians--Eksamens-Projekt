@@ -106,11 +106,13 @@
             <!-------------------------------------------------ROUTE MENU---------------------------------------------------------->
             <br/>
             <div id="route-div">
-                    <h2 class="h2" style="text-align: center"> Ruter <a id="question-button">
+                <div id="routes-header-index" onclick="showRoutes()">
+                    <h2 class="h2" style="text-align: center" id="routes-header"> Ruter &darr; <a id="question-button">
                     <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Her kan du lave en rute. Når du trykker på knappen,
 så sætter du en usynlig markør, hver gang du trykker på kortet.&#10;Tryk flere gange for at lave flere punkter,&#10;og når du er tilfreds med ruten, kan du trykke på gem rute.">
   <button class="btn btn-primary" type="button" style="border-radius: 20px; padding: 0px; height: 20px; width: 20px; font-size: 12px; left: 100%" disabled>?</button>
-</span></a></h2>
+</span></a></h2> </div>
+
                 <div id="route-content">
 
                     <button id="route-edit" onclick="enableRouteCreation()" class="btn btn-primary">Ny Rute</button>
@@ -279,13 +281,14 @@ hvor længe der er til din båd kommer.">
 
 <script>
     //funktion som gemmer pop-up for den sidst kreeret attraktion når man loader siden.
-    window.onload = function (){
+    window.onload = setTimeout(function (){
         let x = document.getElementsByClassName('leaflet-popup  leaflet-zoom-animated');
         let newest = x.length;
         let lastElem = document.getElementsByClassName('leaflet-popup  leaflet-zoom-animated')[newest-1]
 
         lastElem.style.visibility= 'hidden';
-    }
+    }, 100)
+
     //---------------------------------------------- KODE TIL BÅDEN --------------------------------------------------------
 
     //UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
