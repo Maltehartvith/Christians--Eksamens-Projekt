@@ -278,6 +278,14 @@ hvor længe der er til din båd kommer.">
 <script src="Attraction.js" type="module"></script>
 
 <script>
+    //funktion som gemmer pop-up for den sidst kreeret attraktion når man loader siden.
+    window.onload = function (){
+        let x = document.getElementsByClassName('leaflet-popup  leaflet-zoom-animated');
+        let newest = x.length;
+        let lastElem = document.getElementsByClassName('leaflet-popup  leaflet-zoom-animated')[newest-1]
+
+        lastElem.style.visibility= 'hidden';
+    }
     //---------------------------------------------- KODE TIL BÅDEN --------------------------------------------------------
 
     //UDREGNING AF AFGANG AFHÆNGIG AF ANKOMST
