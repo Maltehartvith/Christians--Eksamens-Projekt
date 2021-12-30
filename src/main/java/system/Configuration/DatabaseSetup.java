@@ -94,10 +94,24 @@ public class DatabaseSetup implements CommandLineRunner {
         //attractionRepo.save(new Attraction(46L, "Trappe",  "Trappe", "Bygning", 55.3195648, 15.1895525, 2));
 
 
-       /* Tour t = new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200);
+       Tour t = new Tour(1L,"Senior tur", "En behagelig mindre tur, med fokus på gamle bygninger og natur", 25, 150);
         t.addAttraction(new Attraction(2L, "Den hvide dame", "Her er spøgelset den hvide dame blevet set ", "Spøgelser", 55.3196099, 15.1878977, 2));
+        t.addAttraction(new Attraction(1L, "Den Blå Hane", "Den Blå Hane er en af de huse man kan overnatte i, som ligger syd på Christiansø, og som har sengpladser til to personer.\nHuset er åben for bookning året rundt.", "Bygning", 55.3184577, 15.1899624, 6, "hane.jpg", "Den blaa hane.m4a"));
+
+        Tour t1 = new Tour(2L,"Dyr og plante tur", "En længere tur der tager dig med på naturoplevelser! Oplev blandt andet sæler", 20, 150);
+        t1.addAttraction(new Attraction(10L, "Sæler", "Ved kysten af Christiansø, kan man være heldig og se sæler, og primært gråsælen som holder sig til Øen. De lever af fisk, krebsdyr og blæksprutter. Gråsælen genkendes på deres korte grålige pels med mørke pletter.", "Dyr", 55.3225185, 15.1906426, 6, "Foka_szara_mateusz_wlodarczyk.jpg", "BabySealSounds.mp3"));
+        t1.addAttraction(new Attraction(4L, "Latter frøer", "Latterfrøen er den største Europæiske frø. Den kan både springe langt og hurtigt. Frøen lever naturligt på Bornholm og Christiansø ved Ertholmene. Latterfrøen yngler i mellem Maj og Juni og går i hi i vandhuller over vinteren.\n", "Natur", 55.3204756, 15.1876427, 2, "Latterfroe.jpg", "Frøer på Christiansø 2015.mp3"));
+        t1.addAttraction(new Attraction(3L, "Æble plantage", "Her kan du se Christiansø's smukke æble plantage. Den er specielt smuk om foråret, hvor den typisk springer ud i Maj måned.", "Natur", 55.3212630, 15.1891052, 4, "Bjerregaarden+aebleplantage.jpg", "Aebleplantage.m4a"));
+
+        Tour t2 = new Tour(3L,"Danmarks østligste punkt", "Se blandt andet Danmarks østligste punkt, og meget mere af Christiansø, på denne herlige tur!", 30, 120);
+        t2.addAttraction(new Attraction(2L, "Danmarks Østligste Punkt", "Danmarks østligste punkt består af de to små øer Christiansø og Frederiksø samt flere små ubeboede øer og skær, også kaldet Ertholmene. Punktet er markeret af en rå kystlinje, og som nås via sammenfaldne volde.\nPunktet kan tilgås året rundt", "Natur", 55.3194966, 15.1914682, 8, "2020-07-17.webp", "oestligste.m4a"));
+        t2.addAttraction(new Attraction(9L, "Christiansø Fyr", "Fyret er i mellem 1801 og 1805 bygget ind imellem den ydre og den indre mur i Store Tårn, der er en del af Christiansøs fæstningsværk fra 1684. Lanternen i toppen er tegnet af Poul de Løwenørn.\nI dag er Store Tårn blevet til et museum.", "Bygning", 55.3204645, 15.1872536, 2, "Store-Tårn-Christiansø-A.jpg", "Fyr.m4a"));
+        t2.addAttraction(new Attraction(6L, "Christiansøbroen (Vest)", "Broen er meget uundværlig, da de ca. 94 beboere ellers skulle vente på Christiansøfærgen hver gang de skulle mellem øerne.\nDet er sjældent broen åbner og lukker, men har en sjov mekanisme. Fremfor at de to bro-dele løfter sig vertikalt, som normale broer, så skilder de sig på midten, og går ud til siden, næsten parallelt med kysten.", "Bygning", 55.3204508, 15.1856262, 0, "Christiansø-2008.jpg", "Bro.m4a"));
+        t2.addAttraction(new Attraction(7L, "Christiansøbroen (Øst)", "Broen er meget uundværlig, da de ca. 94 beboere ellers skulle vente på Christiansøfærgen hver gang de skulle mellem øerne.\nDet er sjældent broen åbner og lukker, men har en sjov mekanisme. Fremfor at de to bro-dele løfter sig vertikalt, som normale broer, så skilder de sig på midten, og går ud til siden, næsten parallelt med kysten.", "Bygning", 55.3204404, 15.1862263, 0, "Christiansøbroen.jpeg", "Bro.m4a"));
+
         tourRepo.save(t);
-        tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));*/
+        tourRepo.save(t1);
+        tourRepo.save(t2);
 
 
 
