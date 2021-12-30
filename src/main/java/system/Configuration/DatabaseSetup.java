@@ -30,34 +30,22 @@ public class DatabaseSetup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        /*tourRepo.save(new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200));
-        tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));*/
 
         routeRepo.save(new Route(1L));
 
-        attractionRepo.save(new Attraction(1L, "Den Blå Hane", "Den Blå Hane er en af de huse man kan overnatte i, som ligger syd på Christiansø, og som har sengpladser til to personer.\nHuset er åben for bookning året rundt.", "Bygning", 55.3184577, 15.1899624, 6, "", "Den blaa hane.m4a"));
+        attractionRepo.save(new Attraction(1L, "Den Blå Hane", "Den Blå Hane er en af de huse man kan overnatte i, som ligger syd på Christiansø, og som har sengpladser til to personer.\nHuset er åben for bookning året rundt.", "Bygning", 55.3184577, 15.1899624, 6, "hane.jpg", "Den blaa hane.m4a"));
         attractionRepo.save(new Attraction(2L, "Danmarks Østligste Punkt", "Danmarks østligste punkt består af de to små øer Christiansø og Frederiksø samt flere små ubeboede øer og skær, også kaldet Ertholmene. Punktet er markeret af en rå kystlinje, og som nås via sammenfaldne volde.\nPunktet kan tilgås året rundt", "Natur", 55.3194966, 15.1914682, 8, "2020-07-17.webp", "oestligste.m4a"));
         attractionRepo.save(new Attraction(3L, "Æble plantage", "Her kan du se Christiansø's smukke æble plantage. Den er specielt smuk om foråret, hvor den typisk springer ud i Maj måned.", "Natur", 55.3212630, 15.1891052, 4, "Bjerregaarden+aebleplantage.jpg", "Aebleplantage.m4a"));
         attractionRepo.save(new Attraction(4L, "Latter frøer", "Latterfrøen er den største Europæiske frø. Den kan både springe langt og hurtigt. Frøen lever naturligt på Bornholm og Christiansø ved Ertholmene. Latterfrøen yngler i mellem Maj og Juni og går i hi i vandhuller over vinteren.\n"
-                /*"Endvidere findes udsatte frøer fra parkvandhuller i Århus og København.\n" + "\n" +
-                "Udseende Latterfrøen er en af de grønne frøer, selv om den ofte er mere brun end den  grønne frø . Men den enkelte frø kan skifte farve og veksle mellem grønne, brune, grå og sortbrune nuancer.\n" + "\n" +
-                "De fleste latterfrøer kan kendes fra grøn frø på formen af fodrodsknuden, og på, at de som regel kvækker anderledes.\n" + "\n" +
-                "De voksne frøer æder alt, hvad der bevæger sig, og som de kan sluge. De tager især insekter, bl.a. mange myrer, men også hundestejler, salamandre og frøer, deriblandt andre latterfrøer.\n" + "\n" +
-                "Latterfrøen er så stor, at den også kan tage mus og små fugle.\n" + "\n" +
-                "Latterfrø lever i større vandhuller og søer end den grønne frø. Der skal være meget bevoksning i søen, så den kan ligge camoufleret i overfladen af vandet.\n" + "\n" +
-                "Latterfrøen er nu forsvundet fra de fleste naturlige søer på Bornholm. Nu findes den i grusgrave, lergrave, kaolingrave, granitbrud og sandstensbrud. Selv om der ofte er meget lidt bevoksning her. I de senere år er den også vandret ind til ret små, nygravede vandhuller.\n" + "\n" +
-                "På Østbornholm er der kun fundet hunner. Disse parrer sig her med grøn frø, men er alligevel i stand til at opretholde sig som art. På Vestbornholm findes både hanner og hunner.\n" + "\n" +
-                "Latterfrøen menes at kunne leve op til 11 år.\n" + "\n" +
-                "Latterfrøer ædes af snoge, fiskehejrer, oddere, grævlinger og ildere.\n"+*/
                 , "Natur", 55.3204756, 15.1876427, 2, "Latterfroe.jpg", "Frøer på Christiansø 2015.mp3"));
         attractionRepo.save(new Attraction(5L, "Ballonen (Fængsel/Vadrehjem)", "Christiansøs tidligere statsfængsel, kaldet Ballonen, er i dag indrettet som et lille vandrerhjem med fem celler til overnatning for 1-2 personer og alle praktiske faciliteter.\nBallonen har åbent hele året.", "Bygning", 55.3199894, 15.1845679, 1, "billede-christiansoe-overnatning-ballonen-879x385-1.jpg", "Ballonen.m4a"));
         attractionRepo.save(new Attraction(6L, "Christiansøbroen (Vest)", "Broen er meget uundværlig, da de ca. 94 beboere ellers skulle vente på Christiansøfærgen hver gang de skulle mellem øerne.\nDet er sjældent broen åbner og lukker, men har en sjov mekanisme. Fremfor at de to bro-dele løfter sig vertikalt, som normale broer, så skilder de sig på midten, og går ud til siden, næsten parallelt med kysten.", "Bygning", 55.3204508, 15.1856262, 0, "Christiansø-2008.jpg", "Bro.m4a"));
         attractionRepo.save(new Attraction(7L, "Christiansøbroen (Øst)", "Broen er meget uundværlig, da de ca. 94 beboere ellers skulle vente på Christiansøfærgen hver gang de skulle mellem øerne.\nDet er sjældent broen åbner og lukker, men har en sjov mekanisme. Fremfor at de to bro-dele løfter sig vertikalt, som normale broer, så skilder de sig på midten, og går ud til siden, næsten parallelt med kysten.", "Bygning", 55.3204404, 15.1862263, 0, "Christiansøbroen.jpeg", "Bro.m4a"));
-        attractionRepo.save(new Attraction(8L, "Hjertestarter", "Hvis uheldet er ude - Hjertestarter her!", "SOS", 55.3203103, 15.1863093, 1));
+        attractionRepo.save(new Attraction(8L, "Hjertestarter", "Hvis uheldet er ude - Hjertestarter her!", "SOS", 55.3203103, 15.1863093, 1, "hjerte.jpg"));
         attractionRepo.save(new Attraction(9L, "Christiansø Fyr", "Fyret er i mellem 1801 og 1805 bygget ind imellem den ydre og den indre mur i Store Tårn, der er en del af Christiansøs fæstningsværk fra 1684. Lanternen i toppen er tegnet af Poul de Løwenørn.\nI dag er Store Tårn blevet til et museum.", "Bygning", 55.3204645, 15.1872536, 2, "Store-Tårn-Christiansø-A.jpg", "Fyr.m4a"));
         attractionRepo.save(new Attraction(10L, "Sæler", "Ved kysten af Christiansø, kan man være heldig og se sæler, og primært gråsælen som holder sig til Øen. De lever af fisk, krebsdyr og blæksprutter. Gråsælen genkendes på deres korte grålige pels med mørke pletter.", "Dyr", 55.3225185, 15.1906426, 6, "Foka_szara_mateusz_wlodarczyk.jpg", "BabySealSounds.mp3"));
 
-        // NYE HARDCODEDE ATTRAKTIONS FRA INDEX(JANUS)
+        // Mulige fremtidige attraktioner
         //attractionRepo.save(new Attraction(1L, "Det store tårn",  "Her finder du christian ø's tårn", "Bygning", 55.3207358, 15.1867559, 2));
         //attractionRepo.save(new Attraction(2L, "Den hvide dame",  "Her er spøgelset den hvide dame blevet set ", "Spøgelser", 55.3196099 ,  15.1878977, 2));
         //attractionRepo.save(new Attraction(3L, "Den hvide dame",  "Her er spøgelset den hvide dame blevet set ", "Spøgelser", 55.3195853,  15.1878071, 2));
@@ -106,36 +94,11 @@ public class DatabaseSetup implements CommandLineRunner {
         //attractionRepo.save(new Attraction(46L, "Trappe",  "Trappe", "Bygning", 55.3195648, 15.1895525, 2));
 
 
-        Tour t = new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200);
+       /* Tour t = new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200);
         t.addAttraction(new Attraction(2L, "Den hvide dame", "Her er spøgelset den hvide dame blevet set ", "Spøgelser", 55.3196099, 15.1878977, 2));
         tourRepo.save(t);
-        //tourRepo.save(new Tour("Den bedste tur", "Det er en meget lang tur", 30, 200));
-        tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));
+        tourRepo.save(new Tour("Den aller bedste tur", "Det er en meget meget meget lang tur", 30, 500));*/
 
-
-        /*ArrayList<Coordinate> route0coords=new ArrayList<>();
-
-        route0coords.add(new Coordinate(55.320783, 15.186147));
-        route0coords.add(new Coordinate(55.320865, 15.186308));
-        route0coords.add(new Coordinate(55.320914, 15.186443));
-        route0coords.add(new Coordinate(55.320919, 15.187355));
-        route0coords.add(new Coordinate(55.320851, 15.187840));
-        route0coords.add(new Coordinate(55.321360, 15.189657));
-        route0coords.add(new Coordinate(55.320560, 15.189646));
-        route0coords.add(new Coordinate(55.320221, 15.189061));
-        route0coords.add(new Coordinate(55.319913, 15.189120));
-        route0coords.add(new Coordinate(55.319516, 15.188455));
-        route0coords.add(new Coordinate(55.319243, 15.187435));
-        route0coords.add(new Coordinate(55.319317, 15.186718));
-        route0coords.add(new Coordinate(55.320229, 15.186411));
-
-        routeRepo.save(new Route(1L));
-
-        route0coords.forEach(c->{
-            c.setRoute(routeRepo.getById(1L));
-            CoordinateRepo check=coordinateRepo;
-            coordinateRepo.save(c);
-        });*/
 
 
     }
